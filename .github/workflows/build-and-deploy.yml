@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUCKET: 1023c04-grupo4
-      DIST: build
+      DIST: dist  # La carpeta por defecto de salida para proyectos Vue.js
       REGION: us-east-1
   
     steps:
@@ -22,10 +22,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.REGION }}
 
-      - name: Install Node.js and npm
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '14'  # Puedes ajustar la versión según las necesidades de tu proyecto
+          node-version: '14'
 
       - name: Install Dependencies
         run: |
