@@ -1,4 +1,4 @@
-const URL_BASE = "http://localhost:8090"
+const URL_BASE = "http://54.196.13.40:8090"
 import createStore from '@/store'
 let jwt = createStore.getters.getUser.jwt
 
