@@ -11,23 +11,21 @@ jobs:
       DIST: build
       REGION: us-east-1
   
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.REGION }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
 
-    - name: Install Dependencies
-      run: |
-        npm install
-    
-    - name: Copy files to the production website with the AWS CLI
-      run: |
-        aws s3 sync s3://${{ env.BUCKET }}
-  
-  
+      - name: Install Dependencies
+        run: |
+          npm install
+      
+      - name: Copy files to the production website with the AWS CLI
+        run: |
+          aws s3 sync $DIST s3://${{ env.BUCKET }}
