@@ -22,9 +22,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.REGION }}
 
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'  # Puedes ajustar la versión según las necesidades de tu proyecto
+
       - name: Install Dependencies
         run: |
           npm install
+
+      - name: Build Project
+        run: |
+          npm run build
 
       - name: Check if the build directory exists
         run: test -d $DIST
