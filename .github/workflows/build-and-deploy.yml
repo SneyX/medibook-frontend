@@ -25,7 +25,16 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-      
+
+      - name: Check if the build directory exists
+        run: test -d $DIST
+        continue-on-error: true
+
       - name: Copy files to the production website with the AWS CLI
         run: |
-          aws s3 sync $DIST s3://${{ env.BUCKET }}
+          if [ -d $DIST ]; then
+            aws s3 sync $DIST s3://${{ env.BUCKET }}
+          else
+            echo "Error: The '$DIST' directory does not exist."
+            exit 1
+          fi
