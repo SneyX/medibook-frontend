@@ -39,6 +39,9 @@ export default {
       let dialog = {
         type: 'delete',
         texto: 'Está seguro que desea eliminar esta categoría?',
+        id: card.id,
+        name: card.name,
+        description: card.description,
         acept: async () =>{
           dialog = {}
           this.$store.dispatch('setDialog',dialog)

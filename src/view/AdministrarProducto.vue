@@ -79,34 +79,35 @@ export default {
 };
 </script>
 <style scoped>
-.contenedor {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 50px;
-}
-.mainTable {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border: 2px solid black;
-  border-radius: 25px;
-  margin-top: 5px;
-}
-
-.categoryCont, .salaCont{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mainTable .back{
+  .contenedor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 50px;
+  }
+  .mainTable {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 2px solid black;
+    border-radius: 25px;
+    margin-top: 5px;
+  }
+  .mainTable p {
+    cursor: pointer;
+  }
+  .categoryCont, .salaCont{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mainTable .back{
     height: 100%;
     width: 50%;
     display: flex;
@@ -114,28 +115,27 @@ export default {
     justify-content: center;
     border: 1px solid black;
     border-radius: 25px;
-}
-
-.info {
-  width: 35%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.id {
-  width: 30%;
-}
-.name {
-  width: 70%;
-}
-.action {
-  width: 65%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.salaInfo {
-  width: 100%;
-}
+  }
+  .info {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .id {
+    width: 30%;
+  }
+  .name {
+    width: 70%;
+  }
+  .action {
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .salaInfo {
+    width: 100%;
+  }
 </style>
