@@ -2,7 +2,7 @@ const URL_BASE = "http://localhost:8090"
 import createStore from '@/store'
 let jwt = ""
 
-// METODOS - USERS -
+// METODOS - USERS
 
 const deleteUser = async id =>{
 	const url = URL_BASE+"/users/"+id
