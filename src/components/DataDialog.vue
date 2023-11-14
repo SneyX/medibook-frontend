@@ -75,6 +75,7 @@ export default {
 
 <style scoped>
   .contenedor{
+    z-index: 2;
     position: absolute;
     width: 100%;
     height: 100%;

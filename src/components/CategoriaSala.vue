@@ -1,7 +1,7 @@
 <template>
   <section :class="theme">
     <h3>CATEGORÍAS</h3>
-    <div class="contenedor">
+    <div class="contCard">
       <CardCategoria :resultados="resultados" />
     </div>
   </section>
@@ -14,10 +14,10 @@ import util from '@/utils/utils';
 
 export default {
   name: 'CategoriaSala',
-  props:{
-  },
-  components:{
+  components: {
     CardCategoria
+  },
+  props:{
   },
   data() {
     return {
@@ -54,24 +54,22 @@ section{
   background-color: white;
   width:100%;
 }
-.contenedor{
+h3{
+  align-self: flex-start;
+  font-size: 2vw;
+  color: var(--text2);
+  margin-left: 50px;
+}
+.contCard{
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  width:100%;
 }
-h3{
-  margin-left:-80% ;
-  font-size: 2vw;
-  color: var(--text2);
-}
-
-@media only screen and (max-width:480px ){
-  h3{
-  font-size: 4.5vw;
-  margin-left:-70% ;
-}
-
+  @media only screen and (max-width:480px ){
+    h3{
+    font-size: 4.5vw;
+    margin-left:-70% ;
+  }
 }
 </style>

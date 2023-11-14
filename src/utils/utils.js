@@ -8,11 +8,11 @@ const regExp = {
 const { regTexto, regEmail, regContrasenia } = regExp;
 
 const cargarPopUp = (texto, titulo) =>{
-    const cargando = {
-      isCargando: !createStore.state.popup.cargando,
-      texto: createStore.state.popup.textoPopup == '' ? texto : '',
-      titulo: createStore.state.popup.tituloPopup == '' ? titulo : ''
-    };
+    let cargando = {
+      isCargando: true,
+      texto: texto,
+      titulo: titulo
+    }
     createStore.dispatch('setPopup', cargando)
   }
 
@@ -20,8 +20,8 @@ const cargarPopUp = (texto, titulo) =>{
   const cargarLoader = texto =>{
     let cargando = {}
       texto == "" ?
-      cargando={ isCargando: false, texto: createStore.state.loader.textoCargando == '' } :
-      cargando={ isCargando: !createStore.state.loader.cargando, texto: createStore.state.loader.textoCargando == '' ? texto : '' }
+      cargando={ isCargando: false, texto: texto } :
+      cargando={ isCargando: true, texto: texto }
     createStore.dispatch('setCargando', cargando)
   }
 

@@ -1,7 +1,7 @@
 <template>
   <section :class="theme">
     <h3>RECOMENDACIONES</h3>
-    <div class="contenedor">
+    <div class="contCard">
       <CardSala :resultados="resultados" />
     </div>
   </section>
@@ -58,33 +58,32 @@ export default {
 </script>
 
 <style scoped>
-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 4px solid var(--border);
-  padding: 10px;
-  background-color: white;
-  width: 100%;
-  height: auto;
-}
-.contenedor {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-}
-h3 {
-  margin-left: -73%;
-  font-size: 2vw;
-  color: var(--text2);
-}
-@media only screen and (max-width: 480px) {
-  h3 {
-    font-size: 4.5vw;
-    margin-left: -52%;
+  section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid var(--border);
+    padding: 10px;
+    background-color: white;
+    width:100%;
   }
-}
+  h3{
+    align-self: flex-start;
+    font-size: 2vw;
+    color: var(--text2);
+    margin-left: 50px;
+  }
+  .contCard{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+    @media only screen and (max-width:480px ){
+      h3{
+      font-size: 4.5vw;
+      margin-left:-70% ;
+    }
+  }
 </style>

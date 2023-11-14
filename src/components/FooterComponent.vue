@@ -42,7 +42,7 @@ export default {
   background-color: #0d7277;
   color: #fff;
   padding: 20px 0;
-  z-index: 9;
+  z-index: 1;
   height: auto;
 }
 .footer-content {

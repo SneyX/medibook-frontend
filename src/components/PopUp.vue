@@ -49,6 +49,7 @@ left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
 background-color: rgba(0, 0, 0, 0.5);
+z-index: 2;
 }
 .textCont{
   position: relative;

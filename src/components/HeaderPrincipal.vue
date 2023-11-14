@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
 header{
-  z-index: 9;
+  z-index: 1;
   display: flex;
   position: sticky;
   top: 0;

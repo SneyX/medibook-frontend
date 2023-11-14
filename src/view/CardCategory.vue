@@ -88,7 +88,7 @@
     border: solid var(--text2);
     margin-top: -25px;
     border-radius: 15px 15px 25px 25px;
-    z-index: 2;
+    z-index: 1;
   }
   .info h2{
     margin-left: 5px;
