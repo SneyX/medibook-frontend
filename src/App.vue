@@ -4,11 +4,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
-  <HeaderPrincipal />
-  <router-view></router-view>
-  <LoaderMain />
+  <div class="content">
+      <HeaderPrincipal />
+      <router-view></router-view>
+      <LoaderMain />
+      <PopUp />
+      <div class="push" v-if="path != '/signup'"></div>
+  </div>
   <FooterComponent />
-  <PopUp />
 
 </template>
 
@@ -30,6 +33,11 @@ export default {
     return {
     };
   },
+  computed:{
+    path() {
+      return this.$router.currentRoute.value.path
+    }
+  },
   mounted() {
   },
 }
@@ -41,6 +49,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+html, body {
+  height: 100%;
+  margin: 0;
 }
 *{
   box-sizing: border-box;
@@ -93,5 +105,12 @@ a{
 }
 LoaderMain{
   height: 100%;
+}
+
+.content{
+  min-height: 100vh;
+}
+.push{
+  min-height: 150px;
 }
 </style>

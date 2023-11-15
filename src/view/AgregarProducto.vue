@@ -140,13 +140,13 @@ export default {
 .contenedor {
   background-color: #15b4bc;
   color: var(--text);
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-}
-.contenedor:hover{
-  background-color: #15b4bc;
+  align-items: flex-end;
+  height: 100%;
+  min-height: calc(100vh - 300px);
+  padding-top: 50px;
 }
 
 .login-container {
@@ -197,9 +197,8 @@ button:hover{
   .login-container {
     height: 75%;
     width: 75%;
-  margin-bottom: -100px;
-}
-
+    margin-bottom: -100px;
+  }
 }
 
 </style>

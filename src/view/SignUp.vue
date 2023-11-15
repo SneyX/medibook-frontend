@@ -22,6 +22,7 @@
       <span v-if="!showMsg">{{ msg }}</span>
     </div>
   </div>
+  <div class="push"></div>
 </template>
 
 <script>
@@ -107,11 +108,15 @@ export default {
 .contenedor {
   background-color: #15b4bc;
   color: var(--text);
-  height: auto;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px 0;
+}
+.push{
+  background-color: #15b4bc;
+  min-height: 150px;
 }
 .signup-container {
   width: 300px;

@@ -94,16 +94,13 @@ export default {
 .contenedor {
   background-color: #15b4bc;
   color: var(--text);
-  height: auto;
-  min-height: 90vh;
+  height: calc(100vh - 300px);
+  width: 100%;
+  padding: 40px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.contenedor:hover{
-  background-color: #15b4bc;
-}
-
 .login-container {
   width: 300px;
   padding: 20px;
@@ -111,22 +108,18 @@ export default {
   border-radius: 8px;
   background-color: var(--oscuro);
 }
-
 form {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
-
 label {
   margin-bottom: 8px;
 }
-
 input {
   padding: 8px;
   margin-bottom: 16px;
 }
-
 button {
   background-color: #15b4bc;
   color: var(--text);

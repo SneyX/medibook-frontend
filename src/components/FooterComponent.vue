@@ -43,7 +43,8 @@ export default {
   color: #fff;
   padding: 20px 0;
   z-index: 1;
-  height: auto;
+  height: 150px;
+  margin-top: -150px;
 }
 .footer-content {
   display: flex;
