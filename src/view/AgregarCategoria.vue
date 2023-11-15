@@ -40,7 +40,12 @@ export default {
   },
   methods: {
     handleImageChange(event) {
-      const selectedFiles = Array.from(event.target.files).slice(0, 1)
+      const selectedFiles = Array.from(event.target.files)
+      if (selectedFiles.length != 1) {
+        util.cargarPopUp("Seleccione 1 imagen", "Faltan datos..")
+        this.imageFiles = []
+        return
+      }
       this.imageFiles = selectedFiles
     },
     async submitForm() {
@@ -49,11 +54,11 @@ export default {
         util.cargarPopUp("Seleccione 1 sola imagen", "Faltan datos..")
         return
       }
-      if (this.$refs.nombre.length < 4) {
+      if (this.$refs.nombre.value.replace(/\s/g, '').length < 4) {
         util.cargarPopUp("Ingrese el nombre", "Faltan datos..")
         return
       }
-      if (this.$refs.description.length < 10) {
+      if (this.$refs.description.value.replace(/\s/g, '').length < 10) {
         util.cargarPopUp("Ingrese el descripción de la sala", "Faltan datos..")
         return
       }
