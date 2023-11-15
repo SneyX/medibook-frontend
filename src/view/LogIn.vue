@@ -94,7 +94,7 @@ export default {
 .contenedor {
   background-color: #15b4bc;
   color: var(--text);
-  height: calc(100vh - 300px);
+  height: calc(100vh - 180px);
   width: 100%;
   padding: 40px 0;
   display: flex;

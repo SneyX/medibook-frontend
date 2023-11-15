@@ -45,7 +45,12 @@ export default {
   },
   methods: {
     handleImageChange(event) {
-      const selectedFiles = Array.from(event.target.files).slice(0, 5)
+      const selectedFiles = Array.from(event.target.files)
+      if (selectedFiles.length != 5) {
+        util.cargarPopUp("Seleccione 5 imagenes", "Faltan datos..")
+        this.imageFiles = []
+        return
+      }
       this.imageFiles = selectedFiles
     },
     async submitForm() {
@@ -54,11 +59,11 @@ export default {
         util.cargarPopUp("Seleccione 5 imagenes", "Faltan datos..")
         return
       }
-      if (this.$refs.nombre.length < 4) {
+      if (this.$refs.nombre.value.replace(/\s/g, '').length < 4) {
         util.cargarPopUp("Ingrese el nombre", "Faltan datos..")
         return
       }
-      if (this.$refs.description.length < 10) {
+      if (this.$refs.description.value.replace(/\s/g, '').length < 10) {
         util.cargarPopUp("Ingrese el descripción de la sala", "Faltan datos..")
         return
       }
@@ -68,20 +73,20 @@ export default {
       }
 
       const roomsResult = await getMethod.getRooms()
-        let aux = false
-        if (roomsResult) {
-          roomsResult.forEach(room => {
-            if (room.name == this.$refs.nombre.value) {
-              aux = true
-              return
-            }
-          });
-        }
-        if (aux) {
-          util.cargarPopUp("Ya exite una sala con ese nombre", "Error..")
-          aux=false
-          return
-        }
+      let aux = false
+      if (roomsResult) {
+        roomsResult.forEach(room => {
+          if (room.name == this.$refs.nombre.value) {
+            aux = true
+            return
+          }
+        });
+      }
+      if (aux) {
+        util.cargarPopUp("Ya exite una sala con ese nombre", "Error..")
+        aux=false
+        return
+      }
 
       // INICIO DE AGREGAR SALA -------------------------
 
