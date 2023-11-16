@@ -2,7 +2,7 @@
   <div :class="[theme, 'contenedor']">
     <div class="signup-container">
       <h2>Registrarse</h2>
-      <form @submit.prevent="submitForm">
+      <form ref="form" @submit.prevent="submitForm">
 
         <label for="name">Nombre:</label>
         <input ref="name" type="text" id="name" :value="name" placeholder="Entre 3 y 20 Letras"/>
@@ -29,7 +29,7 @@
 
 import postMethods from '@/service/postMethod';
 import util from '@/utils/utils';
-import emailjs from '@emailjs/browser';
+// import emailjs from '@emailjs/browser';
 
 export default {
   name: 'SignUp',
@@ -79,7 +79,34 @@ export default {
         }
       }
 
+      
       if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid) {
+
+        /* let mailBody = {
+          service_id:'service_f34uw5r',
+          template_id: 'template_1x7auwe',
+          template_params: {
+            from_name: this.$refs.name,
+            name: this.$refs.name,
+            username: this.$refs.username,
+            to_email: this.$refs.username,
+          },
+        }; */
+        
+        // const url = "https://api.emailjs.com/api/v1.0/email/send"
+
+        /* const res = await postMethods.sendEmail(url,mailBody)
+        console.log(res); */
+
+        // emailjs.init('DAB1-dX1vNhJi41D3')
+
+        /* emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
+          .then((result) => {
+              console.log('SUCCESS!', result.text);
+          }, (error) => {
+              console.log('FAILED...', error.text);
+          }); */
+
         const result = await postMethods.addUser(data)
         util.cargarLoader("")
         if (result) {
@@ -91,21 +118,6 @@ export default {
           util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       }
-      let mailBody = {
-          template_params: {
-            from_name: "Medibook",
-            to_name: this.name,
-            username: this.username,
-            message: "Empezá a navegar http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/login",
-          },
-        };
-
-      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', mailBody, 'DAB1-dX1vNhJi41D3')
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
-        }, (error) => {
-            console.log('FAILED...', error.text);
-        });
       
     },
     resetForm() {
