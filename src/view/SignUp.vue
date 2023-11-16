@@ -29,6 +29,7 @@
 
 import postMethods from '@/service/postMethod';
 import util from '@/utils/utils';
+import emailjs from '@emailjs/browser';
 
 export default {
   name: 'SignUp',
@@ -90,6 +91,22 @@ export default {
           util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       }
+      let mailBody = {
+          template_params: {
+            from_name: "Medibook",
+            to_name: this.name,
+            username: this.username,
+            message: "Empezá a navegar http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/login",
+          },
+        };
+
+      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', mailBody, 'DAB1-dX1vNhJi41D3')
+        .then((result) => {
+            console.log('SUCCESS!', result.text);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
+    }
     },
     resetForm() {
       this.name = '';
