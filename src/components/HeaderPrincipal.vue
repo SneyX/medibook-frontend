@@ -17,6 +17,7 @@
       <router-link to="/admin/category" v-if="(path == '/admin' || path == '/admin/product') && jwt != '' && rol == 'ADMIN'">
         <BotonPrincipal class="btnAgrSala" texto="+ CATEGORÍA" size="19"/>
       </router-link>
+      <img src="http://res.cloudinary.com/dwibkhh3e/image/upload/v1699825669/zqc7a6rngr8m1a5at9e8.jpg" alt="">
       <UserProfile v-if="(path != '/login' || path == '/signup') && jwt != ''"/>
       <!-- <BotonPrincipal class="btnTheme" texto="🌓" @click="toggleTheme" style="border-radius: 50%; padding: .8vw;" /> -->
     </div>
