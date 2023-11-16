@@ -92,14 +92,14 @@ export default {
         }
       }
 
-      let mailBody = {
+      /*let mailBody = {
           template_params: {
             from_name: "Medibook",
             to_name: this.name,
             username: this.username,
             message: "Empezá a navegar http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/login",
           },
-        };
+        };*/
 
       emailjs.init('DAB1-dX1vNhJi41D3')
 
