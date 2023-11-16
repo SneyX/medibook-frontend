@@ -145,6 +145,24 @@ const addImgTyperoom = async (data) =>{
 	}
 }
 
+const sendEmail = async (mailBody) => {
+	const url = "https://api.emailjs.com/api/v1.0/email/send"
+    const settings = {
+		method: "POST",
+		headers: {
+			
+		},
+		body: JSON.stringify(mailBody)
+	}
+	try {
+		const response = await fetch(url, settings)
+		return response
+	} catch (e) {
+		console.log(e)
+		return false
+	}
+  };
+
 const postMethods = {
 	addUser: addUser,
 	logIn: logIn,
@@ -153,6 +171,9 @@ const postMethods = {
 	addTypeRoom: addTypeRoom,
 	addImg: addImg,
 	addImgTyperoom: addImgTyperoom,
+	sendEmail:sendEmail
 }
+
+
 
 export default postMethods
