@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="contenedor-salas">
     <Swiper
       :slides-per-view="3"
       :space-between="10"
@@ -92,6 +92,9 @@
   </script>
   
   <style scoped>
+    .contenedor-salas{
+    width: 98vw;
+  }
   .swiper{
     width: 1000px;
     height: auto;
@@ -114,7 +117,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 98vw;
     margin-top: 20px;
   }
   .btnCont button{

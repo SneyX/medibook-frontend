@@ -41,10 +41,11 @@ export default {
   width: 100%;
   background-color: #0d7277;
   color: #fff;
-  padding: 20px 0;
+  padding: 3vh 0;
   z-index: 1;
-  height: 150px;
-  margin-top: -150px;
+  height: 8vw;
+  display: flex;
+  align-items: center;
 }
 .footer-content {
   display: flex;
@@ -52,7 +53,6 @@ export default {
   align-items: center;
   width: 100%;
   margin: 0 auto;
-  padding: 10px 0;
 }
 .footerInfompresa {
   display: flex;
@@ -60,27 +60,25 @@ export default {
   align-items: center;
   text-align: left;
   margin-right: 20vw;
-  width: 360px;
+  width: 20vw;
 }
 .isologotipo img {
-  max-width: 100px;
+  width: 6vw;
 }
 .info p {
   margin: 0;
+  font-size: 0.85vw;
 }
 .redesSociales img {
-  max-width: 40px;
-  margin-right: 45px;
+  max-width: 2.4vw;
+  margin-right: 3vw;
 }
 .redesSociales{
-  width: 327px;
+  width: 20vw;
 }
 
 @media only screen and (max-width:480px ){
-  .footer {
-    height: 60px;
-    padding: 10px 0;
-  }
+
   .redesSociales {
     margin-bottom: 0px;
     width:200px;
@@ -89,24 +87,29 @@ export default {
   }
   .footerInfompresa {
     width:200px;
+
   }
   .info p{
-    font-size: 1.3vh;
+    font-size: 1.7vw;
   }
   .isologotipo img {
-    width: 50px;
+    width: 10vw;
+    margin-top: 0.8vw;
+
   }
-  .isologotipo{
-    width: 50px;
-    height: 100%;
+  .isologotipo {
+    width: 10vw;
+    height: 10vw;
   }
+
   .redesSociales img {
-    max-width: 20px;
-    margin-right: 25px;
+    max-width: 4vw;
+    margin-right: 5vw;
+  margin-top: 0.8vw;
   }
   .footerInfompresa {
     justify-content: center;
     margin-right: 0vw;
-  }
+  } 
 }
 </style>
