@@ -14,8 +14,8 @@
         <input ref="username" type="text" id="username" :value="username" placeholder="En formato xxxx@xxx.xxx"/>
 
         <label for="password">Contraseña:</label>
-        <input ref="password" type="password" id="password" :value="password" placeholder="Ingrese su Contraseña." @change="checkPass"/>
-      <span class="span-contra" v-html="msg"></span>
+        <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
+
         
         <button type="submit">Registrarse</button>
       </form>
@@ -29,7 +29,7 @@
 
 import postMethods from '@/service/postMethod';
 import util from '@/utils/utils';
-// import emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 
 export default {
   name: 'SignUp',
@@ -46,7 +46,7 @@ export default {
       password: '',
       roles:["ADMIN"],
       showMsg:true,
-      msg: "&nbsp;&nbsp;&nbsp;La contraseña debe cumplir con los requisitos: <br>• Tener una longitud entre 8 y 12 caracteres.<br>• Al menos una letra minúscula y una maypuscula. <br>• Un caracter especial: !@#$%^&*()_+ "
+      msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres."
     };
   },
   methods: {
@@ -79,34 +79,7 @@ export default {
         }
       }
 
-      
       if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid) {
-
-        /* let mailBody = {
-          service_id:'service_f34uw5r',
-          template_id: 'template_1x7auwe',
-          template_params: {
-            from_name: this.$refs.name,
-            name: this.$refs.name,
-            username: this.$refs.username,
-            to_email: this.$refs.username,
-          },
-        }; */
-        
-        // const url = "https://api.emailjs.com/api/v1.0/email/send"
-
-        /* const res = await postMethods.sendEmail(url,mailBody)
-        console.log(res); */
-
-        // emailjs.init('DAB1-dX1vNhJi41D3')
-
-        /* emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
-          .then((result) => {
-              console.log('SUCCESS!', result.text);
-          }, (error) => {
-              console.log('FAILED...', error.text);
-          }); */
-
         const result = await postMethods.addUser(data)
         util.cargarLoader("")
         if (result) {
@@ -118,7 +91,24 @@ export default {
           util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       }
-      
+
+      let mailBody = {
+          template_params: {
+            from_name: "Medibook",
+            to_name: this.name,
+            username: this.username,
+            message: "Empezá a navegar http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/login",
+          },
+        };
+
+      emailjs.init('DAB1-dX1vNhJi41D3')
+
+      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', username)
+        .then((result) => {
+            console.log('SUCCESS!', result.text);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
     },
     resetForm() {
       this.name = '';
@@ -184,12 +174,5 @@ button {
 button:hover {
   background-color: #0f8389;
   transition: .5s ease-in-out;
-}
-.span-contra{
-  color: black;
-  font-size: 0.6vw;
-  font-weight: bold;
-  margin: -0.5vw -1.5vw 0.6vw -1.1vw;
-  text-align: left;
 }
 </style>
