@@ -106,7 +106,7 @@ export default {
         }, (error) => {
             console.log('FAILED...', error.text);
         });
-    }
+      
     },
     resetForm() {
       this.name = '';
