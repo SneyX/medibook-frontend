@@ -3,7 +3,7 @@
     <div class="info">
       <p class="id">{{ user?.id }}</p>
       <p class="name">{{ user?.name }}</p>
-      <p class="name">{{ user?.roles[0]?.name }}</p>
+      <p class="name">{{ user?.role }}</p>
     </div>
     <div class="action">
       <!-- <router-link :to="{ name: 'user-modify', params: { id: user.id }, props: {card: card} }">
@@ -18,13 +18,12 @@
 <script>
 
 import getMethod from '@/service/getMethod'
-import putMethod from '@/service/putMethod'
 import util from '@/utils/utils'
 import DataDialog from './DataDialog'
 
 export default {
 name:'AdminUser',
-emits: ['update-rol','update-users'],
+emits: ['update-rol','update-user'],
 components: {
   DataDialog,
 },
@@ -57,27 +56,22 @@ methods:{
   async handleUpdateRol(rol) {
     let dialog = {}
     this.$store.dispatch('setDialog', dialog)
+
     util.cargarLoader("Actualizando rol...")
 
-    if (this.user && this.user.roles && Array.isArray(this.user.roles) && this.user.roles.length > 0) {
-      this.user.roles[0].name = rol;
-    } else if (this.user && this.user.roles) {
-      if (rol == 'ADMIN') {
-        this.user.roles = [{ id: 1, name: rol }]          
-      } 
-      if (rol == 'USER') {
-        this.user.roles = [{ id: 2, name: rol }]
+    if(this.user.role != rol){
+      const res = await getMethod.getUserRol(this.userId)
+      if (res.ok) {
+        util.cargarPopUp("Rol asignado con éxito", "Gracias!")
+        const users = await getMethod.getUsers()
+        this.$emit('update-user', users)
+      } else {
+        util.cargarPopUp("Lo sentimo, ha ocurrido un error", "Error!")
       }
-    }
-    const res = await putMethod.updateUser(this.user)
-    util.cargarLoader("")
-    if (res == "OK") {
-      util.cargarPopUp("Rol asignado con éxito", "Gracias!")
-      const users = await getMethod.getUsers()
-      this.$emit('update-user', users)
     } else {
-      util.cargarPopUp("Lo sentimo, ha ocurrido un error", "Error!")
+      util.cargarPopUp(`El usuario ya es ${rol}`, "Error!")
     }
+    util.cargarLoader("")
   }
 }
 }

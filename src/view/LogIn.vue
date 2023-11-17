@@ -70,7 +70,7 @@ export default {
           username: this.$refs.username.value,
           password: this.$refs.password.value,
           jwt: result.token,
-          roles: user?.roles
+          role: user?.role
         }
         this.resetForm()
         this.$store.dispatch('setUser',userForStore)

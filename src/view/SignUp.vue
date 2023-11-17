@@ -58,7 +58,6 @@ export default {
       lastName: '',
       username: '',
       password: '',
-      roles:["ADMIN"],
       showMsg:true,
       msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres."
     };
@@ -75,8 +74,8 @@ export default {
         lastname: this.lastName,
         username: this.username,
         password: this.password,
-        roles: this.roles
       }
+      
       util.cargarLoader("Agregando usuario")
       let validation = [ { name: util.validarDatos(data.name,"nombre") },
         { lastname: util.validarDatos(data.lastname,"apellido") },
