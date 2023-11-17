@@ -2,7 +2,7 @@
   <div :class="[theme, 'contenedor']">
     <div class="signup-container">
       <h2>Registrarse</h2>
-      <form ref="form" @submit.prevent="submitForm">
+      <form @submit.prevent="submitForm">
 
         <label for="name">Nombre:</label>
         <input ref="name" type="text" id="name" :value="name" placeholder="Entre 3 y 20 Letras"/>
@@ -15,10 +15,24 @@
 
         <label for="password">Contraseña:</label>
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
-
         
-        <button type="submit">Registrarse</button>
+        <button type="submit" >Registrarse</button>
       </form>
+
+      <!-- este formulario no es visible, solo es para enviar el mail al registro -->
+      <form ref="form" id="form">
+        <div class="field">
+          <label for="name">name</label>
+          <input type="text" name="name" id="name" :value="name">
+        </div>
+        <div class="field">
+          <label for="username">username</label>
+          <input type="text" name="username" id="username" :value="username">
+        </div>
+        <input ref="btn" type="submit" id="button" value="Send Email">
+      </form>
+      <!-- este formulario no es visible, solo es para enviar el mail al registro -->
+
       <span v-if="!showMsg">{{ msg }}</span>
     </div>
   </div>
@@ -51,7 +65,6 @@ export default {
   },
   methods: {
     async submitForm() {
-
       this.name = this.$refs.name.value
       this.lastName = this.$refs.lastName.value
       this.username = this.$refs.username.value
@@ -83,32 +96,25 @@ export default {
         const result = await postMethods.addUser(data)
         util.cargarLoader("")
         if (result) {
-          this.resetForm();
+          
           util.cargarPopUp("Usuario agregado con éxito", "GRACIAS")
+
+          emailjs.init('DAB1-dX1vNhJi41D3')
+
+          emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
+            .then((result) => {
+                console.log('SUCCESS!', result.text);
+            }, (error) => {
+                console.log('FAILED...', error.text);
+            });
+            
+          this.resetForm();
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
           util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       }
-
-      /*let mailBody = {
-          template_params: {
-            from_name: "Medibook",
-            to_name: this.name,
-            username: this.username,
-            message: "Empezá a navegar http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/login",
-          },
-        };*/
-
-      emailjs.init('DAB1-dX1vNhJi41D3')
-
-      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', username)
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
-        }, (error) => {
-            console.log('FAILED...', error.text);
-        });
     },
     resetForm() {
       this.name = '';
@@ -124,6 +130,9 @@ export default {
 </script>
 
 <style scoped>
+#form{
+  display: none;
+}
 .contenedor {
   background-color: #15b4bc;
   color: var(--text);
