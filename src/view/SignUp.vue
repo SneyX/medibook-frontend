@@ -21,7 +21,6 @@
         <button v-if="!emailConfirmationDelivered" @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
 
       </form>
-
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
       <form ref="form" id="form">
         <div class="field">
@@ -62,7 +61,9 @@ export default {
       username: '',
       password: '',
       showMsg:true,
-      msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres."
+      msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres.",
+      emailConfirmationSent: false,
+      emailConfirmationDelivered: false
     };
   },
   methods: {
@@ -106,6 +107,8 @@ export default {
           emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
             .then((result) => {
                 console.log('SUCCESS!', result.text);
+                this.emailConfirmationSent = true;
+                this.emailConfirmationDelivered = true;
             }, (error) => {
                 console.log('FAILED...', error.text);
             });
@@ -114,9 +117,19 @@ export default {
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
-          util.cargarPopUp("Problema en el servidor", "ERROR")
+          util.cargarPopUp("Problema en el servidor", "ERROR");
         }
       }
+    },
+    resendConfirmationEmail() {
+      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
+        .then((result) => {
+          console.log('SUCCESS!', result.text);
+          this.emailConfirmationDelivered = true;
+        }, (error) => {
+          console.log('FAILED...', error.text);
+          this.emailConfirmationDelivered = false;
+        });
     },
     resetForm() {
       this.name = '';
