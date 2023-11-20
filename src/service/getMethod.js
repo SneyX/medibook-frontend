@@ -44,6 +44,26 @@ const getUser = async (id, isId) =>{
 	}
 }
 
+const getUserRol = async (id) =>{
+	jwt = createStore.getters.getUser.jwt
+	const url = URL_BASE+"/users/modificarRol/"+id 
+	const settings = {
+		method: 'GET',
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		}
+	}
+	try {
+		const response = await fetch(url, settings)
+		// const json = await response.json()
+		return response
+	} catch (e) {
+		console.log(e)
+		return false
+	}
+}
+
 // DOCTORS ------------------------------
 // get doctor id or tuition
 /* 
@@ -71,6 +91,7 @@ const getDoctor = async data =>{
 		return false
 	}
 }
+
 const getDoctors = async () =>{
 	const url = URL_BASE+"/doctors"
 	const settings = {
@@ -175,6 +196,7 @@ const getMethod = {
 	getRoom: getRoom,
 	getTypeRooms: getTypeRooms,
 	getTypeRoom: getTypeRoom,
+	getUserRol: getUserRol,
 }
 
 export default getMethod
