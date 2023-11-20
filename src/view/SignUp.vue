@@ -18,7 +18,8 @@
         
         <button type="submit" >Registrarse</button>
 
-        <button v-if="emailConfirmationSent && !emailConfirmationDelivered" @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
+        <button v-if="!emailConfirmationDelivered" @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
+
       </form>
 
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
