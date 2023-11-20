@@ -43,8 +43,8 @@ export default {
     },
     rol() {
       let rol = ""
-      if (this.$store.getters.getUser && this.$store.getters.getUser.roles) {
-        rol = this.$store.getters.getUser.roles[0].name
+      if (this.$store.getters.getUser && this.$store.getters.getUser.rol) {
+        rol = this.$store.getters.getUser.rol
       }
       return rol 
     },

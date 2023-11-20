@@ -41,7 +41,7 @@ export default {
         username: this.$refs.username.value,
         password: this.$refs.password.value,
       }
-      /* let validation = [
+      let validation = [
         { username: util.validarDatos(data.username,"email"),},
         { password: util.validarDatos(data.password,"password") }
       ]
@@ -52,7 +52,7 @@ export default {
           util.cargarPopUp(item[fieldName].texto, "ERROR")
           return
         }
-      } */
+      }
       util.cargarLoader("Iniciando..")
       const result = await postMethods.logIn(data)
       if (result) {
@@ -70,7 +70,7 @@ export default {
           username: this.$refs.username.value,
           password: this.$refs.password.value,
           jwt: result.token,
-          roles: user?.roles
+          rol: user?.role
         }
         this.resetForm()
         this.$store.dispatch('setUser',userForStore)
