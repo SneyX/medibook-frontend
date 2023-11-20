@@ -2,6 +2,9 @@
   <nav :class="theme">
     <h1>BUSCA LA SALA</h1>
     <div class="buscadorContainer">
+      <label for="filter">
+        <input type="button" ref="filter" id="filter" value="FILTRAR" @click="filtrar">
+      </label>
       <label for="search">
         <input ref="search" id="search" type="text" placeholder="TIPO DE SALA">
       </label>
@@ -10,12 +13,16 @@
       </div>
     </div>
   </nav>
+  <div class="filtrosAplicados" v-if="filtrosAplicados.length > 0">
+    <p v-for="filtro in filtrosAplicados" :key="filtro">{{ filtro }}</p>
+  </div>
   <section :class="theme"  id="resultados" v-if="resultados.length > 0">
     <h3>RESULTADOS DE BÚSQUEDA</h3>
     <div class="contCard">
       <CardSala :resultados="resultados" />
     </div>
   </section>
+  <DataDialog />
 </template>
 
 <script>
@@ -23,12 +30,14 @@ import BotonPrincipal from './BotonPrincipal.vue';
 import CardSala from './CardSala.vue';
 import getMethod from '@/service/getMethod';
 import util from '../utils/utils'
+import DataDialog from './DataDialog.vue';
 
 export default {
   name: 'BuscadorSala',
   components:{
     BotonPrincipal,
-    CardSala
+    CardSala,
+    DataDialog
   },
   computed: {
     theme() {
@@ -38,7 +47,9 @@ export default {
   data() {
     return {
       resultados: [],
-    };
+      filtros: [],
+      filtrosAplicados: []
+    }
   },
   methods: {
     async buscar(){
@@ -61,6 +72,20 @@ export default {
         util.cargarLoader("")
       }
       util.cargarLoader("")
+    },
+    async filtrar(){
+      this.filtros = await getMethod.getTypeRooms()
+      console.log(this.filtros);
+      let dialog = {
+        type: 'filter',
+        filtros: this.filtros,
+        acept: async (filtro) =>{
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
+          this.filtrosAplicados.push(filtro)
+        }
+      }
+      this.$store.dispatch('setDialog',dialog)
     }
   },
 }
@@ -163,5 +188,21 @@ export default {
     nav {
       height: 14vw;
     }
+  }
+
+  .filtrosAplicados{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #filter{
+    width: 100px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
   }
 </style>
