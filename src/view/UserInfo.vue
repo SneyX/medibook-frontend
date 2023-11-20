@@ -6,7 +6,7 @@
       <p>{{user.name}}</p>
       <p>{{user.lastname}}</p>
       <p>{{user.username}}</p>
-      <p>{{user.role}}</p>
+      <p>{{user.rol}}</p>
     </div>
   </div>
 </template>
