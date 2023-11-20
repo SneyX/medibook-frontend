@@ -17,6 +17,8 @@
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
         
         <button type="submit" >Registrarse</button>
+
+        <button v-if="emailConfirmationSent && !emailConfirmationDelivered" @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
       </form>
 
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
