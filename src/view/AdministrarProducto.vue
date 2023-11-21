@@ -1,5 +1,5 @@
 <template>
-  <div class="contenedor">
+  <div class="contenedor" v-if="!isMobile">
     <h2>PANEL DE ADMINISTRACIÓN</h2>
     <div class="mainTable">
       <div class="salaCont">
@@ -25,6 +25,10 @@
       <AdminType :cards="cards" @update-cards="updateCards" />
     </div>
   </div>
+  <div v-if="isMobile">
+    <h1>INGRESE DESDE UN ORDENADOR</h1>
+    <p>Esta vista no está habilidatada para dispositivos móviles</p>
+  </div>
 </template>
 
 <script>
@@ -48,10 +52,14 @@ export default {
     return {
       cards: [],
       display: true,
+      isMobile: false
     };
   },
   async created() {
-    await this.generarCards();
+    this.checkIsMobile()
+    if (!this.isMobile) {
+      await this.generarCards()
+    }
   },
   methods: {
     async generarCards() {
@@ -74,7 +82,16 @@ export default {
       } else {
         await this.generarCards2()
       }
-    }
+    },
+    checkIsMobile() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera
+      if (
+          /android/i.test(userAgent) ||
+          (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) ||
+          (navigator.userAgent.indexOf("IEMobile") !== -1) ||
+          (window.matchMedia && window.matchMedia("(pointer:coarse)").matches)
+        ) { this.isMobile = true } else { this.isMobile = false }
+    },
   },
 };
 </script>
