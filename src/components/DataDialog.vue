@@ -46,11 +46,11 @@
   </div>
   <div v-if="dialog.type == 'filter'" class="contenedor">
     <div class="filterCont">
-        <div class="cerrar" @click="close()">x</div>
-        <select name="filter" id="filter" @change="onFilterChange($event)">
-          <option value="seleccionar filtro">seleccionar filtro</option>
-          <option v-for="filtro in filtros" :value="filtro.name" :key="filtro.id" >{{filtro.name}}</option>
-        </select>
+      <div class="cerrar" @click="close()">x</div>
+      <select name="filter" id="filter" @change="onFilterChange($event)">
+        <option value="seleccionar filtro">seleccionar filtro</option>
+        <option v-for="filtro in filtros" :value="filtro.name" :key="filtro.id" >{{filtro.name}}</option>
+      </select>
     </div>
   </div>
   <div v-if="dialog.type == 'slider'" class="contenedor">
@@ -128,16 +128,37 @@
       position: relative;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-75%, -25%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
-      width: 50%;
-      height: 50%;
-      border: 2px solid black;
-      background-color: white;
-      color: var(--text2);
+      width: 25%;
+      height: 25%;
+      background-color: #99DCDD;
+      border: 2px solid #0f8389;
+      .cerrar{
+        position: absolute;
+        display: flex;
+        align-self: flex-end;
+        padding: 15px 20px;
+        background-color: #15b4bc;
+        border: 1px solid #0f8389;
+        color: #daecec;
+        outline-offset: 0;
+        font-weight: bold;
+        border-radius: 50%;
+        margin-right: 10px;
+        top: 10px;
+        cursor: pointer;
+      }
+      #filter{
+        padding: 10px;
+        border: 2px solid #0f8389;
+        background-color: #15b4bc;
+        cursor: pointer;
+        color: #daecec;
+      }
     }
     .swiper{
       width: 1000px;
