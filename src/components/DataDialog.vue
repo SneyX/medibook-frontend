@@ -52,41 +52,62 @@
         </select>
     </div>
   </div>
+  <div v-if="dialog.type == 'slider'" class="contenedor">
+    <Swiper
+      class="Swiper"
+      :slides-per-view="3"
+      :space-between="10"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+    >
+      <div class="Btn" @click="dialog.cancel">CANCELAR</div>
+      <swiper-slide v-for="img in dialog.imgs" :key="img?.id" :class="[theme, 'card']" >
+        <img :key="img?.id" :src="img?.path" alt="sala">
+      </swiper-slide>
+    </Swiper>
+  </div>
 </template>
 
 <script>
-export default {
-  name:"DataDialog",
-  props: {
-  },
-  emits: ["update-type", "update-rol"],
-  computed: {
-    dialog() {
-      return this.$store.getters.getDialog
+  import { Swiper, SwiperSlide } from 'swiper/vue'
+  import 'swiper/css'
+
+  export default {
+    name:"DataDialog",
+    props: {
     },
-    filtros() {
-      return this.dialog.filtros || [];
+    components:{
+      Swiper,
+      SwiperSlide,
     },
-  },
-  data() {
-    return {
-      selected: null,
-    };
-  },
-  methods:{
-    recategorizeCard() {
-      this.$emit('update-type', this.selected);
+    emits: ["update-type", "update-rol"],
+    computed: {
+      dialog() {
+        return this.$store.getters.getDialog
+      },
+      filtros() {
+        return this.dialog.filtros || [];
+      },
     },
-    recategorizeRol() {
-      this.$emit('update-rol', this.selected);
+    data() {
+      return {
+        selected: null,
+      };
     },
-    onFilterChange(event) {
-      const selectedFilter = event.target.value;
-      this.dialog.acept(selectedFilter);
-      this.$store.dispatch('setDialog', {});
+    methods:{
+      recategorizeCard() {
+        this.$emit('update-type', this.selected);
+      },
+      recategorizeRol() {
+        this.$emit('update-rol', this.selected);
+      },
+      onFilterChange(event) {
+        const selectedFilter = event.target.value;
+        this.dialog.acept(selectedFilter);
+        this.$store.dispatch('setDialog', {});
+      },
     },
-  },
-};
+  }
 </script>
 
 <style scoped lang="scss">
@@ -99,7 +120,7 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.5);
-    filterCont{
+    .filterCont{
       position: relative;
       left: 50%;
       top: 50%;
@@ -114,6 +135,21 @@ export default {
       background-color: white;
       color: var(--text2);
     }
+    .swiper{
+      width: 1000px;
+      height: auto;
+      margin: 0;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      img{
+        width: 300px;
+        height: 250px;
+        border-radius: 15px;
+      }
+    }
+    
   }
   .textCont{
     position: relative;

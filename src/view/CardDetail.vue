@@ -7,10 +7,10 @@
       </div>
       <div class="mainContainer">
         <div class="mainImage" v-if="card?.images && card.images.length > 0">
-          <img :src="card?.images[0]?.path" :alt="card?.images[0]?.alt">
+          <img :src="card?.images[0]?.path" :alt="card?.images[0]?.alt" @click="cargarSlider">
         </div>
         <div class="secondaryImages">
-          <img v-for="(image, index) in card?.images?.slice(1, 5)" :key="index" :src="image.path" :alt="image.alt">
+          <img v-for="(image, index) in card?.images?.slice(1, 5)" :key="index" :src="image.path" :alt="image.alt" @click="cargarSlider">
         </div>
       </div>
       <div class="footerCont">
@@ -22,14 +22,19 @@
       </div>
     </div>
   </div>
+  <DataDialog />
 </template>
 
 <script>
-import util from '@/utils/utils';
+import util from '@/utils/utils'
 import getMethod from '@/service/getMethod'
+import DataDialog from '@/components/DataDialog.vue';
 
 export default {
   name: 'CardDetail',
+  components:{
+    DataDialog,
+  },
   computed: {
     theme() {
       return this.$store.getters.getTheme;
@@ -57,6 +62,17 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    cargarSlider(){
+      let dialog = {
+        type: 'slider',
+        imgs: this.card.images,
+        cancel: () => {
+          dialog = {}
+          this.$store.dispatch('setDialog', dialog)
+        },
+      }
+      this.$store.dispatch('setDialog', dialog)
+    }
   },
 };
 </script>
@@ -115,6 +131,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
   .secondaryImages{
     position: relative;
@@ -124,6 +141,7 @@ export default {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
+    cursor: pointer;
   }
   .mainImage img {
     width: 100%;
