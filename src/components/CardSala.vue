@@ -20,8 +20,8 @@
       <div class="btnCont">
       <button @click="goToFirstSlide">|&lt;</button>
       <button @click="goToPrevSlide">&lt;</button>
-      <p>{{ currentIndex + 1 }} / {{ resultados.length }}</p>
-      <button @click="goToNextSlide">&gt;</button>
+      <p>{{ Math.floor(currentIndex / 3) + 1 }} / {{ Math.ceil(resultados.length / 3) }}</p>
+      <button @click="goToNextSlide(resultados)">&gt;</button>
       <button @click="goToLastSlide(resultados)">&gt;|</button>
     </div>
   </div>
@@ -45,7 +45,7 @@
     },
     computed: {
       theme() {
-        return this.$store.getters.getTheme;
+        return this.$store.getters.getTheme
       },
     },
     setup() {
@@ -57,15 +57,23 @@
       }
       const onSlideChange = () => {
         currentIndex.value = swiperRef.value.activeIndex;
+        if (currentIndex.value - 3 != swiperRef.value.activeIndex) {
+          currentIndex.value++
+        }
       }
       const goToPrevSlide = () => {
         if (swiperRef.value) {
-          swiperRef.value.slidePrev()
+          const currentPage = Math.floor(currentIndex.value / 3)
+          const targetPage = currentPage > 0 ? currentPage - 1 : 0
+          swiperRef.value.slideTo(targetPage * 3)
         }
       }
-      const goToNextSlide = () => {
+      const goToNextSlide = (resultados) => {
         if (swiperRef.value) {
-          swiperRef.value.slideNext()
+          const totalPages = Math.ceil(resultados.length / 3)
+          const currentPage = Math.floor(currentIndex.value / 3)
+          const targetPage = currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1
+          swiperRef.value.slideTo(targetPage * 3)
         }
       }
       const goToFirstSlide = () => {
@@ -75,7 +83,7 @@
       }
       const goToLastSlide = resultados => {
         if (swiperRef.value) {
-          swiperRef.value.slideTo(resultados.length - 1);
+          swiperRef.value.slideTo(resultados.length - 1)
         }
       }
       return {
