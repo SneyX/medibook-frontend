@@ -78,20 +78,41 @@ export default {
       util.cargarLoader("")
     },
     async filtrar(){
-      this.filtros = await getMethod.getTypeRooms()
-      if (this.filtrosAplicados.length > 0) {
-        this.filtros = this.filtros.filter(filtro => !this.filtrosAplicados.includes(filtro.name))
-      }
-      let dialog = {
-        type: 'filter',
-        filtros: this.filtros,
-        acept: async (filtro) =>{
-          dialog = {}
-          this.$store.dispatch('setDialog',dialog)
-          this.filtrosAplicados.push(filtro)
+      util.cargarLoader("Cargando filtros...")
+      let filtrosStored = this.$store.getters.getFiltros
+      if (filtrosStored.length < 1) {
+        this.filtros = await getMethod.getTypeRooms()
+        this.$store.dispatch('setFiltros', this.filtros)
+        if (this.filtrosAplicados.length > 0) {
+          this.filtros = this.filtros.filter(filtro => !this.filtrosAplicados.includes(filtro.name))
         }
+        let dialog = {
+          type: 'filter',
+          filtros: this.filtros,
+          acept: async (filtro) =>{
+            dialog = {}
+            this.$store.dispatch('setDialog',dialog)
+            this.filtrosAplicados.push(filtro)
+          }
+        }
+        util.cargarLoader("")
+        this.$store.dispatch('setDialog',dialog)
+      } else {
+        if (this.filtrosAplicados.length > 0) {
+          filtrosStored = filtrosStored.filter(filtro => !this.filtrosAplicados.includes(filtro.name))
+        }
+        let dialog = {
+          type: 'filter',
+          filtros: filtrosStored,
+          acept: async (filtro) =>{
+            dialog = {}
+            this.$store.dispatch('setDialog',dialog)
+            this.filtrosAplicados.push(filtro)
+          }
+        }
+        util.cargarLoader("")
+        this.$store.dispatch('setDialog',dialog)
       }
-      this.$store.dispatch('setDialog',dialog)
     },
     quitarFiltro(filtro){
       const idx = this.filtrosAplicados.indexOf(filtro)

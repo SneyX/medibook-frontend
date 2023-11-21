@@ -46,6 +46,7 @@
   </div>
   <div v-if="dialog.type == 'filter'" class="contenedor">
     <div class="filterCont">
+        <div class="cerrar" @click="close()">x</div>
         <select name="filter" id="filter" @change="onFilterChange($event)">
           <option value="seleccionar filtro">seleccionar filtro</option>
           <option v-for="filtro in filtros" :value="filtro.name" :key="filtro.id" >{{filtro.name}}</option>
@@ -96,16 +97,19 @@
     },
     methods:{
       recategorizeCard() {
-        this.$emit('update-type', this.selected);
+        this.$emit('update-type', this.selected)
       },
       recategorizeRol() {
-        this.$emit('update-rol', this.selected);
+        this.$emit('update-rol', this.selected)
       },
       onFilterChange(event) {
-        const selectedFilter = event.target.value;
-        this.dialog.acept(selectedFilter);
-        this.$store.dispatch('setDialog', {});
+        const selectedFilter = event.target.value
+        this.dialog.acept(selectedFilter)
+        this.$store.dispatch('setDialog', {})
       },
+      close(){
+        this.$store.dispatch('setDialog', {})
+      }
     },
   }
 </script>
