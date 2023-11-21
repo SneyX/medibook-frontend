@@ -87,11 +87,32 @@ const updateTypeRoom = async (data,id) => {
 	}
 }
 
+const updateFavorite = async (data) => {
+	const url = URL_BASE+`/${data.id}/favorite_rooms`
+	jwt = createStore.getters.getUser.jwt
+	const settings = {
+		method: "PUT",
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	}
+	try {
+		const response = await fetch(url, settings)
+		const json = await response.json()
+		return json
+	} catch (e) {
+		console.log(e)
+	}
+}
+
 const putMethod = {
 	updateUser: updateUser,
 	updateDoctor: updateDoctor,
 	updateRoom: updateRoom,
 	updateTypeRoom: updateTypeRoom,
+	updateFavorite: updateFavorite,
 }
 
 export default putMethod
