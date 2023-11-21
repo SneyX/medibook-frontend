@@ -5,7 +5,7 @@
       <label for="filter">
         <input type="button" ref="filter" id="filter" value="FILTRAR" @click="filtrar">
       </label>
-      <label for="search">
+      <label for="search" class="search">
         <input ref="search" id="search" type="text" placeholder="TIPO DE SALA">
       </label>
       <div class="btnContainer">
@@ -122,7 +122,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   nav{
     display: flex;
     flex-direction: column;
@@ -131,70 +131,95 @@ export default {
     padding: 2vw;
     background-color: var(--background2);
     width:100%;
-    height: 100%;
+    height: auto;
+    h1{
+      color: var(--text2);
+    }
+    .buscadorContainer{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+      label, input{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1vw;
+        outline: none;
+        border: 1px solid var(--border);
+        color: var(--oscuro);
+        height: 100%;
+        border-radius: 20px;
+        text-align: center;
+      }
+      #filter{
+        width: 8vw;
+        cursor: pointer;
+      }
+      .search{
+        width: 50%;
+        #search{
+          width: 100%;
+        }
+      }
+      .btnContainer{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 12vw;
+        .btnBusc{
+          border-radius: 20px;
+          font-size: 1vw;
+          height: 2.8vw ;
+        }
+      }
+    }
   }
-  h1{
-    text-align: left;
-    margin-bottom: 25px;
-    margin-top: -10px;
-    color: var(--text2);
-  }
-  .buscadorContainer{
+  .filtrosAplicados{
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 2vw;
-  }
-  label, input{
-    padding: 1vw;
-    outline: none;
-    border: 1px solid var(--border);
-    color: var(--oscuro);
-    width: 70%;
-  }
-  label{
-    display: flex;
-    justify-content: flex-end;
-  }
-  input{
-    width: 80%;
-    border-radius: 20px;
-    text-align: center;
-  }
-  .btnContainer{
-    display: flex;
     align-items: center;
-    justify-content: flex-start;
-    width: 12vw;
-  }
-  .btnBusc{
-    border-radius: 20px;
-    font-size: 1vw;
-    height: 2.8vw ;
+    width: 100%;
+    p{
+      padding: 1vw;
+      border: 1px solid #0f8389;
+      color: #0d7277;
+      height: 100%;
+      border-radius: 20px;
+      text-align: center;
+      span{
+        cursor: pointer;
+        padding: .3vw .8vw;
+        border: 1px solid #0f8389;
+        border-radius: 50%;
+        background-color: #99DCDD;
+        color: #0d7277;
+      }
+    }
   }
   section{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 4px solid var(--border);
     padding: 10px;
-    background-color: white;
     width:100%;
+    h3{
+      align-self: flex-start;
+      font-size: 2vw;
+      color: #605B5B;
+      margin-left: 50px;
+    }
+    .contCard{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
-  h3{
-    align-self: flex-start;
-    font-size: 2vw;
-    color: var(--text2);
-    margin-left: 50px;
-  }
-  .contCard{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+
+
   @media only screen and (max-width:480px ){
     h1{
       font-size: 13px;
@@ -221,25 +246,5 @@ export default {
     }
   }
 
-  .filtrosAplicados{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #filter{
-    width: 100px;
-    height: 50px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  .filtrosAplicados > p{
-    padding: 5px;
-  }
-  span{
-    cursor: pointer;
-  }
+  
 </style>
