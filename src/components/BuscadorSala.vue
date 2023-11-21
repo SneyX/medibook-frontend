@@ -14,7 +14,8 @@
     </div>
   </nav>
   <div class="filtrosAplicados" v-if="filtrosAplicados.length > 0">
-    <p v-for="filtro in filtrosAplicados" :key="filtro">{{ filtro }}</p>
+    <p>Filtros: </p>
+    <p v-for="filtro in filtrosAplicados" :key="filtro">{{ filtro }} <span @click="quitarFiltro(filtro)">x</span></p>
   </div>
   <section :class="theme"  id="resultados" v-if="resultados.length > 0">
     <h3>RESULTADOS DE BÚSQUEDA</h3>
@@ -63,19 +64,24 @@ export default {
         ) :
         (this.resultados = datos.filter(sala => {  
           let {name, description} = sala
-        return name.trim().toLowerCase().includes(busqueda) ||
-        description.trim().toLowerCase().includes(busqueda) 
-      }) 
+          return name.trim().toLowerCase().includes(busqueda) ||
+          description.trim().toLowerCase().includes(busqueda) 
+        }) 
       )
       if (this.resultados.length < 1) {
         util.cargarPopUp("no se encontran coincidencias", "RESULTADO")
         util.cargarLoader("")
       }
+      if (this.filtrosAplicados.length > 0){
+        this.resultados = this.resultados.filter(res => this.filtrosAplicados.includes(res.typeroom.name) )
+      }
       util.cargarLoader("")
     },
     async filtrar(){
       this.filtros = await getMethod.getTypeRooms()
-      console.log(this.filtros);
+      if (this.filtrosAplicados.length > 0) {
+        this.filtros = this.filtros.filter(filtro => !this.filtrosAplicados.includes(filtro.name))
+      }
       let dialog = {
         type: 'filter',
         filtros: this.filtros,
@@ -86,7 +92,11 @@ export default {
         }
       }
       this.$store.dispatch('setDialog',dialog)
-    }
+    },
+    quitarFiltro(filtro){
+      const idx = this.filtrosAplicados.indexOf(filtro)
+      this.filtrosAplicados.splice(idx,1)
+    },
   },
 }
 </script>
@@ -203,6 +213,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+  }
+  .filtrosAplicados > p{
+    padding: 5px;
+  }
+  span{
     cursor: pointer;
   }
 </style>
