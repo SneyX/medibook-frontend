@@ -49,10 +49,12 @@ export default {
       if (selectedFiles.length > 5) {
         util.cargarPopUp("Seleccione sólo 5 imágenes", "Imágenes..")
         this.imageFiles = []
+        event.target.value = ""
         return
       } else if (selectedFiles.length < 5) {
         util.cargarPopUp("Seleccione 5 imágenes", "Imágenes..")
         this.imageFiles = []
+        event.target.value = ""
         return
       }
       this.imageFiles = selectedFiles
