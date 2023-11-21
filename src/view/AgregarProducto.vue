@@ -46,8 +46,12 @@ export default {
   methods: {
     handleImageChange(event) {
       const selectedFiles = Array.from(event.target.files)
-      if (selectedFiles.length != 5) {
-        util.cargarPopUp("Seleccione 5 imagenes", "Faltan datos..")
+      if (selectedFiles.length > 5) {
+        util.cargarPopUp("Seleccione sólo 5 imágenes", "Imágenes..")
+        this.imageFiles = []
+        return
+      } else if (selectedFiles.length < 5) {
+        util.cargarPopUp("Seleccione 5 imágenes", "Imágenes..")
         this.imageFiles = []
         return
       }
@@ -55,8 +59,13 @@ export default {
     },
     async submitForm() {
 
-      if (this.imageFiles.length != 5) {
-        util.cargarPopUp("Seleccione 5 imagenes", "Faltan datos..")
+      if (this.imageFiles.length > 5) {
+        util.cargarPopUp("Seleccione sólo 5 imágenes", "Imágenes..")
+        this.imageFiles = []
+        return
+      } else if (this.imageFiles.length < 5) {
+        util.cargarPopUp("Seleccione 5 imágenes", "Imágenes..")
+        this.imageFiles = []
         return
       }
       if (this.$refs.nombre.value.replace(/\s/g, '').length < 4) {
