@@ -13,6 +13,9 @@
           <img v-for="(image, index) in card?.images?.slice(1, 5)" :key="index" :src="image.path" :alt="image.alt" @click="cargarSlider">
         </div>
       </div>
+      <div class="verMas">
+        <p @click="cargarSlider">ver más</p>
+      </div>
       <div class="footerCont">
         <p><strong>TIPO DE SALA: </strong>{{ card?.typeroom?.name }}</p>
         <div class="descripcion">
@@ -179,46 +182,58 @@ export default {
     padding-left: 5px;
     text-align: left;
   }
-  @media only screen and (max-width:480px ){ 
-
-    
-  .headerContainer{
-    width: 100%;
-    padding: 0px 2px;
-    font-size: 12px;
+  .verMas{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 78%;
   }
-  .cerrar{
-    border: 2px #605B5B solid;
-    font-size: 20px;
-    width: 25px;
-    height: 25px;
-    margin-right: 5px;
+  .verMas p {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: .5s ease-in-out;
   }
+  .verMas p:hover {
+    background-color: #0f8389;
+    color: #99DCDD;
+  }
+  @media only screen and (max-width:480px ){
+    .headerContainer{
+      width: 100%;
+      padding: 0px 2px;
+      font-size: 12px;
+    }
+    .cerrar{
+      border: 2px #605B5B solid;
+      font-size: 20px;
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
 
     .mainContainer {
-    flex-direction: column;
-  }
-  .mainImage{
-    width: 100%;
-  }
+      flex-direction: column;
+    }
+    .mainImage{
+      width: 100%;
+    }
 
-  .mainImage img {
-    width: 97%;
-    margin: 0px;
-  }
+    .mainImage img {
+      width: 97%;
+      margin: 0px;
+    }
 
-  .secondaryImages{
-    width: 100%;
+    .secondaryImages{
+      width: 100%;
+    }
+    .secondaryImages img {
+      width: 46%;
+      height: 20vw;
+      margin: 3px;
+    }
+    .footerCont{
+      width: 100%;
+    }
   }
-  .secondaryImages img {
-    width: 46%;
-    height: 20vw;
-    margin: 3px;
-  }
-  .footerCont{
-    width: 100%;
-  }
-
-  }
-
 </style>

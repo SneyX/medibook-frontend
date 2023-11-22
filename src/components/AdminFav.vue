@@ -105,7 +105,6 @@ export default {
   .action p:hover{
     background-color: #0f8389;
     color: #99DCDD;
-    border: 2px solid #0d7277;
   }
   .corazon{
     display: flex;
@@ -120,6 +119,5 @@ export default {
   .corazon:hover{
     background-color: #0f8389;
     color: #99DCDD;
-    border: 2px solid #0d7277;
   }
 </style>
