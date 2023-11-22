@@ -113,6 +113,11 @@ export default {
     border: 2px solid black;
     border-radius: 25px;
     margin-top: 5px;
+    background-color: #15b4bc;
+    font-weight: bold;
+  }
+  .back {
+    background-color: #99DCDD;
   }
   .mainTable p {
     cursor: pointer;
