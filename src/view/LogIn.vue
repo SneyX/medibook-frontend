@@ -75,6 +75,7 @@ export default {
         }
         this.resetForm()
         this.$store.dispatch('setUser',userForStore)
+        this.$store.dispatch('setUserRooms',userForStore.rooms)
         util.cargarLoader("")
         this.$router.push({ path: '/' })
       } else {

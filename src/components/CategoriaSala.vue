@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import CardCategoria from './CardCategoria.vue';
-import getMethod from '@/service/getMethod';
-import util from '@/utils/utils';
+import CardCategoria from './CardCategoria.vue'
+import getMethod from '@/service/getMethod'
+import util from '@/utils/utils'
 
 export default {
   name: 'CategoriaSala',
@@ -26,11 +26,11 @@ export default {
   },
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     }
   },
-  mounted() {
-    this.generarCategorias();
+  async mounted() {
+    await this.generarCategorias()
   },
   methods: {
     async generarCategorias() {

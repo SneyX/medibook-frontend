@@ -87,8 +87,8 @@ const updateTypeRoom = async (data,id) => {
 	}
 }
 
-const updateFavorite = async (data) => {
-	const url = URL_BASE+`/${data.id}/favorite_rooms`
+const updateFavorite = async (data, id) => {
+	const url = URL_BASE+`/users/${id}/favorite_rooms`
 	jwt = createStore.getters.getUser.jwt
 	const settings = {
 		method: "PUT",
