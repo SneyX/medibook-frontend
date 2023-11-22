@@ -3,7 +3,7 @@
     <h1>BUSCA LA SALA</h1>
     <div class="buscadorContainer">
       <label for="filter">
-        <input type="button" ref="filter" id="filter" value="FILTRAR" @click="filtrar">
+        <input class="filter" type="button" ref="filter" id="filter" value="FILTRAR" @click="filtrar">
       </label>
       <label for="search" class="search">
         <input ref="search" id="search" type="text" placeholder="TIPO DE SALA">
@@ -227,24 +227,29 @@ export default {
     }
     label, input {
       padding: 0.3vw;
-      margin-top: -4vw;
+      margin-top: 0vw;
       margin-right: 2vw;
       font-size: 2vw;
     }
     .btnContainer{
-      margin-top: -8vw;
+      margin-top: 0vw;
       margin-left: -3vw;
-      width: 15vw;
     }
     .btnBusc{
       width: 100px;
-      height: 4vw;
-      font-size: 2vw;
+      height: 4vw !important;
+      font-size: 2vw !important;
     }
     nav {
       height: 14vw;
     }
+  .filter{
+    font-size: 1.5vw;
   }
+    
+  }
+
+  
 
   
 </style>
