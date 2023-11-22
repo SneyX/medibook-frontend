@@ -75,6 +75,8 @@ export default {
     border: 2px solid black;
     border-radius: 15px;
     margin: 10px 0;
+    background-color: #15b4bc;
+    font-weight: bold;
   }
   .info{
     width: 35%;
