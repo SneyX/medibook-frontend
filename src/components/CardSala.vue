@@ -123,6 +123,10 @@ import util from '@/utils/utils'
   
   <style scoped>
     .contenedor-salas{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center; 
     width: 98vw;
   }
   .swiper{
