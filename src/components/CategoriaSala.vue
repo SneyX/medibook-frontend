@@ -27,6 +27,9 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.getTheme
+    },
+    storeTypeRooms(){
+      return this.$store.getters?.getTypeRooms || []
     }
   },
   async mounted() {
@@ -35,7 +38,12 @@ export default {
   methods: {
     async generarCategorias() {
       util.cargarLoader("Buscando salas...")
-      this.resultados = await getMethod.getTypeRooms()
+      if (this.storeTypeRooms.length < 1) {
+        this.resultados = await getMethod.getTypeRooms()
+        this.$store.dispatch('setTypeRooms',this.resultados)
+      } else {
+        this.resultados = this.storeTypeRooms
+      }
       util.cargarLoader("")
     },
   },

@@ -83,15 +83,25 @@ export default {
         return
       }
 
-      const roomsResult = await getMethod.getRooms()
       let aux = false
-      if (roomsResult) {
-        roomsResult.forEach(room => {
+      const storeRooms = this.$store.getters.getRooms()
+      if (storeRooms.length < 1) {
+        const roomsResult = await getMethod.getRooms()
+        if (roomsResult) {
+          roomsResult.forEach(room => {
+            if (room.name == this.$refs.nombre.value) {
+              aux = true
+              return
+            }
+          })
+        }
+      } else {
+        storeRooms.forEach(room => {
           if (room.name == this.$refs.nombre.value) {
             aux = true
             return
           }
-        });
+        })
       }
       if (aux) {
         util.cargarPopUp("Ya exite una sala con ese nombre", "Error..")
@@ -121,6 +131,7 @@ export default {
 
       if (id) {
         await postMethods.addRoom(datos)
+        this.$store.dispatch('setRooms', [])
         const rooms = await getMethod.getRooms()
         const idx = rooms.length -1
         const id = rooms[idx].id

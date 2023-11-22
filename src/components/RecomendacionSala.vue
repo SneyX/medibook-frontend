@@ -27,6 +27,9 @@ export default {
     theme() {
       return this.$store.getters.getTheme
     },
+    storeRooms(){
+      return this.$store.getters?.getRooms || []
+    }
   },
   async mounted() {
     await this.generarResultados()
@@ -34,9 +37,16 @@ export default {
   methods: {
     async generarResultados() {
       util.cargarLoader("cargando")
-      const data = await getMethod.getRooms()
-      if (data) {
-        this.$store.dispatch('setRooms', data)
+      if (this.storeRooms.length < 1) {
+        const data = await getMethod.getRooms()
+        if (data) {
+          this.$store.dispatch('setRooms', data)
+          const cantidad = data.length < 5 ? data.length : 5
+          const indicesAleatorios = this.obtenerIndicesAleatorios(data.length,cantidad)
+          this.resultados = indicesAleatorios.map((index) => data[index])
+        }
+      } else {
+        const data = this.storeRooms
         const cantidad = data.length < 5 ? data.length : 5
         const indicesAleatorios = this.obtenerIndicesAleatorios(data.length,cantidad)
         this.resultados = indicesAleatorios.map((index) => data[index])

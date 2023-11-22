@@ -89,7 +89,7 @@ export default {
       const res = await postMethods.addTypeRoom(category)
       
       if (res) {
-
+        this.$store.dispatch('setTypeRooms',[])
         const categorys = await getMethod.getTypeRooms()
         const idx = categorys.length -1
         const id = categorys[idx].id
