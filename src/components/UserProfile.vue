@@ -1,5 +1,6 @@
 <template>
   <div class="user-profile">
+    <div class="favoritos" @click="actionMenu('Favoritos')">Favoritos</div>
     <div class="profile-picture">{{userName}}</div>
     <div class="container" @click="toggleMenu"><span></span><span></span><span></span></div>
     <div class="menu" :class="{ 'is-open': isOpen }">
@@ -64,22 +65,35 @@ methods: {
 
 <style scoped>
 .user-profile {
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 20%;
+}
+.favoritos{
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 15px;
+  transition: .5s ease-in-out;
+}
+.favoritos:hover{
+  background-color: #0f8389;
+  color: #99DCDD;
+  border: 2px solid #0d7277;
 }
 
 .profile-picture {
-width: 3vw;
-height: 3vw;
-border-radius: 50%;
-background-color: #ccc;
-border: 2px solid #000;
-background-size: cover;
-background-position: center;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 1.5vw;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: 2px solid #000;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5vw;
 }
 
 .container{

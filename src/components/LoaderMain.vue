@@ -79,7 +79,7 @@ border-radius: 50% 50% 0 0;
 }
 }
 .contenedor{
-position: absolute;
+position: fixed;
 width: 100%;
 height: 100%;
 left: 50%;
