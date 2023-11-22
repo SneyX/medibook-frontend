@@ -66,8 +66,8 @@ align-items: center;
 }
 
 .profile-picture {
-width: 80px;
-height: 80px;
+width: 3vw;
+height: 3vw;
 border-radius: 50%;
 background-color: #ccc;
 border: 2px solid #000;
@@ -76,7 +76,7 @@ background-position: center;
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 2rem;
+font-size: 1.5vw;
 }
 
 .container{
@@ -147,4 +147,33 @@ cursor: pointer;
 text-decoration: underline;
 cursor: pointer;
 }
+
+@media only screen and (max-width:480px ){ 
+    
+.profile-picture {
+width: 5vw;
+height: 5vw;
+font-size: 3vw;
+border: 1.5px solid #000;
+}
+
+span{
+  border: 1px solid #000;
+}
+
+.container{
+width: 10vw;
+height: 10vw;
+}
+.menu.is-open {
+display: block;
+width: 150px;
+height: 150px;
+position: absolute;
+left: 100%;
+top: -35px;
+transform: translate( -100%, 50%);
+}
+
+  }
 </style>
