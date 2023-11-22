@@ -111,7 +111,7 @@ export default {
     align-items: center;
     justify-content: space-around;
     border: 2px solid black;
-    border-radius: 25px;
+    border-radius: 15px;
     margin-top: 5px;
     background-color: #15b4bc;
     font-weight: bold;
@@ -136,7 +136,7 @@ export default {
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 15px;
   }
   .info {
     width: 35%;
