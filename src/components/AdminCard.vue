@@ -101,7 +101,6 @@ export default {
       }
       this.$store.dispatch('setDialog',dialog)
     },
-    
   }
 }
 </script>

@@ -11,6 +11,7 @@ import AgregarCategoria from './view/AgregarCategoria'
 import CardModify from './view/CardModify'
 import UsersInfo from './view/UsersInfo'
 import UserInfo from './view/UserInfo'
+import FavoriteRoom from './view/FavoriteRoom'
 
 const routes = [
   { path: '/', component: BodyMain },
@@ -21,6 +22,7 @@ const routes = [
   { path: '/admin/category', component: AgregarCategoria },
   { path: '/admin/users', component: UsersInfo },
   { path: '/admin/user', component: UserInfo },
+  { path: '/admin/favorite', component: FavoriteRoom },
   { path: '/card-detail/:id', name: 'card-detail', component: CardDetail },
   { path: '/card-category/:id', name: 'card-category', component: CardCategory },
   { path: '/modify/:id', name: 'card-modify', component: CardModify },

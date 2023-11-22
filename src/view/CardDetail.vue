@@ -39,14 +39,19 @@ export default {
     theme() {
       return this.$store.getters.getTheme;
     },
+    favorite() {
+      const fav = this.$store.getters?.getUserRooms || []
+      const ids = fav.map(room => room.id)
+      return ids
+    },
   },
   data(){
     return {
       card:[]
     }
   },
-  created() {
-			this.loadCard();
+  async created() {
+			await this.loadCard();
 		},
   methods:{
     async loadCard() {
