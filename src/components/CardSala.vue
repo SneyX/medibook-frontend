@@ -10,7 +10,8 @@
         <img :key="sala.images[0].id" :src="sala.images[0].path" :alt="sala.images[0].name">
         <div :class="[theme, 'info']">
           <h2>{{ sala.name }}</h2>
-          <div class="favorito" :class="[favorite.includes(sala.id) ? 'lleno' : 'vacio', 'corazon']" @click="handleFavorite(sala)">&#10084;</div>
+          <div :class="[favorite.includes(sala.id) ? 'lleno' : 'vacio', 'corazon']" @click="handleFavorite(sala)" v-if="cargando[sala.id] !== false && user">&#10084;</div>
+          <div class="corazon2"><div class="lds-heart" v-if="cargando[sala.id] == false && user"><div></div></div></div>
           <h2>{{ sala.typeroom.name }}</h2>
           <router-link :to="{ name: 'card-detail', params: { id: sala.id } }">
             <p class="infoDet">Detalles</p>
@@ -29,10 +30,9 @@
 </template>
 <script>
   import { Swiper, SwiperSlide } from 'swiper/vue'
-  import { ref } from 'vue'
+  import { ref, reactive  } from 'vue'
   import 'swiper/css'
   import putMethod from '@/service/putMethod'
-import util from '@/utils/utils'
 
   export default {
     name:'CardSala',
@@ -55,15 +55,23 @@ import util from '@/utils/utils'
         const ids = fav.map(room => room.id)
         return ids
       },
+      user(){
+        return this.$store.getters?.getUser?.jwt || false
+      },
     },
+    data() {
+      return {
+          cargando: reactive({}),
+        };
+      },
     methods: {
       async handleFavorite(sala){
         const user = this.$store.getters.getUser?.id || null
         if (user) {
-          util.cargarLoader('Agregando a favoritos')
+          this.cargando[sala.id] = false
           const res = await putMethod.updateFavorite(sala, user)
           this.$store.dispatch('setUserRooms',res.rooms)
-          util.cargarLoader('')
+          this.cargando[sala.id] = true
         } else {
           console.log("no");
         }
@@ -122,7 +130,7 @@ import util from '@/utils/utils'
   </script>
   
   <style scoped>
-    .contenedor-salas{
+  .contenedor-salas{
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -214,6 +222,68 @@ import util from '@/utils/utils'
     position: absolute;
     top: 200px;
     right: 20px;
+  }
+  .corazon2{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 220px;
+    right: 30px;
+  }
+
+  .lds-heart {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    transform-origin: 20px 20px;
+  }
+  .lds-heart div {
+    top:   0;
+    left: 0;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #cef;
+    animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .lds-heart div:after,
+  .lds-heart div:before {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: #cef;
+  }
+  .lds-heart div:before {
+    left: -24px;
+    border-radius: 50% 0 0 50%;
+  }
+  .lds-heart div:after {
+    top: -24px;
+    border-radius: 50% 50% 0 0;
+  }
+  @keyframes lds-heart {
+    0% {
+      transform: scale(0.95);
+    }
+    5% {
+      transform: scale(1.1);
+    }
+    39% {
+      transform: scale(0.85);
+    }
+    45% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(0.9);
+    }
   }
   </style>
   

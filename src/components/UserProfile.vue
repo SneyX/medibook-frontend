@@ -18,7 +18,7 @@ name: 'UserProfile',
 props: {
   options: {
     type: Array,
-    default: () => ['Administrar', 'Mi Perfil', 'Cerrar Sesión'],
+    default: () => ['Administrar', 'Mi Perfil', 'Favoritos', 'Cerrar Sesión'],
   },
 },
 data() {
@@ -46,6 +46,9 @@ methods: {
         break;
       case "Mi Perfil":
         this.$router.push({ path: '/admin/user' })
+        break;
+      case "Favoritos":
+        this.$router.push({ path: '/admin/favorite' })
         break;
     }
   },
