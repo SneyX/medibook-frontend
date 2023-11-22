@@ -215,6 +215,7 @@
     margin: 0;
     padding: 1px 5px;
     width: 40px;
+    height: 40px;
     cursor: pointer;
     border-radius: 50%;
     background-color: rgba(120, 120, 120, 0.550);
@@ -222,6 +223,7 @@
     position: absolute;
     top: 200px;
     right: 20px;
+    z-index: 2;
   }
   .corazon2{
     position: absolute;

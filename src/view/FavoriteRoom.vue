@@ -3,7 +3,7 @@
     <h2>PANEL DE  FAVORITOS</h2>
     <div class="mainTable">
       <div class="salaCont">
-        <p class="back">Favoritas</p>
+        <p>Favoritas</p>
       </div>
     </div>
     <div class="mainTable">
@@ -16,19 +16,20 @@
       </div>
     </div>
     <div class="salaInfo">
-      <AdminCard :cards="cards" @update-cards="updateCards" />
+      <AdminFav :cards="cards" @update-favs="updateFavs" />
     </div>
   </div>
 </template>
 
 <script>
 import util from "@/utils/utils"
-import AdminCard from "@/components/AdminCard"
+import AdminFav from "@/components/AdminFav"
 
 export default {
   name: "FavoriteRoom",
+  emits: ['update-favs'],
   components: {
-    AdminCard,
+    AdminFav,
   },
   computed: {
     theme() {
@@ -50,7 +51,7 @@ export default {
       this.cards = await this.$store.getters?.getUserRooms || []
       util.cargarLoader("")
     },
-    async updateCards(updatedRooms) {
+    async updateFavs(updatedRooms) {
       this.cards = updatedRooms;
     },
   },
@@ -65,18 +66,43 @@ export default {
     justify-content: flex-start;
     padding: 50px;
   }
-  .mainTable {
+  .mainTable{
     width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     border: 2px solid black;
-    border-radius: 25px;
-    margin-top: 5px;
+    border-radius: 15px;
+    margin: 10px 0;
   }
-  .mainTable p {
-    cursor: pointer;
+  .info{
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .id{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .name{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .action{
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
   .categoryCont, .salaCont{
     width: 50%;
@@ -85,33 +111,12 @@ export default {
     align-items: center;
     justify-content: center;
   }
-  .mainTable .back{
-    height: 100%;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 25px;
-  }
   .info {
     width: 35%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
-  }
-  .id {
-    width: 30%;
-  }
-  .name {
-    width: 70%;
-  }
-  .action {
-    width: 65%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .salaInfo {
     width: 100%;
