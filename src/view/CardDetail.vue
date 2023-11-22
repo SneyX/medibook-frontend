@@ -126,7 +126,6 @@ export default {
   }
   .mainContainer {
     width: 80%;
-    height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,7 +143,6 @@ export default {
   .secondaryImages{
     position: relative;
     width: 50%;
-    height: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -152,15 +150,19 @@ export default {
     cursor: pointer;
   }
   .mainImage img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 31vw;
+    max-width: 100%;
     border-radius: 8px;
+    object-fit: cover;
   }
   .secondaryImages img {
     width: 45%;
-    height: 45%;
+    height: 15vw;
+    object-fit: cover;
+    max-width: 100%;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .footerCont{
     display: flex;
@@ -180,7 +182,6 @@ export default {
     padding-left: 5px;
     text-align: left;
   }
-
   .verMas{
     display: flex;
     align-items: center;
@@ -197,5 +198,42 @@ export default {
     background-color: #0f8389;
     color: #99DCDD;
   }
+  @media only screen and (max-width:480px ){
+    .headerContainer{
+      width: 100%;
+      padding: 0px 2px;
+      font-size: 12px;
+    }
+    .cerrar{
+      border: 2px #605B5B solid;
+      font-size: 20px;
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
 
+    .mainContainer {
+      flex-direction: column;
+    }
+    .mainImage{
+      width: 100%;
+    }
+
+    .mainImage img {
+      width: 97%;
+      margin: 0px;
+    }
+
+    .secondaryImages{
+      width: 100%;
+    }
+    .secondaryImages img {
+      width: 46%;
+      height: 20vw;
+      margin: 3px;
+    }
+    .footerCont{
+      width: 100%;
+    }
+  }
 </style>
