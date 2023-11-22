@@ -101,7 +101,11 @@
   
   <style scoped>
     .contenedor-salas{
-    width: 98vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      text-align: center;
+      width: 98vw;
   }
   .swiper{
     width: 1000px;
