@@ -10,14 +10,15 @@
         <img :key="sala.images[0].id" :src="sala.images[0].path" :alt="sala.images[0].name">
         <div :class="[theme, 'info']">
           <h2>{{ sala.name }}</h2>
+          <div class="favorito" :class="[favorite.includes(sala.id) ? 'lleno' : 'vacio', 'corazon']" @click="handleFavorite(sala)">&#10084;</div>
           <h2>{{ sala.typeroom.name }}</h2>
           <router-link :to="{ name: 'card-detail', params: { id: sala.id } }">
             <p class="infoDet">Detalles</p>
           </router-link>
-          </div>
-        </swiper-slide>
-      </Swiper>
-      <div class="btnCont">
+        </div>
+      </swiper-slide>
+    </Swiper>
+    <div class="btnCont">
       <button @click="goToFirstSlide">|&lt;</button>
       <button @click="goToPrevSlide">&lt;</button>
       <p>{{ Math.floor(currentIndex / 3) + 1 }} / {{ Math.ceil(resultados.length / 3) }}</p>
@@ -30,6 +31,8 @@
   import { Swiper, SwiperSlide } from 'swiper/vue'
   import { ref } from 'vue'
   import 'swiper/css'
+  import putMethod from '@/service/putMethod'
+import util from '@/utils/utils'
 
   export default {
     name:'CardSala',
@@ -47,6 +50,24 @@
       theme() {
         return this.$store.getters.getTheme
       },
+      favorite() {
+        const fav = this.$store.getters?.getUserRooms || []
+        const ids = fav.map(room => room.id)
+        return ids
+      },
+    },
+    methods: {
+      async handleFavorite(sala){
+        const user = this.$store.getters.getUser?.id || null
+        if (user) {
+          util.cargarLoader('Agregando a favoritos')
+          const res = await putMethod.updateFavorite(sala, user)
+          this.$store.dispatch('setUserRooms',res.rooms)
+          util.cargarLoader('')
+        } else {
+          console.log("no");
+        }
+      }
     },
     setup() {
       const swiperRef = ref(null)
@@ -96,16 +117,13 @@
         currentIndex,
       }
     },
+    
   }
   </script>
   
   <style scoped>
     .contenedor-salas{
-      display: flex;
-      flex-direction: column;
-      align-items: center; 
-      text-align: center;
-      width: 98vw;
+    width: 98vw;
   }
   .swiper{
     width: 1000px;
@@ -143,6 +161,26 @@
   }
   @media only screen and (max-width:480px ){ 
     
+  }
+  .lleno{
+    color: red;
+    font-size: 24px;
+  }
+  .vacio{
+    color: rgb(40, 40, 40);
+    font-size: 24px;
+  }
+  .corazon{
+    margin: 0;
+    padding: 1px 5px;
+    width: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgba(120, 120, 120, 0.550);
+    border: 2px solid rgb(25, 25, 25);
+    position: absolute;
+    top: 200px;
+    right: 20px;
   }
   </style>
   
