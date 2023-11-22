@@ -13,6 +13,9 @@
           <img v-for="(image, index) in card?.images?.slice(1, 5)" :key="index" :src="image.path" :alt="image.alt" @click="cargarSlider">
         </div>
       </div>
+      <div class="verMas">
+        <p @click="cargarSlider">ver más</p>
+      </div>
       <div class="footerCont">
         <p><strong>TIPO DE SALA: </strong>{{ card?.typeroom?.name }}</p>
         <div class="descripcion">
@@ -178,5 +181,21 @@ export default {
     text-align: left;
   }
 
+  .verMas{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 78%;
+  }
+  .verMas p {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: .5s ease-in-out;
+  }
+  .verMas p:hover {
+    background-color: #0f8389;
+    color: #99DCDD;
+  }
 
 </style>
