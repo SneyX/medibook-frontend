@@ -221,16 +221,16 @@
     background-color: rgba(120, 120, 120, 0.550);
     border: 2px solid rgb(25, 25, 25);
     position: absolute;
-    top: 200px;
-    right: 20px;
+    top: 50px;
+    right: 12px;
     z-index: 2;
   }
   .corazon2{
     position: absolute;
     width: 50px;
     height: 50px;
-    top: 220px;
-    right: 30px;
+    top: 45px;
+    right: 7px;
   }
 
   .lds-heart {
