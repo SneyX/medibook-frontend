@@ -236,8 +236,10 @@
   .lds-heart {
     display: inline-block;
     position: relative;
-    width: 20px;
-    height: 20px;
+    top:15px;
+    left: -18px;
+    width: 10px;
+    height: 10px;
     transform: rotate(45deg);
     transform-origin: 20px 20px;
   }
