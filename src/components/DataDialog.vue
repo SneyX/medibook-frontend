@@ -53,7 +53,7 @@
       </select>
     </div>
   </div>
-  <div v-if="dialog.type == 'slider'" class="contenedor">
+  <div v-if="dialog.type == 'slider'" class="contenedor" id="slider">
     <Swiper
       class="Swiper"
       :slides-per-view="3"
@@ -123,7 +123,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     .filterCont{
       position: relative;
       left: 50%;
@@ -232,11 +232,35 @@
     align-items: center;
     justify-content: center;
     border-radius: 3%;
-    border: 1px solid aqua;
-    color: aqua;
+    border: 2px solid #0f8389;
+    color: #0f8389;
     cursor: pointer;
     margin-top: 10px;
     padding: 10px 50px;
+    font-weight: bold;
   }
+  .Btn:hover {
+    background-color: #99DCDD;
+  }
+  @media only screen and (max-width:480px ){
+    #slider .swiper{
+      width: 100%;
+      height: auto;
+      margin: 0;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+        img {
+          width: 100%;
+          height: 35vw;
+        }
+    }
+
+  #slider .Btn {
+    width: 50vw;
+    margin-left: 25vw;
+  }
+}
 
 </style>
