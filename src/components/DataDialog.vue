@@ -251,6 +251,20 @@
           height: 30vw;
         }
     }
+    .contenedor{
+      .filterCont{
+        left: 65%;
+        width: 60%;
+        height: 50%;
+      }
+      .cerrar{
+        height: 10vw;
+        width: 10vw;
+      }
+      #filter{
+      margin-top: -60%;
+      }
+    }
 
 }
 
