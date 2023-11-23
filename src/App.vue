@@ -9,7 +9,6 @@
       <router-view></router-view>
       <LoaderMain />
       <PopUp />
-      <div class="push" v-if="path != '/signup'"></div>
   </div>
   <FooterComponent />
 
@@ -62,12 +61,10 @@ html, body {
 p{
   color: var(--text);
 }
-
 .oscuro,
 .claro{
   transition: .5s ease-in-out;
 }
-
 .claro{
   --background: #15b4bc;
   --background2: #99DCDD;
@@ -84,7 +81,6 @@ p{
   --shadow: 0px 1px 5px 1px #daecec;
   --oscuro: #0d7277;
 }
-
 .oscuro{
   --background: #0f8389;
   --text: #daecec;
@@ -106,11 +102,8 @@ a{
 LoaderMain{
   height: 100%;
 }
-
 .content{
   min-height: 100vh;
 }
-.push{
-  min-height: 150px;
-}
+
 </style>

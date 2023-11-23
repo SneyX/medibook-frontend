@@ -38,7 +38,7 @@
       <span v-if="!showMsg">{{ msg }}</span>
     </div>
   </div>
-  <div class="push"></div>
+  <!-- <div class="push"></div> -->
 </template>
 
 <script>

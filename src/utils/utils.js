@@ -59,10 +59,29 @@ const cargarPopUp = (texto, titulo) =>{
     return result
   }
 
+  const iconList = [
+    'camera', 'car', 'user', 'star', 'music', 'flag', 'globe', 'tooth', 'shield', 'leaf',
+    'building', 'book', 'film', 'gamepad', 'coffee', 'plane', 'bicycle', 'smile', 'pager',
+    'cloud', 'sun', 'moon', 'snowflake', 'key', 'bell', 'diamond', 'envelope', 'fire',
+    'code', 'paint-brush', 'cutlery', 'tree', 'anchor', 'trophy', 'umbrella', 'lightbulb',
+    'paper-plane', 'hourglass', 'cogs', 'gavel', 'headphones', 'microphone', 'paw', 'rocket',
+    'hospital', 'medkit', 'syringe', 'flask', 'thermometer-half', 'lungs', 'brain', 'walking',
+    'eye', 'wheelchair', 'briefcase-medical', 'prescription-bottle', 'first-aid', 'crutch',
+    'laptop-medical', 'x-ray', 'procedures', 'clipboard-list', 'vial', 'dna', 'viruses',
+    'stethoscope', 'shield-alt', 'baby', 'thermometer', 'teeth-open','ambulance', 'tachometer',
+    'hand-holding-medical', 'book-medical', 'microscope', 'shield-virus', 'pills', 'band-aid',
+    'eye-dropper', 'eye-slash', 'glasses', 'hiking', 'hospital-user', 'id-card', 'microchip', 
+    'puzzle-piece', 'restroom', 'skull-crossbones', 'spa', 'tablets', 'teeth', 'poo-storm',
+    'user-injured', 'user-md', 'user-nurse', 'virus', 'virus-slash', 'baby-carriage', 'bed',
+    'bone', 'child', 'clipboard-check', 'heart', 'heartbeat', 'blind', 'hospital-symbol',
+    'prescription', 'hospital-alt', 'clinic-medical', 'dumbbell', 'vials', 'wifi'
+  ]
+
   const util = {
     cargarPopUp: cargarPopUp,
     cargarLoader: cargarLoader,
     validarDatos: validarDatos,
+    iconList: iconList
   }
 
   export default util

@@ -26,6 +26,7 @@ const routes = [
   { path: '/card-detail/:id', name: 'card-detail', component: CardDetail },
   { path: '/card-category/:id', name: 'card-category', component: CardCategory },
   { path: '/modify/:id', name: 'card-modify', component: CardModify },
+  { path: '/modify/caracteristicas/:id', name: 'card-modify-caracteristicas', component: CardDetail },
 ];
 
 const router = createRouter({

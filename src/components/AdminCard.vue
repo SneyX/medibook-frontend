@@ -9,7 +9,9 @@
         <p>Modificar</p>
       </router-link>
       <p @click="recategorizeCard(card)">Recategorizar</p>
-      <p @click="viewCharacteristics(card)">Características</p>
+      <router-link :to="{ name: 'card-modify-caracteristicas', params: { id: card.id } }">
+        <p>Características</p>
+      </router-link>
       <p @click="deleteCard(card)">Eliminar</p>
     </div>
   </div>
@@ -77,9 +79,6 @@ export default {
       } else {
         util.cargarPopUp("Lo sentimo, ha ocurrido un error", "Error!")
       }
-    },
-    viewCharacteristics(card) {
-      console.log('Características', card);
     },
     async deleteCard(card) {
       let dialog = {
