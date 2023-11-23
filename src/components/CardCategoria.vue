@@ -170,7 +170,7 @@
     margin: 0 5px;
     height: 20px;
     width: 35px;
-    font-size: 2.5vw;
+    font-size: 2vw;
   }
   }
   </style>
