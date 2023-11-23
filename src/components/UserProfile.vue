@@ -186,5 +186,11 @@ methods: {
       top: -35px;
       transform: translate( -100%, 50%);
     }
+    .favoritos{
+      font-size: 3vw;
+      padding: 0px;
+      margin-left: -22vw;
+      margin-right: 1vw;
+  }
   }
 </style>

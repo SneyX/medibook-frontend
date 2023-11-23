@@ -108,6 +108,7 @@ header{
     height: 5vw;
     font-size: 1.5vw;
     width: 14vw !important;
+    margin-left: -38vw;
   }
   
 }
