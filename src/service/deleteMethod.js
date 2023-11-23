@@ -19,7 +19,7 @@ const deleteUser = async id =>{
 		const response = await fetch(url, settings)
 		return response
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 		return false
 	}
 }
@@ -40,7 +40,7 @@ const deleteDoctor = async id =>{
 		const response = await fetch(url, settings)
 		return response
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 		return false
 	}
 }
@@ -61,7 +61,7 @@ const deleteRoom = async id => {
 		const response = await fetch(url, settings)
 		return response
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 		return false
 	}
 }
@@ -82,7 +82,26 @@ const deleteTypeRoom = async id =>{
 		const response = await fetch(url, settings)
 		return response
 	} catch (error) {
-		console.log(error);
+		console.log(error)
+		return false
+	}
+}
+
+const deleteCaracteristica = async id => {
+	const url = URL_BASE+"/characteristics/"+id
+	jwt = createStore.getters.getUser.jwt
+	const settings = {
+		method: "DELETE",
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		},
+	}
+	try {
+		const response = await fetch(url, settings)
+		return response
+	} catch (error) {
+		console.log(error)
 		return false
 	}
 }
@@ -92,6 +111,7 @@ const deleteMethods = {
 	deleteRoom: deleteRoom,
 	deleteTypeRoom: deleteTypeRoom,
 	deleteUser: deleteUser,
+	deleteCaracteristica: deleteCaracteristica,
 }
 
 export default deleteMethods

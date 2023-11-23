@@ -1,6 +1,6 @@
 <template>
   <div class="icons">
-    <i :class="['fas', `fa-${iconName}`]" @click="$emit('iconClick', iconName.toString())"></i>
+    <i :class="['fas', `fa-${iconName}`]" @click="$emit('updateIcon', iconName.toString())"></i>
   </div>
 </template>
 

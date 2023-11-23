@@ -65,13 +65,7 @@ const getUserRol = async (id) =>{
 }
 
 // DOCTORS ------------------------------
-// get doctor id or tuition
-/* 
-	data = {
-		id: integer or string (tuition)
-		isId: boolean (true = id, false = tuition)
-	}
-*/
+
 const getDoctor = async data =>{
 	const {id, isId} = data
 	const url = isId ? URL_BASE+"/doctors/"+id : URL_BASE+"/doctors/tuition/"+id
@@ -187,6 +181,28 @@ const getTypeRoom = async id =>{
 	}
 }
 
+// CARACTERISTICAS 
+
+const getCaracteristicas = async () =>{
+	jwt = createStore.getters.getUser.jwt
+	const url = URL_BASE+"/characteristics"
+	const settings = {
+		method: 'GET',
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		}
+	}
+	try {
+		const response = await fetch(url, settings)
+		const json = await response.json()
+		return json
+	} catch (e) {
+		console.log(e)
+		return false
+	}
+}
+
 const getMethod = {
 	getUsers: getUsers,
 	getUser: getUser,
@@ -197,6 +213,7 @@ const getMethod = {
 	getTypeRooms: getTypeRooms,
 	getTypeRoom: getTypeRoom,
 	getUserRol: getUserRol,
+	getCaracteristicas: getCaracteristicas,
 }
 
 export default getMethod

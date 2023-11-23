@@ -3,13 +3,16 @@
     <h2>PANEL DE ADMINISTRACIÓN</h2>
     <div class="mainTable">
       <div class="salaCont">
-        <p :class="{ back : display }" @click="displayHandler(true)">salas</p>
+        <p :class="{ back : displaysala }" @click="displayHandler('sala')">salas</p>
       </div>
       <div class="categoryCont">
-        <p :class="{ back : !display }" @click="displayHandler(false)">categorías</p>
+        <p :class="{ back : displaycategory }" @click="displayHandler('category')">categorías</p>
+      </div>
+      <div class="categoryCont">
+        <p :class="{ back : displaycar }" @click="displayHandler('car')">características</p>
       </div>
     </div>
-    <div class="mainTable">
+    <div class="mainTable" v-if="!displaycar && !displaycategory">
       <div class="info">
         <p class="id">id</p>
         <p class="name">Nombre</p>
@@ -18,11 +21,14 @@
         <p>Acciones</p>
       </div>
     </div>
-    <div class="salaInfo" v-if="display">
+    <div class="salaInfo" v-if="displaysala">
       <AdminCard :cards="cards" @update-cards="updateCards" />
     </div>
-    <div class="salaInfo" v-if="!display">
+    <div class="salaInfo" v-if="displaycategory">
       <AdminType :cards="cards" @update-cards="updateCards" />
+    </div>
+    <div class="salaInfo" v-if="displaycar">
+      <AdminCaracteristicas :cards="cards" @update-cards="updateCards" />
     </div>
   </div>
   <div v-if="isMobile">
@@ -32,26 +38,39 @@
 </template>
 
 <script>
-import getMethod from "@/service/getMethod";
-import util from "@/utils/utils";
-import AdminCard from "@/components/AdminCard";
+import getMethod from "@/service/getMethod"
+import util from "@/utils/utils"
+import AdminCard from "@/components/AdminCard"
 import AdminType from '@/components/AdminType'
+import AdminCaracteristicas from '@/components/AdminCaracteristicas.vue'
 
 export default {
   name: "AdministrarProducto",
   components: {
     AdminCard,
     AdminType,
+    AdminCaracteristicas,
   },
   computed: {
     theme() {
       return this.$store.getters.getTheme;
     },
+    storeRooms(){
+      return this.$store.getters?.getRooms || []
+    },
+    storeTypeRooms(){
+      return this.$store.getters?.getTypeRooms || []
+    },
+    storeCaracteristicas(){
+      return this.$store.getters?.getCaracteristicas || []
+    },
   },
   data() {
     return {
       cards: [],
-      display: true,
+      displaysala: true,
+      displaycategory: false,
+      displaycar: false,
       isMobile: false
     };
   },
@@ -63,24 +82,52 @@ export default {
   },
   methods: {
     async generarCards() {
-      util.cargarLoader("Cargando salas...");
-      this.cards = await getMethod.getRooms();
+      util.cargarLoader("Cargando salas...")
+      this.cards = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
+      if (this.storeRooms.length < 1) {
+        this.$store.dispatch('setRooms', this.cards)
+      }
       util.cargarLoader("");
     },
     async generarCards2() {
-      util.cargarLoader("Cargando salas...");
-      this.cards = await getMethod.getTypeRooms();
+      util.cargarLoader("Cargando categorías...")
+      this.cards = this.storeTypeRooms.length < 1 ? await getMethod.getTypeRooms() : this.storeTypeRooms
+      if (this.storeTypeRooms.length < 1) {
+        this.$store.dispatch('setTypeRooms', this.cards)
+      }
+      util.cargarLoader("");
+    },
+    async generarCards3() {
+      util.cargarLoader("Cargando características...")
+      this.cards = this.storeCaracteristicas.length < 1 ? await getMethod.getCaracteristicas() : this.storeCaracteristicas
+      if (this.storeCaracteristicas.length < 1) {
+        this.$store.dispatch('setCaracteristicas', this.cards)
+      }
       util.cargarLoader("");
     },
     async updateCards(updatedRooms) {
-      this.cards = updatedRooms;
+      this.cards = updatedRooms
     },
     async displayHandler(value){
-      this.display = value
-      if (value) {
-        await this.generarCards()
-      } else {
-        await this.generarCards2()
+      switch (value) {
+        case 'sala':
+          this.displaysala= true
+          this.displaycategory= false
+          this.displaycar= false
+          await this.generarCards()
+        break;
+        case 'category':
+          this.displaysala= false
+          this.displaycategory= true
+          this.displaycar= false
+          await this.generarCards2()
+        break;
+        case 'car':
+          this.displaysala= false
+          this.displaycategory= false
+          this.displaycar= true
+          await this.generarCards3()
+        break;
       }
     },
     checkIsMobile() {

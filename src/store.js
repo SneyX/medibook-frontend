@@ -14,6 +14,7 @@ export default createStore({
     },
     rooms: [],
     typeRooms: [],
+    caracteristicas: [],
     dialog:{},
     user:{},
     userRooms:[],
@@ -37,6 +38,9 @@ export default createStore({
     },
     setTypeRooms(state, typeRooms){
       state.typeRooms = typeRooms
+    },
+    setCaracteristicas(state, caracteristicas){
+      state.caracteristicas = caracteristicas
     },
     setFiltros(state, filtros){
       state.filtros = filtros
@@ -67,6 +71,9 @@ export default createStore({
     setTypeRooms({ commit }, typeRooms) {
       commit("setTypeRooms", typeRooms)
     },
+    setCaracteristicas({ commit }, caracteristicas) {
+      commit("setCaracteristicas", caracteristicas)
+    },
     setFiltros({ commit }, filtros) {
       commit("setFiltros", filtros)
     },
@@ -89,6 +96,7 @@ export default createStore({
     getPopUp: state => state.popup.cargando,
     getRooms: state => state.rooms,
     getTypeRooms: state => state.typeRooms,
+    getCaracteristicas: state => state.caracteristicas,
     getFiltros: state => state.filtros,
     getDialog: state => state.dialog,
     getUser: state => state.user,

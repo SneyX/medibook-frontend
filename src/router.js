@@ -12,6 +12,8 @@ import CardModify from './view/CardModify'
 import UsersInfo from './view/UsersInfo'
 import UserInfo from './view/UserInfo'
 import FavoriteRoom from './view/FavoriteRoom'
+import AdministrarCaracteristicas from './view/AdministrarCaracteristicas'
+import AgregarCaracteristicas from './view/AgregarCaracteristicas'
 
 const routes = [
   { path: '/', component: BodyMain },
@@ -20,13 +22,14 @@ const routes = [
   { path: '/admin', component: AdministrarProducto },
   { path: '/admin/product', component: AgregarProducto },
   { path: '/admin/category', component: AgregarCategoria },
+  { path: '/admin/caracteristicas', component: AgregarCaracteristicas },
   { path: '/admin/users', component: UsersInfo },
   { path: '/admin/user', component: UserInfo },
   { path: '/admin/favorite', component: FavoriteRoom },
   { path: '/card-detail/:id', name: 'card-detail', component: CardDetail },
   { path: '/card-category/:id', name: 'card-category', component: CardCategory },
   { path: '/modify/:id', name: 'card-modify', component: CardModify },
-  { path: '/modify/caracteristicas/:id', name: 'card-modify-caracteristicas', component: CardDetail },
+  { path: '/modify/caracteristicas/:id', name: 'card-modify-caracteristicas', component: AdministrarCaracteristicas },
 ];
 
 const router = createRouter({

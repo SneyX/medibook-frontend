@@ -2,16 +2,19 @@
   <div class="mainTable2">
     <div class="info2">
       <p class="id2">id</p>
-      <p class="name2">Nombre</p>
+      <p class="name2">Ícono - Nombre</p>
     </div>
     <div class="action2">
       <p>Acciones</p>
     </div>
   </div>
-  <div class="mainTable" v-for="card in cards" :key="card.id">
+  <div class="mainTable" v-for="card in cards" :key="card?.id">
     <div class="info">
-      <p class="id">{{ card.id }}</p>
-      <p class="name">{{ card.name }}</p>
+      <p class="id">{{ card?.id }}</p>
+      <div class="name">
+        <DinamicIcon :iconName="card?.urlicon"  @iconClick="handleIconClick" class="icono"/>
+        {{ card?.name }}
+      </div>
     </div>
     <div class="action">
       <p @click="modifyCard(card)">Modificar</p>
@@ -20,19 +23,20 @@
   </div>
   <DataDialog @update-type="handleUpdateType"/>
 </template>
-
 <script>
-
 import deleteMethods from '@/service/deleteMethod'
 import getMethod from '@/service/getMethod'
 import util from '@/utils/utils'
 import DataDialog from './DataDialog'
+import DinamicIcon from './DinamicIcon.vue'
+
 
 export default {
   name:'AdminType',
   emits: ['update-cards'],
   components: {
     DataDialog,
+    DinamicIcon,
   },
   props:{
     cards:{
@@ -47,17 +51,17 @@ export default {
     async deleteCard(card) {
       let dialog = {
         type: 'delete',
-        texto: 'Está seguro que desea eliminar esta categoría?',
-        id: card.id,
-        name: card.name,
-        description: card.description,
+        texto: 'Está seguro que desea eliminar esta característica?',
+        id: card?.id,
+        name: card?.name,
+        description: card?.urlicon,
         acept: async () =>{
           dialog = {}
           this.$store.dispatch('setDialog',dialog)
-          util.cargarLoader("Eliminando sala")
-          await deleteMethods.deleteTypeRoom(card.id)
-          const updatedRooms = await getMethod.getTypeRooms()
-          this.$store.dispatch('setTypeRooms', updatedRooms)
+          util.cargarLoader("Eliminando característica")
+          await deleteMethods.deleteCaracteristica(card.id)
+          const updatedRooms = await getMethod.getCaracteristicas()
+          this.$store.dispatch('setCaracteristicas', updatedRooms)
           this.$emit('update-cards', updatedRooms)
           util.cargarLoader("")
         },
@@ -102,6 +106,17 @@ export default {
         justify-content: center;
         border: 1px solid black;
         border-radius: 15px;
+        .icono{
+          display: flex;
+          width: 35px;
+          height: 35px;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #0d7277;
+          border-radius: 50%;
+          background-color: #99DCDD;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -146,4 +161,5 @@ export default {
       justify-content: center;
     }
   }
+  
 </style>

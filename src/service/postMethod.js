@@ -145,6 +145,8 @@ const addImgTyperoom = async (data) =>{
 	}
 }
 
+// EMAILS 
+
 const sendEmail = async (mailBody) => {
 	const url = "https://api.emailjs.com/api/v1.0/email/send"
     const settings = {
@@ -161,7 +163,30 @@ const sendEmail = async (mailBody) => {
 		console.log(e)
 		return false
 	}
-  };
+}
+
+// CARACTERISTICAS
+
+const addCaracteristica = async data =>{
+	const url = URL_BASE+"/characteristics"
+	jwt = createStore.getters.getUser.jwt
+	const settings = {
+		method: "POST",
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	}
+	try {
+		const response = await fetch(url, settings)
+		const json = await response.json()
+		return json
+	} catch (e) {
+		console.log(e);
+		return false
+	}
+}
 
 const postMethods = {
 	addUser: addUser,
@@ -171,7 +196,8 @@ const postMethods = {
 	addTypeRoom: addTypeRoom,
 	addImg: addImg,
 	addImgTyperoom: addImgTyperoom,
-	sendEmail:sendEmail
+	sendEmail: sendEmail,
+	addCaracteristica: addCaracteristica,
 }
 
 

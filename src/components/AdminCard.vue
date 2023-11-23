@@ -89,8 +89,9 @@ export default {
           this.$store.dispatch('setDialog',dialog)
           util.cargarLoader("Eliminando sala")
           await deleteMethods.deleteRoom(card.id)
-          const updatedRooms = await getMethod.getRooms();
-          this.$emit('update-cards', updatedRooms);
+          const updatedRooms = await getMethod.getRooms()
+          this.$store.dispatch('setRooms', updatedRooms)
+          this.$emit('update-cards', updatedRooms)
           util.cargarLoader("")
         },
         cancel: ()=> {
@@ -111,7 +112,7 @@ export default {
     align-items: center;
     justify-content: space-around;
     border: 2px solid black;
-    border-radius: 25px;
+    border-radius: 15px;
     margin: 10px 0;
   }
   .info{
@@ -135,7 +136,7 @@ export default {
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 15px;
   }
   .action{
     width: 65%;

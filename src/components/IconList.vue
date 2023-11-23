@@ -2,7 +2,7 @@
   <div class="contenedor">
     <div class="iconCont">
       <div class="icon" v-for="iconName in iconList" :key="iconName">
-        <DinamicIcon :iconName="iconName"  @iconClick="handleIconClick" />
+        <DinamicIcon :iconName="iconName"  @updateIcon="handleIconClick" />
       </div>
     </div>
   </div>
@@ -14,18 +14,18 @@ import util from '@/utils/utils';
 
 export default {
   name:'IconList',
+  emits: ['update-icon'],
   components: {
     DinamicIcon,
   },
   data() {
     return {
       iconList: util.iconList,
-      selectedIcon: null,
     };
   },
   methods: {
     handleIconClick(iconName) {
-      console.log(`Se hizo clic en el icono: ${iconName}`);
+      this.$emit('update-icon', iconName)
     },
   },
 };
@@ -37,15 +37,10 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
-  position: absolute;
   background-color: #daecec;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 40px;
-  z-index: 4;
   .iconCont{
-    width: 80%;
+    width: 100%;
+    padding: 10px;
     height: auto;
     display: flex;
     align-items: center;
