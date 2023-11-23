@@ -59,22 +59,50 @@ export default {
     async buscar(){
       this.resultados = []
       util.cargarLoader("Buscando salas...")
-      const datos = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
       const busqueda = this.$refs.search.value.trim().toLowerCase()
-      this.resultados = datos.filter(sala => {  
-        let {name, description} = sala
-        return name.trim().toLowerCase().includes(busqueda) ||
-        description.trim().toLowerCase().includes(busqueda) 
-      })
-      if (this.resultados.length < 1 && this.filtrosAplicados.length > 0) {
-        this.resultados = datos.filter(res => this.filtrosAplicados.includes(res.typeroom.name)  )
-      }
-      if (this.resultados.length < 1) {
+      if (this.filtrosAplicados.length < 1 && busqueda.length < 1 ) {
         util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
         util.cargarLoader("")
+        return
       }
-      if (this.filtrosAplicados.length > 0){
-        this.resultados = this.resultados.filter(res => this.filtrosAplicados.includes(res.typeroom.name) )
+      const datos = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
+      if (this.filtrosAplicados.length < 1 && busqueda.length >= 1 ) {
+        this.resultados = datos.filter(sala => {  
+          let {name, description} = sala
+          return name.trim().toLowerCase().includes(busqueda) ||
+          description.trim().toLowerCase().includes(busqueda) 
+        })
+        if (this.resultados.length < 1) {
+          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
+          util.cargarLoader("")
+          this.$refs.search.value = ""
+          return
+        }
+      }
+      if (this.filtrosAplicados.length >= 1 && busqueda.length < 1 ) {
+        this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
+        console.log(this.resultados);
+        if (this.resultados.length < 1) {
+          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
+          util.cargarLoader("")
+          this.$refs.search.value = ""
+          return
+        }
+      }
+      if (this.filtrosAplicados.length >= 1 && busqueda.length >= 1 ) {
+        this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
+        this.resultados = this.resultados.filter(sala => {  
+          let {name, description} = sala
+          return name.trim().toLowerCase().includes(busqueda) ||
+          description.trim().toLowerCase().includes(busqueda) 
+        })
+        if (this.resultados.length < 1) {
+          this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
+          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
+          util.cargarLoader("")
+          this.$refs.search.value = ""
+          return
+        }
       }
       util.cargarLoader("")
     },
@@ -120,7 +148,11 @@ export default {
     async quitarFiltro(filtro){
       const idx = this.filtrosAplicados.indexOf(filtro)
       this.filtrosAplicados.splice(idx,1)
-      await this.buscar()
+      if (this.filtrosAplicados.length >= 1) {
+        await this.buscar()
+      } else {
+        this.resultados = []
+      }
     },
   },
 }
