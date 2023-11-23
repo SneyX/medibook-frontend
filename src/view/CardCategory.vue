@@ -121,21 +121,26 @@
     margin-top: -18px;
     margin-left: 0px;
     height: 55px;
+    flex-direction: column;
   }
   .info p {
-    font-size: 12px;
+    font-size: 8px;
     margin-top: 10px;
     margin-right: 0px;
-    
   }
   div.info > p:first-of-type{
-    margin-left: -120px;
-    margin-top: 19px;
+    margin-left: 4px;
+    margin-top: 1px;
+    width: 40vw;
+
     
   }
   .info h2{
-    font-size: 15px;
+    font-size: 4vw;
     margin-left: 5px;
+    width: 40vw;
+    height: 6vw;
+    margin-top: -6px;
   }
   }
 </style>
