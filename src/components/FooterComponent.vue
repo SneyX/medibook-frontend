@@ -78,7 +78,6 @@ export default {
 }
 
 @media only screen and (max-width:480px ){
-
   .redesSociales {
     margin-bottom: 0px;
     width:200px;
@@ -105,7 +104,7 @@ export default {
   .redesSociales img {
     max-width: 4vw;
     margin-right: 5vw;
-  margin-top: 0.8vw;
+    margin-top: 0.8vw;
   }
   .footerInfompresa {
     justify-content: center;

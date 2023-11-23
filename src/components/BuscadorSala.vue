@@ -38,7 +38,7 @@ export default {
   components:{
     BotonPrincipal,
     CardSala,
-    DataDialog
+    DataDialog,
   },
   computed: {
     theme() {
@@ -255,7 +255,6 @@ export default {
     }
   }
 
-
   @media only screen and (max-width:480px ){
     h1{
       font-size: 13px;
@@ -279,13 +278,8 @@ export default {
     nav {
       height: 14vw;
     }
-  .filter{
-    font-size: 1.5vw;
+    .filter{
+      font-size: 1.5vw;
+    }
   }
-    
-  }
-
-  
-
-  
 </style>
