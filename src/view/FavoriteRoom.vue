@@ -123,4 +123,11 @@ export default {
   .salaInfo {
     width: 100%;
   }
+
+  @media only screen and (max-width:480px ){
+    .salaInfo {
+    font-size: 2.6vw;
+  }
+
+  }
 </style>

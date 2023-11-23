@@ -119,7 +119,9 @@ export default {
   .mainTable p{
     font-size: 3vw;
   }
-
+  .salaInfo {
+    font-size: 2.6vw;
+  }
 
 }
 </style>
