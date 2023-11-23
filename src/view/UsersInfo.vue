@@ -81,13 +81,14 @@ export default {
 }
 .mainTable {
   width: 100%;
-  height: 50px;
+  height: 3vw;
   display: flex;
   align-items: center;
   justify-content: space-around;
   border: 2px solid black;
-  border-radius: 25px;
+  border-radius: 15px;
   margin-top: 5px;
+  background-color: #15b4bc;
 }
 .info {
   width: 35%;
@@ -111,7 +112,13 @@ export default {
 .salaInfo {
   width: 100%;
 }
+
 @media only screen and (max-width:480px ){ 
+
+
+  .mainTable {
+  height: 10vw;
+}
   
   .mainTable h2{
     font-size: 3vw;
@@ -119,7 +126,9 @@ export default {
   .mainTable p{
     font-size: 3vw;
   }
-
+  .salaInfo {
+    font-size: 2.6vw;
+  }
 
 }
 </style>

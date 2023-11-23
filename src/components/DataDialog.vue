@@ -151,6 +151,8 @@
         margin-right: 10px;
         top: 10px;
         cursor: pointer;
+        justify-content: center; /* Center horizontally */
+        align-items: center;
       }
       #filter{
         padding: 10px;
@@ -250,6 +252,22 @@
           width: 108%;
           height: 30vw;
         }
+    }
+    .contenedor{
+      .filterCont{
+        left: 65%;
+        width: 60%;
+        height: 50%;
+      }
+      .cerrar{
+        height: 10vw;
+        width: 10vw;
+        font-size: 5vw;
+        align-self: center;
+      }
+      #filter{
+      margin-top: -60%;
+      }
     }
 
 }

@@ -221,23 +221,25 @@
     background-color: rgba(120, 120, 120, 0.550);
     border: 2px solid rgb(25, 25, 25);
     position: absolute;
-    top: 200px;
-    right: 20px;
+    top: 50px;
+    right: 12px;
     z-index: 2;
   }
   .corazon2{
     position: absolute;
     width: 50px;
     height: 50px;
-    top: 220px;
-    right: 30px;
+    top: 45px;
+    right: 7px;
   }
 
   .lds-heart {
     display: inline-block;
     position: relative;
-    width: 20px;
-    height: 20px;
+    top:15px;
+    left: -18px;
+    width: 10px;
+    height: 10px;
     transform: rotate(45deg);
     transform-origin: 20px 20px;
   }
