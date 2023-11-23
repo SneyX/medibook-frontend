@@ -163,14 +163,14 @@
     padding: 0px 0px 1px 0px;
     height: 18px;
     width: 20px;
-    font-size: 3vw;
+    font-size: 2.5vw;
   }
   .btnCont p{
     padding: 1px 5px;
     margin: 0 5px;
     height: 20px;
     width: 35px;
-    font-size: 3vw;
+    font-size: 2.5vw;
   }
   }
   </style>
