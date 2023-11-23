@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import BotonPrincipal from './BotonPrincipal.vue';
-import CardSala from './CardSala.vue';
-import getMethod from '@/service/getMethod';
+import BotonPrincipal from './BotonPrincipal.vue'
+import CardSala from './CardSala.vue'
+import getMethod from '@/service/getMethod'
 import util from '../utils/utils'
-import DataDialog from './DataDialog.vue';
+import DataDialog from './DataDialog.vue'
 
 export default {
   name: 'BuscadorSala',
@@ -43,7 +43,10 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.getTheme;
-    }
+    },
+    storeRooms(){
+      return this.$store.getters?.getRooms || []
+    },
   },
   data() {
     return {
@@ -56,20 +59,18 @@ export default {
     async buscar(){
       this.resultados = []
       util.cargarLoader("Buscando salas...")
-      const datos = await getMethod.getRooms()
+      const datos = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
       const busqueda = this.$refs.search.value.trim().toLowerCase()
-      busqueda.length == 0 ? (
-        util.cargarLoader(""),
-        util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
-        ) :
-        (this.resultados = datos.filter(sala => {  
-          let {name, description} = sala
-          return name.trim().toLowerCase().includes(busqueda) ||
-          description.trim().toLowerCase().includes(busqueda) 
-        }) 
-      )
+      this.resultados = datos.filter(sala => {  
+        let {name, description} = sala
+        return name.trim().toLowerCase().includes(busqueda) ||
+        description.trim().toLowerCase().includes(busqueda) 
+      })
+      if (this.resultados.length < 1 && this.filtrosAplicados.length > 0) {
+        this.resultados = datos.filter(res => this.filtrosAplicados.includes(res.typeroom.name)  )
+      }
       if (this.resultados.length < 1) {
-        util.cargarPopUp("no se encontran coincidencias", "RESULTADO")
+        util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
         util.cargarLoader("")
       }
       if (this.filtrosAplicados.length > 0){
@@ -93,6 +94,7 @@ export default {
             dialog = {}
             this.$store.dispatch('setDialog',dialog)
             this.filtrosAplicados.push(filtro)
+            await this.buscar()
           }
         }
         util.cargarLoader("")
@@ -108,15 +110,17 @@ export default {
             dialog = {}
             this.$store.dispatch('setDialog',dialog)
             this.filtrosAplicados.push(filtro)
+            await this.buscar()
           }
         }
         util.cargarLoader("")
         this.$store.dispatch('setDialog',dialog)
       }
     },
-    quitarFiltro(filtro){
+    async quitarFiltro(filtro){
       const idx = this.filtrosAplicados.indexOf(filtro)
       this.filtrosAplicados.splice(idx,1)
+      await this.buscar()
     },
   },
 }
