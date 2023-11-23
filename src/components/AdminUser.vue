@@ -120,4 +120,9 @@ methods:{
 .action p{
   cursor: pointer;
 }
+@media only screen and (max-width:480px ){
+  .mainTable{
+    height: 7vw;
+    }
+  }
 </style>
