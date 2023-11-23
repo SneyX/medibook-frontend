@@ -111,4 +111,15 @@ export default {
 .salaInfo {
   width: 100%;
 }
+@media only screen and (max-width:480px ){ 
+  
+  .mainTable h2{
+    font-size: 3vw;
+  }
+  .mainTable p{
+    font-size: 3vw;
+  }
+
+
+}
 </style>
