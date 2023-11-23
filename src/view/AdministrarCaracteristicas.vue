@@ -1,6 +1,7 @@
 <template>
   <div :class="[theme, 'card']">
-    <div class="card-container">
+    hola
+    <!-- <div class="card-container">
       <div class="headerContainer">
         <h2>CARACTERÍSTICAS:</h2>
         <div class="cerrar" @click="goBack">&lt;</div>
@@ -12,7 +13,7 @@
           <strong>{{ car?.name }}</strong>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <DataDialog />
 </template>
@@ -21,13 +22,13 @@
 import util from '@/utils/utils'
 import getMethod from '@/service/getMethod'
 import DataDialog from '@/components/DataDialog.vue'
-import DinamicIcon from '@/components/DinamicIcon.vue';
+// import DinamicIcon from '@/components/DinamicIcon.vue';
 
 export default {
   name: 'AdministrarCaracteristicas',
   components:{
     DataDialog,
-    DinamicIcon,
+    // DinamicIcon,
   },
   computed: {
     theme() {
@@ -40,17 +41,19 @@ export default {
     }
   },
   async created() {
-			await this.loadCard();
-		},
+    await this.loadCard()
+  },
   methods:{
     async loadCard() {
-      util.cargarLoader("Buscando sala...")
+      util.cargarLoader("Buscando características...")
       const data = {
         id: this.$route.params.id,
         isId: true
       };
       const resultado = await getMethod.getRoom(data)
+      console.log(resultado)
       this.card = resultado
+      console.log(this.card)
       util.cargarLoader("")
     },
     goBack() {

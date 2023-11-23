@@ -11,6 +11,14 @@
         <select ref="category" name="category" id="category">
           <option v-for="category in options" :key="category.id" :value=category.name>{{category.name}}</option>
         </select>
+        
+        <!-- <label for="caracteristica">CARACTERÍSTICAS*</label>
+        <div class="caractCont">
+          <div class="carac" v-for="caracteristica in options2" :key="caracteristica.id" >
+            <DinamicIcon :iconName="caracteristica?.urlicon" @click=agregar(caracteristica.id) class="icono"/>
+            <p>{{ caracteristica.name }}</p>
+          </div>
+        </div> -->
 
         <label for="description">DESCRIPCIÓN SALA*</label>
         <textarea ref="description" id="description" :value="description" maxlength="100" rows="4" cols="50"></textarea>
@@ -25,22 +33,28 @@
 </template>
 
 <script>
-import postMethods from '@/service/postMethod';
-import getMethod from '@/service/getMethod';
-import util from '@/utils/utils';
+import postMethods from '@/service/postMethod'
+import getMethod from '@/service/getMethod'
+import util from '@/utils/utils'
+// import DinamicIcon from '@/components/DinamicIcon.vue'
 
 export default {
   name: 'AgregarProducto',
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     }
+  },
+  components:{
+    // DinamicIcon,
   },
   data() {
     return {
       imageFiles: [],
       urls: [],
-      options: []
+      options: [],
+      options2: [],
+      caracteristicas: [],
     };
   },
   methods: {
@@ -58,6 +72,10 @@ export default {
         return
       }
       this.imageFiles = selectedFiles
+    },
+    agregar(){
+      const category = this.$refs.caracteristica.value
+      console.log(category);
     },
     async submitForm() {
 
@@ -84,7 +102,7 @@ export default {
       }
 
       let aux = false
-      const storeRooms = this.$store.getters.getRooms()
+      const storeRooms = this.$store.getters.getRooms
       if (storeRooms.length < 1) {
         const roomsResult = await getMethod.getRooms()
         if (roomsResult) {
@@ -122,6 +140,7 @@ export default {
       })
       const datos= {
         description: this.$refs.description.value,
+        // characteristics: this.$refs.caracteristica.value,
         favourite: false,
         name:this.$refs.nombre.value,
         typeroom:{
@@ -155,6 +174,8 @@ export default {
     },
     async init(){
       this.options = await getMethod.getTypeRooms()
+      this.options2 = await getMethod.getCaracteristicas()
+      console.log(this.options2)
     }
   },
   mounted(){
@@ -163,7 +184,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .contenedor {
   background-color: #15b4bc;
   color: var(--text);
@@ -225,6 +246,46 @@ button:hover{
     height: 75%;
     width: 75%;
     margin-bottom: -100px;
+  }
+}
+
+.caractCont{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  padding: 15px;
+  .carac{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid #0d7277;
+    border-radius: 10px;
+    background-color: #99DCDD;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    .icono{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      height: auto;
+      padding: 5px;
+    }
+    p{
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      color: black;
+    }
+  }
+  .carac:hover{
+    box-shadow: 0px 0px 5px 5px #99dcdd;
   }
 }
 

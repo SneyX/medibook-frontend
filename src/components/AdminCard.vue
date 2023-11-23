@@ -5,14 +5,19 @@
       <p class="name">{{ card.name }}</p>
     </div>
     <div class="action">
+
       <router-link :to="{ name: 'card-modify', params: { id: card.id } }">
         <p>Modificar</p>
       </router-link>
+
       <p @click="recategorizeCard(card)">Recategorizar</p>
+
       <router-link :to="{ name: 'card-modify-caracteristicas', params: { id: card.id } }">
         <p>Características</p>
       </router-link>
+
       <p @click="deleteCard(card)">Eliminar</p>
+      
     </div>
   </div>
   <DataDialog @update-type="handleUpdateType"/>
