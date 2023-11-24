@@ -1,19 +1,18 @@
 <template>
   <div :class="[theme, 'card']">
-    hola
-    <!-- <div class="card-container">
+    <div class="card-container">
       <div class="headerContainer">
         <h2>CARACTERÍSTICAS:</h2>
         <div class="cerrar" @click="goBack">&lt;</div>
       </div>
       <div class="footerCont">
-        <div class="descripcion" v-for="car in card" :key="car.id">
+        <div class="descripcion" v-for="car in card.characteristics" :key="car.id">
           <p>id: {{ car.id }}</p>
-          <DinamicIcon :iconName="car?.urlicon"  @iconClick="handleIconClick" />
+          <DinamicIcon :iconName="car?.urlicon" />
           <strong>{{ car?.name }}</strong>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
   <DataDialog />
 </template>
@@ -22,13 +21,13 @@
 import util from '@/utils/utils'
 import getMethod from '@/service/getMethod'
 import DataDialog from '@/components/DataDialog.vue'
-// import DinamicIcon from '@/components/DinamicIcon.vue';
+import DinamicIcon from '@/components/DinamicIcon.vue';
 
 export default {
   name: 'AdministrarCaracteristicas',
   components:{
     DataDialog,
-    // DinamicIcon,
+    DinamicIcon,
   },
   computed: {
     theme() {

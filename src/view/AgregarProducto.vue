@@ -5,23 +5,32 @@
       <form ref="loginForm" @submit.prevent="submitForm">
         
         <label for="nombre">NOMBRE*</label>
-        <input ref="nombre" type="text" id="nombre" :value="nombre" />
+        <input ref="nombre" type="text" id="nombre" />
 
         <label for="category">CATEGORÍA*</label>
         <select ref="category" name="category" id="category">
           <option v-for="category in options" :key="category.id" :value=category.name>{{category.name}}</option>
         </select>
         
-        <!-- <label for="caracteristica">CARACTERÍSTICAS*</label>
+        <label>CARACTERÍSTICAS*</label>
         <div class="caractCont">
-          <div class="carac" v-for="caracteristica in options2" :key="caracteristica.id" >
-            <DinamicIcon :iconName="caracteristica?.urlicon" @click=agregar(caracteristica.id) class="icono"/>
+          <div class="carac" v-for="caracteristica in options2" :key="caracteristica.id" @click=agregar(caracteristica)>
+            <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
             <p>{{ caracteristica.name }}</p>
           </div>
-        </div> -->
+        </div>
+
+        <label>AGREGADAS*</label>
+        <div class="caractCont">
+          <div class="carac" v-for="caracteristica in caracteristicas" :key="caracteristica.id" @click=quitar(caracteristica)>
+            <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
+            <p>{{ caracteristica.name }}</p>
+            <p class="cerrar">x</p>
+          </div>
+        </div>
 
         <label for="description">DESCRIPCIÓN SALA*</label>
-        <textarea ref="description" id="description" :value="description" maxlength="100" rows="4" cols="50"></textarea>
+        <textarea ref="description" id="description" maxlength="100" rows="4" cols="50"></textarea>
 
         <label for="images">IMÁGENES*</label>
         <input ref="images" type="file" accept="image/png, image/jpeg" id="images" multiple @change="handleImageChange" />
@@ -36,7 +45,7 @@
 import postMethods from '@/service/postMethod'
 import getMethod from '@/service/getMethod'
 import util from '@/utils/utils'
-// import DinamicIcon from '@/components/DinamicIcon.vue'
+import DinamicIcon from '@/components/DinamicIcon.vue'
 
 export default {
   name: 'AgregarProducto',
@@ -46,7 +55,7 @@ export default {
     }
   },
   components:{
-    // DinamicIcon,
+    DinamicIcon,
   },
   data() {
     return {
@@ -73,9 +82,15 @@ export default {
       }
       this.imageFiles = selectedFiles
     },
-    agregar(){
-      const category = this.$refs.caracteristica.value
-      console.log(category);
+    agregar(car){
+      this.caracteristicas.push(car)
+      const idx = this.options2.indexOf(car)
+      this.options2.splice(idx,1)
+    },
+    quitar(car){
+      this.options2.push(car)
+      const idx = this.caracteristicas.indexOf(car)
+      this.caracteristicas.splice(idx,1)
     },
     async submitForm() {
 
@@ -138,9 +153,12 @@ export default {
           return
         }
       })
+      const caracteristicas = this.caracteristicas.map(car=> {
+        return {id: car.id}
+      })
       const datos= {
         description: this.$refs.description.value,
-        // characteristics: this.$refs.caracteristica.value,
+        characteristics: caracteristicas,
         favourite: false,
         name:this.$refs.nombre.value,
         typeroom:{
@@ -175,7 +193,6 @@ export default {
     async init(){
       this.options = await getMethod.getTypeRooms()
       this.options2 = await getMethod.getCaracteristicas()
-      console.log(this.options2)
     }
   },
   mounted(){
@@ -282,6 +299,11 @@ button:hover{
       justify-content: center;
       padding: 5px;
       color: black;
+    }
+    .cerrar{
+      padding: 1px 5px ;
+      border: 1px solid #0d7277;
+      border-radius: 10px;
     }
   }
   .carac:hover{
