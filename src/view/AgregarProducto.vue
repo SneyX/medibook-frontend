@@ -191,8 +191,10 @@ export default {
       
     },
     async init(){
+      util.cargarLoader("Cargando datos...")
       this.options = await getMethod.getTypeRooms()
       this.options2 = await getMethod.getCaracteristicas()
+      util.cargarLoader("")
     }
   },
   mounted(){
