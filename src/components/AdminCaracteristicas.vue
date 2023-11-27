@@ -12,8 +12,10 @@
     <div class="info">
       <p class="id">{{ card?.id }}</p>
       <div class="name">
-        <DinamicIcon :iconName="card?.urlicon"  @iconClick="handleIconClick" class="icono"/>
-        {{ card?.name }}
+        <div class="nameIcon">
+          <DinamicIcon :iconName="card?.urlicon" @iconClick="handleIconClick" class="icono"/>
+          {{ card?.name }}
+        </div>
       </div>
     </div>
     <div class="action">
@@ -32,7 +34,7 @@ import DinamicIcon from './DinamicIcon.vue'
 
 export default {
   name:'AdminType',
-  emits: ['update-cards'],
+  emits: ['update-caracteristicas', 'update-cards'],
   components: {
     DataDialog,
     DinamicIcon,
@@ -43,20 +45,16 @@ export default {
       default:()=>[],
     }
   },
-  computed: {
-    updatedCards() {
-      return this.$store.getters.getCaracteristicas
-    },
-  },
   data(){
     return {
       renderCards:[]
     }
   },
-  created() {
+  mounted() {
     this.renderCards = this.cards
   },
   methods:{
+    handleIconClick(){},
     modifyCard(card) {
       let dialog = {
         type: 'updateCaracteristica',
@@ -132,6 +130,12 @@ export default {
         justify-content: center;
         border: 1px solid black;
         border-radius: 15px;
+        .nameIcon{
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          min-width: 40%;
+        }
         .icono{
           display: flex;
           width: 35px;

@@ -111,22 +111,22 @@ export default {
     async displayHandler(value){
       switch (value) {
         case 'sala':
+          await this.generarCards()
           this.displaysala= true
           this.displaycategory= false
           this.displaycar= false
-          await this.generarCards()
         break;
         case 'category':
+          await this.generarCards2()
           this.displaysala= false
           this.displaycategory= true
           this.displaycar= false
-          await this.generarCards2()
         break;
         case 'car':
+          await this.generarCards3()
           this.displaysala= false
           this.displaycategory= false
           this.displaycar= true
-          await this.generarCards3()
         break;
       }
     },

@@ -37,7 +37,7 @@ export default {
   justify-content: center;
   background-color: var(--background);
   border: var(--border);
-  color: var(--text);
+  color: #000;
   box-shadow: var(--shadow);
   font-size: 1.5vw;
   font-family: 'Poppins', sans-serif;
