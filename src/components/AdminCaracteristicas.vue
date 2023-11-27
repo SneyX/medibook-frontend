@@ -8,7 +8,7 @@
       <p>Acciones</p>
     </div>
   </div>
-  <div class="mainTable" v-for="card in cards" :key="card?.id">
+  <div class="mainTable" v-for="card in renderCards" :key="card?.id">
     <div class="info">
       <p class="id">{{ card?.id }}</p>
       <div class="name">
@@ -21,7 +21,7 @@
       <p @click="deleteCard(card)">Eliminar</p>
     </div>
   </div>
-  <DataDialog @update-type="handleUpdateType"/>
+  <DataDialog @update-caracteristicas="handleUpdateCaracteristicas"/>
 </template>
 <script>
 import deleteMethods from '@/service/deleteMethod'
@@ -29,7 +29,6 @@ import getMethod from '@/service/getMethod'
 import util from '@/utils/utils'
 import DataDialog from './DataDialog'
 import DinamicIcon from './DinamicIcon.vue'
-
 
 export default {
   name:'AdminType',
@@ -44,9 +43,36 @@ export default {
       default:()=>[],
     }
   },
+  computed: {
+    updatedCards() {
+      return this.$store.getters.getCaracteristicas
+    },
+  },
+  data(){
+    return {
+      renderCards:[]
+    }
+  },
+  created() {
+    this.renderCards = this.cards
+  },
   methods:{
     modifyCard(card) {
-      console.log('Modificar', card);
+      let dialog = {
+        type: 'updateCaracteristica',
+        name: card.name,
+        card: card,
+        cancel: ()=> {
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
+        }
+      }
+      this.$store.dispatch('setDialog',dialog)
+    },
+    async handleUpdateCaracteristicas(){
+      const updatedRooms = await getMethod.getCaracteristicas()
+      this.renderCards = updatedRooms
+      this.$store.dispatch('setCaracteristicas', updatedRooms)
     },
     async deleteCard(card) {
       let dialog = {

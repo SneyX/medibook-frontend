@@ -105,30 +105,30 @@ export default {
           emailjs.init('DAB1-dX1vNhJi41D3')
 
           emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
-            .then((result) => {
-                console.log('SUCCESS!', result.text);
-                this.emailConfirmationSent = true;
-                this.emailConfirmationDelivered = true;
+            .then(() => {
+                this.emailConfirmationSent = true
+                this.emailConfirmationDelivered = true
             }, (error) => {
-                console.log('FAILED...', error.text);
-            });
+                console.log('FAILED...', error.text)
+                util.cargarPopUp("No hemos podido enviar el correo", "ERROR")
+            })
             
           this.resetForm();
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
-          util.cargarPopUp("Problema en el servidor", "ERROR");
+          util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       }
     },
     resendConfirmationEmail() {
       emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
-        .then((result) => {
-          console.log('SUCCESS!', result.text);
-          this.emailConfirmationDelivered = true;
+        .then(() => {
+          this.emailConfirmationDelivered = true
         }, (error) => {
-          console.log('FAILED...', error.text);
-          this.emailConfirmationDelivered = false;
+          console.log('FAILED...', error.text)
+          util.cargarPopUp("No hemos podido enviar el correo", "ERROR")
+          this.emailConfirmationDelivered = false
         });
     },
     resetForm() {

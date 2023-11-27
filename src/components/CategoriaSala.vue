@@ -10,7 +10,7 @@
 <script>
 import CardCategoria from './CardCategoria.vue'
 import getMethod from '@/service/getMethod'
-import util from '@/utils/utils'
+// import util from '@/utils/utils'
 
 export default {
   name: 'CategoriaSala',
@@ -37,14 +37,12 @@ export default {
   },
   methods: {
     async generarCategorias() {
-      util.cargarLoader("Buscando salas...")
       if (this.storeTypeRooms.length < 1) {
         this.resultados = await getMethod.getTypeRooms()
         this.$store.dispatch('setTypeRooms',this.resultados)
       } else {
         this.resultados = this.storeTypeRooms
       }
-      util.cargarLoader("")
     },
   },
 

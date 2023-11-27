@@ -81,7 +81,6 @@ export default {
       }
       if (this.filtrosAplicados.length >= 1 && busqueda.length < 1 ) {
         this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
-        console.log(this.resultados);
         if (this.resultados.length < 1) {
           util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           util.cargarLoader("")
