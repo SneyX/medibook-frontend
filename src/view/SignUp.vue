@@ -98,7 +98,7 @@ export default {
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
-          util.cargarPopUp("Problema en el servidor", "ERROR");
+          util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       
   }

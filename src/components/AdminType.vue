@@ -18,7 +18,7 @@
       <p @click="deleteCard(card)">Eliminar</p>
     </div>
   </div>
-  <DataDialog @update-type="handleUpdateType"/>
+  <DataDialog />
 </template>
 
 <script>

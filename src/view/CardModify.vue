@@ -82,13 +82,11 @@ export default {
     agregar(car){
       this.caracteristicas.push(car)
       const idx = this.options2.indexOf(car)
-      console.log(idx);
       this.options2.splice(idx,1)
     },
     quitar(car){
       this.options2.push(car)
       const idx = this.caracteristicas.indexOf(car)
-      console.log(idx);
       this.caracteristicas.splice(idx,1)
     },
     async submitForm() {

@@ -8,12 +8,14 @@
       <p>Acciones</p>
     </div>
   </div>
-  <div class="mainTable" v-for="card in cards" :key="card?.id">
+  <div class="mainTable" v-for="card in renderCards" :key="card?.id">
     <div class="info">
       <p class="id">{{ card?.id }}</p>
       <div class="name">
-        <DinamicIcon :iconName="card?.urlicon"  @iconClick="handleIconClick" class="icono"/>
-        {{ card?.name }}
+        <div class="nameIcon">
+          <DinamicIcon :iconName="card?.urlicon" @iconClick="handleIconClick" class="icono"/>
+          {{ card?.name }}
+        </div>
       </div>
     </div>
     <div class="action">
@@ -21,7 +23,7 @@
       <p @click="deleteCard(card)">Eliminar</p>
     </div>
   </div>
-  <DataDialog @update-type="handleUpdateType"/>
+  <DataDialog @update-caracteristicas="handleUpdateCaracteristicas"/>
 </template>
 <script>
 import deleteMethods from '@/service/deleteMethod'
@@ -30,10 +32,9 @@ import util from '@/utils/utils'
 import DataDialog from './DataDialog'
 import DinamicIcon from './DinamicIcon.vue'
 
-
 export default {
   name:'AdminType',
-  emits: ['update-cards'],
+  emits: ['update-caracteristicas', 'update-cards'],
   components: {
     DataDialog,
     DinamicIcon,
@@ -44,9 +45,32 @@ export default {
       default:()=>[],
     }
   },
+  data(){
+    return {
+      renderCards:[]
+    }
+  },
+  mounted() {
+    this.renderCards = this.cards
+  },
   methods:{
+    handleIconClick(){},
     modifyCard(card) {
-      console.log('Modificar', card);
+      let dialog = {
+        type: 'updateCaracteristica',
+        name: card.name,
+        card: card,
+        cancel: ()=> {
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
+        }
+      }
+      this.$store.dispatch('setDialog',dialog)
+    },
+    async handleUpdateCaracteristicas(){
+      const updatedRooms = await getMethod.getCaracteristicas()
+      this.renderCards = updatedRooms
+      this.$store.dispatch('setCaracteristicas', updatedRooms)
     },
     async deleteCard(card) {
       let dialog = {
@@ -106,6 +130,12 @@ export default {
         justify-content: center;
         border: 1px solid black;
         border-radius: 15px;
+        .nameIcon{
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          min-width: 40%;
+        }
         .icono{
           display: flex;
           width: 35px;

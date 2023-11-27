@@ -45,13 +45,14 @@ export default {
           const indicesAleatorios = this.obtenerIndicesAleatorios(data.length,cantidad)
           this.resultados = indicesAleatorios.map((index) => data[index])
         }
+        util.cargarLoader("")
       } else {
         const data = this.storeRooms
         const cantidad = data.length < 5 ? data.length : 5
         const indicesAleatorios = this.obtenerIndicesAleatorios(data.length,cantidad)
         this.resultados = indicesAleatorios.map((index) => data[index])
+        util.cargarLoader("")
       }
-      util.cargarLoader("")
     },
     obtenerIndicesAleatorios(max, cantidad) {
       const indices = []

@@ -15,6 +15,30 @@
       </div>
     </div>
   </div>
+  <div v-if="dialog.type == 'updateCaracteristica'" class="contenedor">
+    <div class="caracFormContainer">
+      <h2>MODIFICAR CARACTERÍSTICA</h2>
+      <form ref="caracteristicasForm" @submit.prevent="submitForm">
+        
+        <label for="nombre">NOMBRE*</label>
+        <input ref="nombre" type="text" id="nombre" :value="dialog.card.name" />
+        
+        <label for="icono">ÍCONO*</label>
+        <IconList @update-icon="handleUpdateIcon" v-if="!display" class="lista"/>
+        <div class="actualizar" v-if="display" @click="update">
+          <DinamicIcon :iconName="dialog.card.urlicon"  @click="update" class="icono"/>
+          <p>CAMBIAR?</p>
+        </div>
+        <input ref="icono" type="text" id="icono" :value="dialog.card.urlicon"/>
+
+        <button type="submit">MODIFICAR CARACTERÍSTICA</button>
+
+      </form>
+      <div class="btnCont">
+        <div class="Btn" @click="dialog.cancel">CANCELAR</div>
+      </div>
+    </div>
+  </div>
   <div v-if="dialog.type == 'modificarCarac'" class="contenedor">
     <div class="modificarCarac">
       <label>CARACTERÍSTICAS*</label>
@@ -98,6 +122,7 @@
   import DinamicIcon from '@/components/DinamicIcon.vue'
   import util from '@/utils/utils'
   import putMethod from '@/service/putMethod'
+  import IconList from './IconList.vue'
 
   export default {
     name:"DataDialog",
@@ -106,9 +131,10 @@
     components:{
       Swiper,
       SwiperSlide,
+      IconList,
       DinamicIcon,
     },
-    emits: ["update-type", "update-rol"],
+    emits: ["update-type", "update-rol", 'update-caracteristicas'],
     computed: {
       dialog() {
         return this.$store.getters.getDialog
@@ -120,6 +146,8 @@
     data() {
       return {
         selected: null,
+        display: true,
+        iconName: ""
       };
     },
     methods:{
@@ -156,6 +184,43 @@
         await putMethod.updateRoom(data)
         util.cargarLoader("")
         this.$store.dispatch('setDialog',dialog)
+      },
+      handleUpdateIcon(nombre){
+        this.display = true
+        this.$refs.icono.value = nombre
+        this.dialog.card.urlicon = nombre
+      },
+      update(){
+        this.display = false
+        this.$refs.icono.value = ""
+      },
+      async submitForm(){
+        if (this.$refs.nombre.value.replace(/\s/g, '').length < 4) {
+          util.cargarPopUp("Ingrese el nombre", "Faltan datos..")
+          util.cargarLoader("")
+          return
+        }
+        if (this.$refs.icono.value.replace(/\s/g, '').length < 1) {
+          util.cargarPopUp("Ingrese el ícono", "Faltan datos..")
+          util.cargarLoader("")
+          return
+        }
+        
+        const data = {
+          name: this.$refs.nombre.value,
+          urlicon: this.$refs.icono.value
+        }
+        const id = this.dialog.card.id
+
+        util.cargarLoader("Modificando característica")
+        await putMethod.updateCaracteristica(data,id)
+        this.$refs.caracteristicasForm.reset()
+        let dialog = {}
+        this.$store.dispatch('setDialog',dialog)
+        this.$store.dispatch('setCaracteristicas', [])
+        this.$emit('update-caracteristicas')
+        util.cargarLoader("")
+        util.cargarPopUp("Característica modificada con éxito", "Gracias!")
       },
     },
   }
@@ -311,7 +376,7 @@
         justify-content: space-around;
         background-color: white;
         border: 2px solid #0d7277;
-       border-radius: 10px;
+        border-radius: 10px;
         padding: 15px;
         .carac{
           display: flex;
@@ -371,6 +436,123 @@
         }
         .Btn2:hover {
           background-color: #99DCDD;
+        }
+      }
+    }
+    .caracFormContainer {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #afedee;
+      color: var(--text);
+      border: 3px solid #0d7277;
+      border-radius: 10px;
+      .btnCont{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .Btn{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 15px;
+          border: 2px solid #0f8389;
+          color: #0f8389;
+          cursor: pointer;
+          margin: 10px;
+          padding: 10px 50px;
+          font-weight: bold;
+          width: 50%;
+        }
+        .Btn:hover {
+          background-color: #99DCDD;
+        }
+      }
+      form {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border: 2px solid #0d7277;
+        border-radius: 10px;
+        padding: 15px;
+        label {
+          padding: 5px;
+          margin-bottom: 8px;
+          border-radius: 10px;
+        }
+        input {
+          padding: 8px;
+          margin-bottom: 16px;
+          outline-offset: 0;
+          background-color: white;
+          border: 2px solid #0d7277;
+          border-radius: 10px;
+        }
+        .lista{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: white;
+          border: 2px solid #0d7277;
+          border-radius: 10px;
+          padding: 15px;
+          height: auto;
+        }
+        .actualizar{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .icono{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            border: 1px solid #0d7277;
+            border-radius: 50%;
+            background-color: #99DCDD;
+            cursor: pointer;
+          }
+          .icono:hover{
+            border: 1px solid #99DCDD;
+            background-color: #0d7277;
+          }
+          p{
+            cursor: pointer;
+            padding: 10px;
+          }
+        }
+        #icono{
+          display: none;
+        }
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #07d0db;
+          width: auto;
+          color: var(--text);
+          padding: 20px;
+          margin-top: 10px;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: .5s ease-in-out;
+        }
+        button:hover{
+          background-color: #069fa7;
+          transition: .5s ease-in-out;
         }
       }
     }
