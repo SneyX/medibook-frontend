@@ -11,6 +11,11 @@
         </div>
       </div>
 
+      <div class="byc">
+        <h4>Legales</h4>
+        <p><a href="/ruta-a-bases-y-condiciones" target="_blank" class="link">Ver bases y condiciones</a></p>
+      </div>
+
       <div class="redesSociales">
         <a href="https://www.instagram.com" target="_blank">
           <img src="../assets/instagram.png" alt="Logo de Instagram" />
@@ -75,6 +80,20 @@ export default {
 }
 .redesSociales{
   width: 20vw;
+}
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  text-decoration: none; /* Para quitar el subrayado al pasar el cursor sobre el enlace */
+}
+.byc{
+  text-align: left;
+}
+.byc a {
+  font-size: 0.8vw;
 }
 
 @media only screen and (max-width:480px ){
