@@ -16,9 +16,9 @@
         <label for="password">Contraseña:</label>
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
 
-        <label for="acceptTerms">
+        <label for="acceptTerms" class="byc">
           <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
-          Acepto las <a href="/ruta-a-bases-y-condiciones" target="_blank">bases y condiciones</a>
+          Acepto las <a href="/ruta-a-bases-y-condiciones" target="_blank" class="link">bases y condiciones</a>
         </label>
         
         <button type="submit" >Registrarse</button>
@@ -208,5 +208,16 @@ button {
 button:hover {
   background-color: #0f8389;
   transition: .5s ease-in-out;
+}
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  text-decoration: none; /* Para quitar el subrayado al pasar el cursor sobre el enlace */
+}
+.byc{
+  font-size: 1vw;
 }
 </style>
