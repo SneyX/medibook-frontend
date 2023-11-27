@@ -15,16 +15,25 @@
 
         <label for="password">Contraseña:</label>
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
-
-        <label for="acceptTerms" class="byc">
-          <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
-          Acepto las <a href="/ruta-a-bases-y-condiciones" target="_blank" class="link">bases y condiciones</a>
-        </label>
         
         <button type="submit" >Registrarse</button>
 
+
       </form>
- 
+      <!-- este formulario no es visible, solo es para enviar el mail al registro -->
+      <form ref="form" id="form">
+        <div class="field">
+          <label for="name">name</label>
+          <input type="text" name="name" id="name" :value="name">
+        </div>
+        <div class="field">
+          <label for="username">username</label>
+          <input type="text" name="username" id="username" :value="username">
+        </div>
+        <input ref="btn" type="submit" id="button" value="Send Email">
+      </form>
+      <!-- este formulario no es visible, solo es para enviar el mail al registro -->
+
       <span v-if="!showMsg">{{ msg }}</span>
     </div>
   </div>
@@ -35,7 +44,7 @@
 
 import postMethods from '@/service/postMethod';
 import util from '@/utils/utils';
-
+import emailjs from '@emailjs/browser';
 
 export default {
   name: 'SignUp',
@@ -52,7 +61,8 @@ export default {
       password: '',
       showMsg:true,
       msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres.",
-      acceptTerms: false,
+      emailConfirmationSent: false,
+      emailConfirmationDelivered: false
     };
   },
   methods: {
@@ -67,15 +77,13 @@ export default {
         lastname: this.lastName,
         username: this.username,
         password: this.password,
-        acceptTerms: this.acceptTerms,
       }
       
       util.cargarLoader("Agregando usuario")
       let validation = [ { name: util.validarDatos(data.name,"nombre") },
         { lastname: util.validarDatos(data.lastname,"apellido") },
         { username: util.validarDatos(data.username,"email"), },
-        { password: util.validarDatos(data.password,"password") },
-        {acceptTerms: util.validarDatos(data.acceptTerms,"acceptTerms")}
+        { password: util.validarDatos(data.password,"password") }
       ]
       for(let item of validation){
         const fieldName = Object.keys(item)[0]
@@ -86,27 +94,52 @@ export default {
         }
       }
 
-      if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid && validation[4].acceptTerms.isValid) {
-        const result = await postMethods.addUser(data)
-        util.cargarLoader("")
-        if (result) {
-          
-          util.cargarPopUp("¡Usuario agregado con éxito! Gracias por registrarte", "Revisá tu casilla de correo")
+      if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid) {
+    const result = await postMethods.addUser(data);
+    util.cargarLoader("");
+
+    if (result) {
+      util.cargarPopUp("Usuario agregado con éxito", "GRACIAS");
+
+      await this.resendConfirmationEmail();
+            
           this.resetForm();
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
-          util.cargarPopUp("Problema en el servidor", "ERROR")
+          util.cargarPopUp("Problema en el servidor", "ERROR");
         }
-      
+      }
+    },
+    resendConfirmationEmail() {
+  const recipientEmail = this.username;
+
+    if (!recipientEmail || !util.validarDatos(recipientEmail, "email").isValid) {
+    console.error('Recipient email is empty or invalid.');
+    return;
   }
+
+  emailjs.init('DAB1-dX1vNhJi41D3');
+
+const form = document.createElement('form');
+form.appendChild(document.createElement('input')).name = 'username';
+form.querySelector('input').value = recipientEmail;
+
+emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
+  .then((result) => {
+    console.log('Correo de confirmación enviado con éxito:', result.text);
+    this.emailConfirmationDelivered = true;
+  })
+  .catch((error) => {
+    console.error('Error al enviar el correo de confirmación:', error.text);
+    this.emailConfirmationDelivered = false;
+  });
     },
     resetForm() {
       this.name = '';
       this.lastName = '';
       this.username = '';
       this.password = '';
-      this.acceptTerms= false;
     },
     checkPass(e){
       this.showMsg = util.validarDatos(e.target.value,"password").isValid
@@ -169,16 +202,5 @@ button {
 button:hover {
   background-color: #0f8389;
   transition: .5s ease-in-out;
-}
-.link {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.link:hover {
-  text-decoration: none; /* Para quitar el subrayado al pasar el cursor sobre el enlace */
-}
-.byc{
-  font-size: 1vw;
 }
 </style>
