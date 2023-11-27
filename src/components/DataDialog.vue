@@ -6,12 +6,35 @@
         <div class="categoryCont">
           <p><span>ID:</span> {{ dialog.id }}</p>
           <p><span>NOMBRE:</span> {{ dialog.name }}</p>
-          <p><span>DESCRIPCIÓN:</span> {{ dialog.description }}</p>
+          <p v-if="dialog.description"><span>DESCRIPCIÓN:</span> {{ dialog?.description }}</p>
         </div>
       </div>
       <div class="btnCont">
         <div class="Btn" @click="dialog.acept">ACEPTAR</div>
         <div class="Btn" @click="dialog.cancel">CANCELAR</div>
+      </div>
+    </div>
+  </div>
+  <div v-if="dialog.type == 'modificarCarac'" class="contenedor">
+    <div class="modificarCarac">
+      <label>CARACTERÍSTICAS*</label>
+      <div class="caractCont">
+        <div class="carac" v-for="caracteristica in dialog.totalCarac" :key="caracteristica.id" @click=agregar(caracteristica)>
+          <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
+          <p>{{ caracteristica.name }}</p>
+        </div>
+      </div>
+      <label>AGREGADAS*</label>
+      <div class="caractCont">
+        <div class="carac" v-for="caracteristica in dialog.caracteristicas" :key="caracteristica.id" @click=quitar(caracteristica)>
+          <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
+          <p>{{ caracteristica.name }}</p>
+          <p class="cerrar">x</p>
+        </div>
+      </div>
+      <div class="btnCont2">
+        <div class="Btn2" @click="agregarCaracteristica(dialog.card)">ACEPTAR</div>
+        <div class="Btn2" @click="dialog.cancel">CANCELAR</div>
       </div>
     </div>
   </div>
@@ -72,6 +95,9 @@
 <script>
   import { Swiper, SwiperSlide } from 'swiper/vue'
   import 'swiper/css'
+  import DinamicIcon from '@/components/DinamicIcon.vue'
+  import util from '@/utils/utils'
+  import putMethod from '@/service/putMethod'
 
   export default {
     name:"DataDialog",
@@ -80,6 +106,7 @@
     components:{
       Swiper,
       SwiperSlide,
+      DinamicIcon,
     },
     emits: ["update-type", "update-rol"],
     computed: {
@@ -109,7 +136,27 @@
       },
       close(){
         this.$store.dispatch('setDialog', {})
-      }
+      },
+      agregar(car){
+        this.dialog.caracteristicas.push(car)
+        const idx = this.dialog.totalCarac.indexOf(car)
+        this.dialog.totalCarac.splice(idx,1)
+      },
+      quitar(car){
+        this.dialog.totalCarac.push(car)
+        const idx = this.dialog.caracteristicas.indexOf(car)
+        this.dialog.caracteristicas.splice(idx,1)
+      },
+      async agregarCaracteristica(card){
+        let dialog = {}
+        util.cargarLoader("Modificando características")
+        const characteristics = this.dialog.caracteristicas
+        card.characteristics = characteristics
+        const data = card
+        await putMethod.updateRoom(data)
+        util.cargarLoader("")
+        this.$store.dispatch('setDialog',dialog)
+      },
     },
   }
 </script>
@@ -176,82 +223,165 @@
         border-radius: 15px;
       }
     }
-    
-  }
-  .textCont{
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 50%;
-    height: 50%;
-    border: 1px solid aqua;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .texto{
-    width: 80%;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: aqua;
-  }
-  .categoryCont{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 20px;
-    p{
+    .textCont{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: auto;
+      padding: 20px;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      width: 100%;
-      border: 1px solid aqua;
-      margin: 1px;
-      border-radius: 5px;
+      background-color: #afedee;
+      color: #0d7277;
+      border: 3px solid #0d7277;
+      border-radius: 10px;
+      .texto{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #0d7277;
+        .categoryCont{
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          padding: 20px;
+          p{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+            border: 1px solid #0d7277;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+          }
+        }
+      }
+      .btnCont{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .Btn{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 15px;
+          border: 2px solid #0f8389;
+          color: #0f8389;
+          cursor: pointer;
+          margin: 10px;
+          padding: 10px 50px;
+          font-weight: bold;
+          width: 50%;
+        }
+        .Btn:hover {
+          background-color: #99DCDD;
+        }
+      }
     }
-    span{
-      width: 30%;
+    .modificarCarac{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: auto;
+      padding: 20px;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
+      background-color: #afedee;
+      color: var(--text);
+      border: 3px solid #0d7277;
+      border-radius: 10px;
+      label{
+        margin: 10px;
+      }
+      .caractCont{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: white;
+        border: 2px solid #0d7277;
+       border-radius: 10px;
+        padding: 15px;
+        .carac{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          border: 1px solid #0d7277;
+          border-radius: 10px;
+          background-color: #99DCDD;
+          width: auto;
+          height: auto;
+          cursor: pointer;
+          transition: 0.3s ease-in-out;
+          margin: 4px;
+          .icono{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            height: auto;
+            padding: 5px;
+          }
+          p{
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            color: black;
+          }
+          .cerrar{
+            padding: 1px 5px ;
+            border: 1px solid #0d7277;
+            border-radius: 10px;
+          }
+        }
+        .carac:hover{
+          box-shadow: 0px 0px 5px 5px #99dcdd;
+        }
+      }
+      .btnCont2{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .Btn2{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 15px;
+          border: 2px solid #0f8389;
+          color: #0f8389;
+          cursor: pointer;
+          margin: 10px;
+          padding: 10px 50px;
+          font-weight: bold;
+          width: 50%;
+        }
+        .Btn2:hover {
+          background-color: #99DCDD;
+        }
+      }
     }
   }
-  .btnCont{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  .Btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3%;
-    border: 3px solid #0f8389;
-    color: #0f8389;
-    cursor: pointer;
-    margin-top: 10px;
-    padding: 10px 50px;
-    font-weight: bold;
-    width: 50%;
-    margin-left: 25%;
-  }
-  .Btn:hover {
-    background-color: #99DCDD;
-  }
+
   @media only screen and (max-width:480px ){
     #slider .swiper{
-        img {
-          width: 108%;
-          height: 30vw;
-        }
+      img {
+        width: 108%;
+        height: 30vw;
+      }
     }
     .contenedor{
       .filterCont{
@@ -269,7 +399,6 @@
       margin-top: -60%;
       }
     }
-
-}
+  }
 
 </style>

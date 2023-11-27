@@ -65,7 +65,7 @@ export default {
       this.$store.dispatch('setDialog',dialog)
     },
     async handleUpdateType(id) {
-      let dialog = {};
+      let dialog = {}
       this.$store.dispatch('setDialog', dialog);
       util.cargarLoader("Actualizando sala...")
       let typeroom = {
