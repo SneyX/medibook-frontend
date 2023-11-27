@@ -52,8 +52,6 @@ export default {
       password: '',
       showMsg:true,
       msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres.",
-      emailConfirmationSent: false,
-      emailConfirmationDelivered: false,
       acceptTerms: false,
     };
   },
