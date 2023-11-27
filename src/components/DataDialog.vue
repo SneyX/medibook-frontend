@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div v-if="dialog.type == 'modificarCarac'" class="caracContenedor">
+  <div v-if="dialog.type == 'modificarCarac'" class="contenedor">
     <div class="modificarCarac">
       <label>CARACTERÍSTICAS*</label>
       <div class="caractCont">
@@ -223,86 +223,69 @@
         border-radius: 15px;
       }
     }
-    
-  }
-  .textCont{
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 50%;
-    height: 50%;
-    border: 1px solid aqua;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .texto{
-    width: 80%;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: aqua;
-  }
-  .categoryCont{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 20px;
-    p{
+    .textCont{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: auto;
+      padding: 20px;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      width: 100%;
-      border: 1px solid aqua;
-      margin: 1px;
-      border-radius: 5px;
+      background-color: #afedee;
+      color: #0d7277;
+      border: 3px solid #0d7277;
+      border-radius: 10px;
+      .texto{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #0d7277;
+        .categoryCont{
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          padding: 20px;
+          p{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+            border: 1px solid #0d7277;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+          }
+        }
+      }
+      .btnCont{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .Btn{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 15px;
+          border: 2px solid #0f8389;
+          color: #0f8389;
+          cursor: pointer;
+          margin: 10px;
+          padding: 10px 50px;
+          font-weight: bold;
+          width: 50%;
+        }
+        .Btn:hover {
+          background-color: #99DCDD;
+        }
+      }
     }
-    span{
-      width: 30%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-  }
-  .btnCont{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  .Btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3%;
-    border: 3px solid #0f8389;
-    color: #0f8389;
-    cursor: pointer;
-    margin-top: 10px;
-    padding: 10px 50px;
-    font-weight: bold;
-    width: 50%;
-    margin-left: 25%;
-  }
-  .Btn:hover {
-    background-color: #99DCDD;
-  }
-
-  .caracContenedor{
-    z-index: 2;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
     .modificarCarac{
       position: absolute;
       left: 50%;
