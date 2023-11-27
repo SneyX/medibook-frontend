@@ -100,7 +100,7 @@ export default {
         util.cargarLoader("")
         if (result) {
           
-          util.cargarPopUp("Usuario agregado con éxito", "GRACIAS")
+          util.cargarPopUp("¡Usuario agregado con éxito! Gracias por registrarte", "Revisá tu casilla de correo")
 
           emailjs.init('DAB1-dX1vNhJi41D3')
 
