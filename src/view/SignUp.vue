@@ -23,23 +23,8 @@
         
         <button type="submit" >Registrarse</button>
 
-        <button v-if="!emailConfirmationDelivered" @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
-
       </form>
-      <!-- este formulario no es visible, solo es para enviar el mail al registro -->
-      <form ref="form" id="form">
-        <div class="field">
-          <label for="name">name</label>
-          <input type="text" name="name" id="name" :value="name">
-        </div>
-        <div class="field">
-          <label for="username">username</label>
-          <input type="text" name="username" id="username" :value="username">
-        </div>
-        <input ref="btn" type="submit" id="button" value="Send Email">
-      </form>
-      <!-- este formulario no es visible, solo es para enviar el mail al registro -->
-
+ 
       <span v-if="!showMsg">{{ msg }}</span>
     </div>
   </div>
@@ -50,7 +35,7 @@
 
 import postMethods from '@/service/postMethod';
 import util from '@/utils/utils';
-import emailjs from '@emailjs/browser';
+
 
 export default {
   name: 'SignUp',
@@ -109,18 +94,6 @@ export default {
         if (result) {
           
           util.cargarPopUp("¡Usuario agregado con éxito! Gracias por registrarte", "Revisá tu casilla de correo")
-
-          emailjs.init('DAB1-dX1vNhJi41D3')
-
-          emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
-            .then((result) => {
-                console.log('SUCCESS!', result.text);
-                this.emailConfirmationSent = true;
-                this.emailConfirmationDelivered = true;
-            }, (error) => {
-                console.log('FAILED...', error.text);
-            });
-            
           this.resetForm();
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
@@ -129,16 +102,6 @@ export default {
         }
       
   }
-    },
-    resendConfirmationEmail() {
-      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', this.$refs.form)
-        .then((result) => {
-          console.log('SUCCESS!', result.text);
-          this.emailConfirmationDelivered = true;
-        }, (error) => {
-          console.log('FAILED...', error.text);
-          this.emailConfirmationDelivered = false;
-        });
     },
     resetForm() {
       this.name = '';

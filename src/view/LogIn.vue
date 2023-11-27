@@ -1,8 +1,8 @@
 <template>
-  <div :class="[theme, 'contenedor']">
+   <div :class="[theme, 'contenedor']">
     <div class="login-container">
       <h2>Iniciar Sesión</h2>
-      <form ref="loginForm" @submit.prevent="submitForm">
+      <form ref="form" @submit.prevent="submitForm">
         <label for="username">Email:</label>
         <input ref="username" type="text" id="username" :value="username" />
 
@@ -10,6 +10,7 @@
         <input ref="password" type="password" id="password" :value="password" />
 
         <button type="submit">Iniciar Sesión</button>
+        <button @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
       </form>
     </div>
   </div>
@@ -20,6 +21,7 @@
 import postMethods from '@/service/postMethod'
 import getMethod from '@/service/getMethod'
 import util from '@/utils/utils'
+import emailjs from '@emailjs/browser';
 
 
 export default {
@@ -84,6 +86,32 @@ export default {
       }
 
     },
+    resendConfirmationEmail() {
+  const recipientEmail = this.$refs.username.value;
+  console.log(recipientEmail);
+
+  if (!recipientEmail || !util.validarDatos(recipientEmail, "email").isValid) {
+    console.error('Recipient email is empty or invalid.');
+
+    return;
+  }
+
+  emailjs.init('DAB1-dX1vNhJi41D3');
+
+  const emailParams = {
+    username: recipientEmail,
+  };
+
+  emailjs.send('service_f34uw5r', 'template_1x7auwe', emailParams)
+    .then((result) => {
+      console.log('SUCCESS!', result.text);
+      this.emailConfirmationDelivered = true;
+    })
+    .catch((error) => {
+      console.error('FAILED...', error);
+      this.emailConfirmationDelivered = false;
+    });
+},
     resetForm(){
       this.username = ""
       this.password = ""
