@@ -150,4 +150,20 @@ h2 {
   margin-top: 2vw;
   padding-left: 2vw;
 }
+
+@media only screen and (max-width:480px ){
+   .cuerpo {
+      font-size: 2vw;
+      width: 80vw;
+      padding-left: 4vw;
+      column-gap: 3.5vw;
+   }
+   .poli {
+  padding: 2vw;
+  width: 95vw;
+}
+h2{
+   font-size: 4vw;
+}
+}
 </style>

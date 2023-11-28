@@ -97,6 +97,9 @@ export default {
 }
 
 @media only screen and (max-width:480px ){
+  .footer {
+    height: 10vw;
+  }
   .redesSociales {
     margin-bottom: 0px;
     width:200px;
@@ -129,5 +132,20 @@ export default {
     justify-content: center;
     margin-right: 0vw;
   } 
+  .byc h4{
+    font-size: 1.4vw;
+    margin-top: -8px;
+  }
+  .byc p {
+    height: 15px;
+    font-size: 3vw;
+    width: 70px;
+    margin-top: -9px;
+  }
+
+  .byc{
+    height: 10px;
+    margin-left: 20px;
+  }
 }
 </style>
