@@ -171,38 +171,6 @@
     border: 1px solid black;
     margin: 0 10px;
   }
-  @media only screen and (max-width:480px ){ 
-    .swiper{
-    width: 360px;
-  }
-  img{
-    width: 100px;
-    height: 90px;
-  }
-  .info p {
-    font-size: 2vw;
-  } 
-  .info h2{
-        font-size: 3vw;
-  }
-  .btnCont{
-    margin-top: 10px;
-    height: 30px;
-  }
-  .btnCont button{
-    padding: 0px 0px 1px 0px;
-    height: 18px;
-    width: 20px;
-    font-size: 2.5vw;
-  }
-  .btnCont p{
-    padding: 1px 5px;
-    margin: 0 5px;
-    height: 20px;
-    width: 35px;
-    font-size: 2vw;
-  }
-  }
   .lleno{
     color: red;
     font-size: 24px;
@@ -221,7 +189,7 @@
     background-color: rgba(120, 120, 120, 0.550);
     border: 2px solid rgb(25, 25, 25);
     position: absolute;
-    top: 50px;
+    top: 210px;
     right: 12px;
     z-index: 2;
   }
@@ -229,7 +197,7 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    top: 45px;
+    top: 200px;
     right: 7px;
   }
 
@@ -288,6 +256,38 @@
     100% {
       transform: scale(0.9);
     }
+  }
+  @media only screen and (max-width:480px ){ 
+    .swiper{
+    width: 360px;
+  }
+  img{
+    width: 100px;
+    height: 90px;
+  }
+  .info p {
+    font-size: 2vw;
+  } 
+  .info h2{
+        font-size: 3vw;
+  }
+  .btnCont{
+    margin-top: 10px;
+    height: 30px;
+  }
+  .btnCont button{
+    padding: 0px 0px 1px 0px;
+    height: 18px;
+    width: 20px;
+    font-size: 2.5vw;
+  }
+  .btnCont p{
+    padding: 1px 5px;
+    margin: 0 5px;
+    height: 20px;
+    width: 35px;
+    font-size: 2vw;
+  }
   }
   </style>
   
