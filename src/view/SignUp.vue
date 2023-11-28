@@ -122,6 +122,8 @@ export default {
   emailjs.init('DAB1-dX1vNhJi41D3');
 
 const form = document.createElement('form');
+form.appendChild(document.createElement('input')).name = 'name';
+form.querySelector('input').value = this.name;
 form.appendChild(document.createElement('input')).name = 'username';
 form.querySelector('input').value = recipientEmail;
 
