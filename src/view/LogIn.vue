@@ -10,53 +10,52 @@
         <input ref="password" type="password" id="password" :value="password" />
 
         <button type="submit">Iniciar Sesión</button>
-        <button class="reenviar" @click="resendConfirmationEmail">
-          Reenviar Correo de Confirmación
-        </button>
       </form>
+      <button class="reenviar" @click="resendConfirmationEmail">Reenviar Correo de Confirmación</button>
     </div>
   </div>
 </template>
 
 <script>
-import postMethods from "@/service/postMethod";
-import getMethod from "@/service/getMethod";
-import util from "@/utils/utils";
-import emailjs from "@emailjs/browser";
+import postMethods from "@/service/postMethod"
+import getMethod from "@/service/getMethod"
+import util from "@/utils/utils"
+import emailjs from "@emailjs/browser"
 
 export default {
   name: "LogIn",
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     },
   },
   data() {
     return {
       username: this.$store.getters?.getUser?.username || "",
+      name: this.$store.getters?.getUser?.name || "",
       password: this.$store.getters?.getUser?.password || "",
-    };
+    }
   },
   methods: {
     async submitForm() {
       const data = {
         username: this.$refs.username.value,
         password: this.$refs.password.value,
-      };
+      }
       let validation = [
         { username: util.validarDatos(data.username, "email") },
         { password: util.validarDatos(data.password, "password") },
-      ];
+      ]
       for (let item of validation) {
-        const fieldName = Object.keys(item)[0];
+        const fieldName = Object.keys(item)[0]
         if (!item[fieldName].isValid) {
-          util.cargarLoader("");
-          util.cargarPopUp(item[fieldName].texto, "ERROR");
-          return;
+          util.cargarLoader("")
+          util.cargarPopUp(item[fieldName].texto, "ERROR")
+          return
         }
       }
-      util.cargarLoader("Iniciando..");
-      const result = await postMethods.logIn(data);
+      util.cargarLoader("Iniciando..")
+      const result = await postMethods.logIn(data)
       if (result) {
         let preUser = {
           username: this.$refs.username.value,
@@ -64,7 +63,7 @@ export default {
           jwt: result.token,
         };
         this.$store.dispatch("setUser", preUser);
-        let user = await getMethod.getUser(data.username, false);
+        let user = await getMethod.getUser(data.username, false)
         const userForStore = {
           id: user?.id || "",
           name: user?.name || "",
@@ -74,49 +73,33 @@ export default {
           jwt: result.token,
           rol: user?.role,
           rooms: user?.rooms || [],
-        };
-        this.resetForm();
-        this.$store.dispatch("setUser", userForStore);
-        this.$store.dispatch("setUserRooms", userForStore.rooms);
-        util.cargarLoader("");
-        this.$router.push({ path: "/" });
+        }
+        this.resetForm()
+        this.$store.dispatch("setUser", userForStore)
+        this.$store.dispatch("setUserRooms", userForStore.rooms)
+        util.cargarLoader("")
+        this.$router.push({ path: "/" })
       } else {
-        util.cargarLoader("");
-        util.cargarPopUp("los datos ingresados no son correctos", "ERROR");
+        util.cargarLoader("")
+        util.cargarPopUp("Los datos ingresados no son correctos", "ERROR")
       }
     },
-    resendConfirmationEmail() {
-      const recipientEmail = this.$refs.username.value;
-      console.log(recipientEmail);
-
-      if (
-        !recipientEmail ||
-        !util.validarDatos(recipientEmail, "email").isValid
-      ) {
-        console.error("Recipient email is empty or invalid.");
-        return;
-      }
-
-      emailjs.init("DAB1-dX1vNhJi41D3");
-
+    async resendConfirmationEmail() {
+      emailjs.init("DAB1-dX1vNhJi41D3")
       const emailParams = {
-        username: recipientEmail,
-      };
-
-      emailjs
-        .send("service_f34uw5r", "template_1x7auwe", emailParams)
-        .then((result) => {
-          console.log("SUCCESS!", result.text);
-          this.emailConfirmationDelivered = true;
-        })
-        .catch((error) => {
-          console.error("FAILED...", error);
-          this.emailConfirmationDelivered = false;
-        });
+        name: this.name.length > 0 ? this.name : this.$refs.username.value,
+        username: this.$refs.username.value
+      }
+      try {
+        const res = await emailjs.send("service_f34uw5r", "template_1x7auwe", emailParams)
+        console.log("SUCCESS!", res.text)
+      } catch (error) {
+        console.error("FAILED...", error)
+      }
     },
     resetForm() {
-      this.username = "";
-      this.password = "";
+      this.username = ""
+      this.password = ""
     },
   },
 };
