@@ -1,6 +1,7 @@
 <template>
   <div class="contenedor" v-if="!isMobile">
     <h2>PANEL DE ADMINISTRACIÓN</h2>
+    <div class="cerrar" @click="goBack">&lt;</div>
     <div class="mainTable">
       <div class="salaCont">
         <p :class="{ back : displaysala }" @click="displayHandler('sala')">salas</p>
@@ -139,10 +140,29 @@ export default {
           (window.matchMedia && window.matchMedia("(pointer:coarse)").matches)
         ) { this.isMobile = true } else { this.isMobile = false }
     },
+    goBack() {
+      this.$router.go(-1)
+    },
   },
 };
 </script>
 <style scoped>
+
+  .cerrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #15b4bc;
+    border: 3px #15b4bc solid;
+    background-color: #99dcdd;
+    font-size: 30px;
+    font-weight: bold;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 40px;
+  }
   .contenedor {
     width: 100%;
     display: flex;

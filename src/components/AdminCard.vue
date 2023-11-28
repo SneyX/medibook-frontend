@@ -2,7 +2,9 @@
   <div class="mainTable" v-for="card in cards" :key="card?.id">
     <div class="info">
       <p class="id">{{ card?.id }}</p>
-      <p class="name">{{ card?.name }}</p>
+      <router-link class="name" :to="{ name: 'card-detail', params: { id: card?.id } }">
+        <p>{{ card?.name }}</p>
+      </router-link>
     </div>
     <div class="action">
 

@@ -22,6 +22,17 @@
           <strong>DESCRIPCIÓN:</strong>
           <p>{{ card?.description }}</p>
         </div>
+        <strong>CARACTERÍSITCAS:</strong>
+        <div class="mainTable" v-if="card?.characteristics?.length > 0">
+          <div class="caracteristica" v-for="caracteristica in card?.characteristics" :key="caracteristica?.id">
+            <div class="name">
+              <div class="nameIcon">
+                <DinamicIcon :iconName="caracteristica?.urlicon" @iconClick="handleIconClick" class="icono"/>
+                {{ caracteristica?.name }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -31,16 +42,18 @@
 <script>
 import util from '@/utils/utils'
 import getMethod from '@/service/getMethod'
-import DataDialog from '@/components/DataDialog.vue';
+import DataDialog from '@/components/DataDialog.vue'
+import DinamicIcon from '@/components/DinamicIcon'
 
 export default {
   name: 'CardDetail',
   components:{
     DataDialog,
+    DinamicIcon,
   },
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     },
     favorite() {
       const fav = this.$store.getters?.getUserRooms || []
@@ -54,7 +67,7 @@ export default {
     }
   },
   async created() {
-			await this.loadCard();
+			await this.loadCard()
 		},
   methods:{
     async loadCard() {
@@ -68,7 +81,7 @@ export default {
       util.cargarLoader("")
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
     cargarSlider(){
       let dialog = {
@@ -85,7 +98,51 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+  .mainTable{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 10px 0;
+    .caracteristica{
+      height: 50px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 10px 0;
+      .name{
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px;
+        .nameIcon{
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          min-width: 40%;
+          padding: 10px;
+        }
+        .icono{
+          display: flex;
+          width: 35px;
+          height: 35px;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #0d7277;
+          border-radius: 50%;
+          background-color: #99DCDD;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  strong{
+    padding: 10px;
+  }
   .card{
     width: 100%;
   }
@@ -110,9 +167,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #605B5B;
-    border: 3px #605B5B solid;
-    background-color: #cbcaca;
+    color: #15b4bc;
+    border: 3px #15b4bc solid;
+    background-color: #99dcdd;
     font-size: 30px;
     font-weight: bold;
     width: 45px;
@@ -205,7 +262,7 @@ export default {
       font-size: 12px;
     }
     .cerrar{
-      border: 2px #605B5B solid;
+      border: 2px #15b4bc solid;
       font-size: 20px;
       width: 25px;
       height: 25px;

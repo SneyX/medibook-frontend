@@ -1,6 +1,7 @@
 <template>
   <div :class="[theme, 'contenedor']">
     <div class="login-container">
+      <div class="cerrar" @click="goBack">&lt;</div>
       <h2>MODIFICAR SALA</h2>
       <form ref="modifyForm" @submit.prevent="submitForm">
         
@@ -164,7 +165,10 @@ export default {
         description: this.card.description
       }
       util.cargarLoader("")
-    }
+    },
+    goBack() {
+      this.$router.go(-1)
+    },
   },
   async mounted(){
     await this.init()
@@ -192,6 +196,21 @@ export default {
   background-color: var(--oscuro);
 }
 
+.cerrar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #15b4bc;
+  border: 3px #15b4bc solid;
+  background-color: #99dcdd;
+  font-size: 30px;
+  font-weight: bold;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 40px;
+}
 form {
   display: flex;
   flex-direction: column;

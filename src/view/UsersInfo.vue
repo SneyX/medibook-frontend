@@ -2,6 +2,7 @@
   <div class="user-profile" v-if="rol == 'ADMIN'">
     <div class="contenedor">
       <h2>ADMINISTRACIÓN DE USUARIOS</h2>
+      <div class="cerrar" @click="goBack">&lt;</div>
       <div class="mainTable">
         <div class="info">
           <p class="id">id</p>
@@ -65,6 +66,9 @@ export default {
     async updateUsers(updateUsers) {
       this.users = updateUsers
     },
+    goBack() {
+      this.$router.go(-1)
+    },
   }, 
 
 };
@@ -89,6 +93,21 @@ export default {
   border-radius: 15px;
   margin-top: 5px;
   background-color: #15b4bc;
+}
+.cerrar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #15b4bc;
+  border: 3px #15b4bc solid;
+  background-color: #99dcdd;
+  font-size: 30px;
+  font-weight: bold;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 40px;
 }
 .info {
   width: 35%;

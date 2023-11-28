@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+    <div class="cerrar" @click="goBack">&lt;</div>
 		<div v-for="card in cards" :key="card?.id" :class="[theme, 'card']" >
 			<router-link :to="{ name: 'card-detail', params: { id: card?.id } }">
 			<img :key="card?.id" :src="card?.images[0]?.path" :alt="card?.name">
@@ -44,7 +45,10 @@
 				const rooms = await getMethod.getRooms()
 				this.cards = rooms.filter( item => item.typeroom.name == category )
 				util.cargarLoader("")
-			}
+			},
+      goBack() {
+        this.$router.go(-1)
+      },
 		}
 	}
 </script>
@@ -62,6 +66,21 @@
     overflow: hidden;
     width: 390px;
 		height: auto;
+  }
+  .cerrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #15b4bc;
+    border: 3px #15b4bc solid;
+    background-color: #99dcdd;
+    font-size: 30px;
+    font-weight: bold;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 40px;
   }
   
   .card img {

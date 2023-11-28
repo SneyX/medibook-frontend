@@ -1,7 +1,9 @@
 <template>
   <div class="user-profile">
     <div class="contenedor">
-      <h2>ADMINISTRACIÓN DE USUARIOS</h2>
+      <h2>ADMINISTRACIÓN DE USUARIOS
+        <div class="cerrar" @click="goBack">&lt;</div>
+      </h2>
       <p>{{user.id}}</p>
       <p>{{user.name}}</p>
       <p>{{user.lastname}}</p>
@@ -31,6 +33,9 @@ export default {
   created() {
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },
   }, 
 
 };
@@ -44,6 +49,21 @@ export default {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 50px;
+}
+.cerrar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #15b4bc;
+  border: 3px #15b4bc solid;
+  background-color: #99dcdd;
+  font-size: 30px;
+  font-weight: bold;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 40px;
 }
 .mainTable {
   width: 100%;

@@ -2,6 +2,7 @@
   <div :class="[theme, 'contenedor']">
     <div class="login-container">
       <h2>AGREGAR CARACTERÍSTICA</h2>
+      <div class="cerrar" @click="goBack">&lt;</div>
       <form ref="caracteristicasForm" @submit.prevent="submitForm">
         
         <label for="nombre">NOMBRE*</label>
@@ -77,6 +78,9 @@ export default {
         util.cargarLoader("")
       }
     },
+    goBack() {
+      this.$router.go(-1)
+    },
     handleUpdateIcon(nombre){
       this.display = false
       this.$refs.icono.value = nombre
@@ -108,6 +112,20 @@ export default {
     border-radius: 8px;
     background-color: var(--oscuro);
     margin-bottom: 130px;
+    .cerrar{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #15b4bc;
+      border: 3px #15b4bc solid;
+      background-color: #99dcdd;
+      font-size: 30px;
+      font-weight: bold;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
     form {
       display: flex;
       flex-direction: column;

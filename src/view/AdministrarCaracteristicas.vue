@@ -141,8 +141,8 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #0f8389;
-          border: 2px #0d7277 solid;
+          color: #15b4bc;
+          border: 3px #15b4bc solid;
           background-color: #99dcdd;
           font-size: 30px;
           font-weight: bold;
@@ -221,7 +221,7 @@ export default {
       font-size: 12px;
     }
     .cerrar{
-      border: 2px #605B5B solid;
+      border: 2px #15b4bc solid;
       font-size: 20px;
       width: 25px;
       height: 25px;

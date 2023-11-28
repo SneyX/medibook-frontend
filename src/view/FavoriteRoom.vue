@@ -1,6 +1,7 @@
 <template>
   <div class="contenedor">
     <h2>PANEL DE  FAVORITOS</h2>
+    <div class="cerrar" @click="goBack">&lt;</div>
     <div class="mainTable">
       <div class="salaCont">
         <p>Favoritas</p>
@@ -54,6 +55,9 @@ export default {
     async updateFavs(updatedRooms) {
       this.cards = updatedRooms;
     },
+    goBack() {
+      this.$router.go(-1)
+    },
   },
 }
 </script>
@@ -77,6 +81,21 @@ export default {
     margin: 10px 0;
     background-color: #15b4bc;
     font-weight: bold;
+  }
+  .cerrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #15b4bc;
+    border: 3px #15b4bc solid;
+    background-color: #99dcdd;
+    font-size: 30px;
+    font-weight: bold;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 40px;
   }
   .info{
     width: 35%;

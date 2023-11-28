@@ -2,8 +2,8 @@
   <div :class="[theme, 'contenedor']">
     <div class="login-container">
       <h2>AGREGAR SALA</h2>
+      <div class="cerrar" @click="goBack">&lt;</div>
       <form ref="loginForm" @submit.prevent="submitForm">
-        
         <label for="nombre">NOMBRE*</label>
         <input ref="nombre" type="text" id="nombre" />
 
@@ -195,7 +195,10 @@ export default {
       this.options = await getMethod.getTypeRooms()
       this.options2 = await getMethod.getCaracteristicas()
       util.cargarLoader("")
-    }
+    },
+    goBack() {
+      this.$router.go(-1)
+    },
   },
   mounted(){
     this.init()
@@ -224,6 +227,21 @@ export default {
   margin-bottom: 130px;
 }
 
+.cerrar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #15b4bc;
+  border: 3px #15b4bc solid;
+  background-color: #99dcdd;
+  font-size: 30px;
+  font-weight: bold;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 40px;
+}
 form {
   display: flex;
   flex-direction: column;
