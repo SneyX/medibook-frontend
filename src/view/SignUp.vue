@@ -12,9 +12,9 @@
         <input ref="username" type="text" id="username" :value="username" placeholder="En formato xxxx@xxx.xxx"/>
         <label for="password">Contraseña:</label>
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
-        <label for="acceptTerms">
+        <label for="acceptTerms" class="link">
         <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
-        Acepto las <router-link to="/bases-y-condiciones" class="link" target="_blank">bases y condiciones</router-link></label>
+        Acepto las <router-link to="/politicas-y-medidas-de-seguridad" target="_blank">Políticas y Medidas de Seguridad</router-link></label>
         
 
         <button type="submit" >Registrarse</button>
@@ -182,5 +182,8 @@ button {
 button:hover {
   background-color: #0f8389;
   transition: .5s ease-in-out;
+}
+.link {
+    font-size: 1vw;
 }
 </style>
