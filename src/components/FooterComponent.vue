@@ -13,7 +13,7 @@
 
       <div class="byc">
         <h4>Legales</h4>
-        <p><a href="/ruta-a-bases-y-condiciones" target="_blank" class="link">Ver bases y condiciones</a></p>
+        <p><router-link to="/bases-y-condiciones" class="link" target="_blank">Ver bases y condiciones</router-link></p>
       </div>
 
       <div class="redesSociales">

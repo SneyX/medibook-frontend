@@ -15,6 +15,11 @@
 
         <label for="password">Contraseña:</label>
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
+
+        <label for="acceptTerms">
+  <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
+  Acepto las <router-link to="/bases-y-condiciones" class="link" target="_blank">bases y condiciones</router-link>
+</label>
         
         <button type="submit" >Registrarse</button>
 
@@ -62,7 +67,8 @@ export default {
       showMsg:true,
       msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres.",
       emailConfirmationSent: false,
-      emailConfirmationDelivered: false
+      emailConfirmationDelivered: false,
+      acceptTerms: false
     };
   },
   methods: {
@@ -77,13 +83,15 @@ export default {
         lastname: this.lastName,
         username: this.username,
         password: this.password,
+        acceptTerms: this.acceptTerms,
       }
       
       util.cargarLoader("Agregando usuario")
       let validation = [ { name: util.validarDatos(data.name,"nombre") },
         { lastname: util.validarDatos(data.lastname,"apellido") },
         { username: util.validarDatos(data.username,"email"), },
-        { password: util.validarDatos(data.password,"password") }
+        { password: util.validarDatos(data.password,"password") },
+        {acceptTerms: util.validarDatos(data.acceptTerms,"acceptTerms")}
       ]
       for(let item of validation){
         const fieldName = Object.keys(item)[0]
@@ -94,7 +102,7 @@ export default {
         }
       }
 
-      if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid) {
+      if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid && validation[4].acceptTerms.isValid) {
     const result = await postMethods.addUser(data);
     util.cargarLoader("");
 
@@ -142,6 +150,7 @@ emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
       this.lastName = '';
       this.username = '';
       this.password = '';
+      this.acceptTerms= false;
     },
     checkPass(e){
       this.showMsg = util.validarDatos(e.target.value,"password").isValid

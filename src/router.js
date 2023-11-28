@@ -14,6 +14,7 @@ import UserInfo from './view/UserInfo'
 import FavoriteRoom from './view/FavoriteRoom'
 import AdministrarCaracteristicas from './view/AdministrarCaracteristicas'
 import AgregarCaracteristicas from './view/AgregarCaracteristicas'
+import BasesYCondiciones from './view/BasesYCondiciones'
 
 const routes = [
   { path: '/', component: BodyMain },
@@ -30,6 +31,7 @@ const routes = [
   { path: '/card-category/:id', name: 'card-category', component: CardCategory },
   { path: '/modify/:id', name: 'card-modify', component: CardModify },
   { path: '/modify/caracteristicas/:id', name: 'card-modify-caracteristicas', component: AdministrarCaracteristicas },
+  { path: '/bases-y-condiciones', component: BasesYCondiciones },
 ];
 
 const router = createRouter({
