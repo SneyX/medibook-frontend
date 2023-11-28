@@ -2,39 +2,30 @@
   <div :class="[theme, 'contenedor']">
     <div class="signup-container">
       <h2>Registrarse</h2>
-      <form @submit.prevent="submitForm">
 
+      <form @submit.prevent="submitForm">
         <label for="name">Nombre:</label>
         <input ref="name" type="text" id="name" :value="name" placeholder="Entre 3 y 20 Letras"/>
-
         <label for="lastName">Apellido:</label>
         <input ref="lastName" type="text" id="lastName" :value="lastName" placeholder="Entre 3 y 20 Letras"/>
-
         <label for="username">Correo Electrónico:</label>
         <input ref="username" type="text" id="username" :value="username" placeholder="En formato xxxx@xxx.xxx"/>
-
         <label for="password">Contraseña:</label>
         <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
-
         <label for="acceptTerms">
-  <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
-  Acepto las <router-link to="/bases-y-condiciones" class="link" target="_blank">bases y condiciones</router-link>
-</label>
+        <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
+        Acepto las <router-link to="/bases-y-condiciones" class="link" target="_blank">bases y condiciones</router-link></label>
         
+
         <button type="submit" >Registrarse</button>
-
-
       </form>
+
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
       <form ref="form" id="form">
-        <div class="field">
-          <label for="name">name</label>
-          <input type="text" name="name" id="name" :value="name">
-        </div>
-        <div class="field">
-          <label for="username">username</label>
-          <input type="text" name="username" id="username" :value="username">
-        </div>
+        <label for="name">name</label>
+        <input type="text" name="name" id="name" :value="name">
+        <label for="username">username</label>
+        <input type="text" name="username" id="username" :value="username">
         <input ref="btn" type="submit" id="button" value="Send Email">
       </form>
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
@@ -42,14 +33,13 @@
       <span v-if="!showMsg">{{ msg }}</span>
     </div>
   </div>
-  <!-- <div class="push"></div> -->
 </template>
 
 <script>
 
-import postMethods from '@/service/postMethod';
-import util from '@/utils/utils';
-import emailjs from '@emailjs/browser';
+import postMethods from '@/service/postMethod'
+import util from '@/utils/utils'
+import emailjs from '@emailjs/browser'
 
 export default {
   name: 'SignUp',
@@ -102,48 +92,32 @@ export default {
         }
       }
 
+
       if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid && validation[4].acceptTerms.isValid) {
     const result = await postMethods.addUser(data);
     util.cargarLoader("");
 
-    if (result) {
-      util.cargarPopUp("Usuario agregado con éxito", "GRACIAS");
-
-      await this.resendConfirmationEmail();
-            
+      if (result) {
+          util.cargarPopUp("Usuario agregado con éxito", "GRACIAS");
+          this.sendEmail()
           this.resetForm();
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
-          util.cargarPopUp("Problema en el servidor", "ERROR");
+          util.cargarPopUp("Problema en el servidor", "ERROR")
         }
       }
     },
-    resendConfirmationEmail() {
-  const recipientEmail = this.username;
-
-    if (!recipientEmail || !util.validarDatos(recipientEmail, "email").isValid) {
-    console.error('Recipient email is empty or invalid.');
-    return;
-  }
-
-  emailjs.init('DAB1-dX1vNhJi41D3');
-
-const form = document.createElement('form');
-form.appendChild(document.createElement('input')).name = 'name';
-form.querySelector('input').value = this.name;
-form.appendChild(document.createElement('input')).name = 'username';
-form.querySelector('input').value = recipientEmail;
-
-emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
-  .then((result) => {
-    console.log('Correo de confirmación enviado con éxito:', result.text);
-    this.emailConfirmationDelivered = true;
-  })
-  .catch((error) => {
-    console.error('Error al enviar el correo de confirmación:', error.text);
-    this.emailConfirmationDelivered = false;
-  });
+    sendEmail() {
+      emailjs.init('DAB1-dX1vNhJi41D3')
+      const form = this.$refs.form
+      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
+      .then((result) => {
+        console.log('Correo de confirmación enviado con éxito:', result.text)
+      })
+      .catch((error) => {
+        console.error('Error al enviar el correo de confirmación:', error.text)
+      })
     },
     resetForm() {
       this.name = '';
@@ -156,7 +130,7 @@ emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
       this.showMsg = util.validarDatos(e.target.value,"password").isValid
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -184,22 +158,18 @@ emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
   border-radius: 8px;
   background-color: var(--oscuro);
 }
-
 form {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
-
 label {
   margin-bottom: 8px;
 }
-
 input {
   padding: 8px;
   margin-bottom: 16px;
 }
-
 button {
   background-color: #15b4bc;
   color: var(--text);
@@ -209,7 +179,6 @@ button {
   cursor: pointer;
   transition: .5s ease-in-out;
 }
-
 button:hover {
   background-color: #0f8389;
   transition: .5s ease-in-out;
