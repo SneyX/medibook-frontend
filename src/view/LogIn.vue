@@ -10,7 +10,7 @@
         <input ref="password" type="password" id="password" :value="password" />
 
         <button type="submit">Iniciar Sesión</button>
-        <button @click="resendConfirmationEmail">
+        <button class="reenviar" @click="resendConfirmationEmail">
           Reenviar Correo de Confirmación
         </button>
       </form>
@@ -162,6 +162,11 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: 0.5s ease-in-out;
+
+}
+.reenviar{
+  margin-top: 9px;
+
 }
 button:hover {
   background-color: #0f8389;
