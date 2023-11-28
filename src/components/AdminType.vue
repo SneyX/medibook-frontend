@@ -8,10 +8,10 @@
       <p>Acciones</p>
     </div>
   </div>
-  <div class="mainTable" v-for="card in cards" :key="card.id">
+  <div class="mainTable" v-for="card in cards" :key="card?.id">
     <div class="info">
-      <p class="id">{{ card.id }}</p>
-      <p class="name">{{ card.name }}</p>
+      <p class="id">{{ card?.id }}</p>
+      <p class="name">{{ card?.name }}</p>
     </div>
     <div class="action">
       <p @click="modifyCard(card)">Modificar</p>

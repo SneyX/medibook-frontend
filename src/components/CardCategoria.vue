@@ -10,7 +10,7 @@
         <router-link :to="{ name: 'card-category', params: { id: sala?.name } }">
           <img :key="sala?.id" :src="sala?.image?.path" :alt="sala?.image">
           <div :class="[theme, 'info']">
-            <h2>{{ sala.name }}</h2>
+            <h2>{{ sala?.name }}</h2>
               <p class="infoDet">Detalles</p>
             </div>
           </router-link>

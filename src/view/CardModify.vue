@@ -9,22 +9,22 @@
 
         <label for="category">CATEGORÍA*</label>
         <select ref="category" name="category" id="category" v-model="localCard.category">
-          <option v-for="category in options" :key="category.id" :value="category.name">{{category.name}}</option>
+          <option v-for="category in options" :key="category?.id" :value="category?.name">{{category?.name}}</option>
         </select>
 
         <label>CARACTERÍSTICAS*</label>
         <div class="caractCont">
-          <div class="carac" v-for="caracteristica in options2" :key="caracteristica.id" @click=agregar(caracteristica)>
+          <div class="carac" v-for="caracteristica in options2" :key="caracteristica?.id" @click=agregar(caracteristica)>
             <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
-            <p>{{ caracteristica.name }}</p>
+            <p>{{ caracteristica?.name }}</p>
           </div>
         </div>
 
         <label>AGREGADAS*</label>
         <div class="caractCont">
-          <div class="carac" v-for="caracteristica in caracteristicas" :key="caracteristica.id" @click=quitar(caracteristica)>
+          <div class="carac" v-for="caracteristica in caracteristicas" :key="caracteristica?.id" @click=quitar(caracteristica)>
             <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
-            <p>{{ caracteristica.name }}</p>
+            <p>{{ caracteristica?.name }}</p>
             <p class="cerrar">x</p>
           </div>
         </div>

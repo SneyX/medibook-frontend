@@ -43,16 +43,16 @@
     <div class="modificarCarac">
       <label>CARACTERÍSTICAS*</label>
       <div class="caractCont">
-        <div class="carac" v-for="caracteristica in dialog.totalCarac" :key="caracteristica.id" @click=agregar(caracteristica)>
+        <div class="carac" v-for="caracteristica in dialog.totalCarac" :key="caracteristica?.id" @click=agregar(caracteristica)>
           <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
-          <p>{{ caracteristica.name }}</p>
+          <p>{{ caracteristica?.name }}</p>
         </div>
       </div>
       <label>AGREGADAS*</label>
       <div class="caractCont">
-        <div class="carac" v-for="caracteristica in dialog.caracteristicas" :key="caracteristica.id" @click=quitar(caracteristica)>
+        <div class="carac" v-for="caracteristica in dialog.caracteristicas" :key="caracteristica?.id" @click=quitar(caracteristica)>
           <DinamicIcon :iconName="caracteristica?.urlicon" class="icono"/>
-          <p>{{ caracteristica.name }}</p>
+          <p>{{ caracteristica?.name }}</p>
           <p class="cerrar">x</p>
         </div>
       </div>
@@ -68,7 +68,7 @@
         <p>{{ dialog.texto }}</p> 
       </div>
       <select name="type" id="type" v-model="selected">
-        <option v-for="category in dialog.categorys" :key="category.id" :value="category.id">{{ category.name }}</option>
+        <option v-for="category in dialog.categorys" :key="category?.id" :value="category?.id">{{ category?.name }}</option>
       </select>
       <div class="btnCont">
         <div class="Btn" @click="recategorizeCard">ACEPTAR</div>
@@ -96,7 +96,7 @@
       <div class="cerrar" @click="close()">x</div>
       <select name="filter" id="filter" @change="onFilterChange($event)">
         <option value="seleccionar filtro">seleccionar filtro</option>
-        <option v-for="filtro in filtros" :value="filtro.name" :key="filtro.id" >{{filtro.name}}</option>
+        <option v-for="filtro in filtros" :value="filtro?.name" :key="filtro.id" >{{filtro?.name}}</option>
       </select>
     </div>
   </div>

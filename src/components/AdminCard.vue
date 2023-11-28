@@ -1,18 +1,18 @@
 <template>
-  <div class="mainTable" v-for="card in cards" :key="card.id">
+  <div class="mainTable" v-for="card in cards" :key="card?.id">
     <div class="info">
-      <p class="id">{{ card.id }}</p>
-      <p class="name">{{ card.name }}</p>
+      <p class="id">{{ card?.id }}</p>
+      <p class="name">{{ card?.name }}</p>
     </div>
     <div class="action">
 
-      <router-link :to="{ name: 'card-modify', params: { id: card.id } }">
+      <router-link :to="{ name: 'card-modify', params: { id: card?.id } }">
         <p>Modificar</p>
       </router-link>
 
       <p @click="recategorizeCard(card)">Recategorizar</p>
 
-      <router-link :to="{ name: 'card-modify-caracteristicas', params: { id: card.id } }">
+      <router-link :to="{ name: 'card-modify-caracteristicas', params: { id: card?.id } }">
         <p>Características</p>
       </router-link>
 

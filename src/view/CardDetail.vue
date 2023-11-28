@@ -10,7 +10,7 @@
           <img :src="card?.images[0]?.path" :alt="card?.images[0]?.alt" @click="cargarSlider">
         </div>
         <div class="secondaryImages">
-          <img v-for="(image, index) in card?.images?.slice(1, 5)" :key="index" :src="image.path" :alt="image.alt" @click="cargarSlider">
+          <img v-for="(image, index) in card?.images?.slice(1, 5)" :key="index" :src="image?.path" :alt="image?.alt" @click="cargarSlider">
         </div>
       </div>
       <div class="verMas">

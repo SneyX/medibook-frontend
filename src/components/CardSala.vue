@@ -7,13 +7,13 @@
       @slideChange="onSlideChange"
     >
       <swiper-slide v-for="sala in resultados" :key="sala?.id" :class="[theme, 'card']" >
-        <img :key="sala.images[0].id" :src="sala.images[0].path" :alt="sala.images[0].name">
+        <img :key="sala?.images[0]?.id" :src="sala?.images[0]?.path" :alt="sala?.images[0]?.name">
         <div :class="[theme, 'info']">
-          <h2>{{ sala.name }}</h2>
-          <div :class="[favorite.includes(sala.id) ? 'lleno' : 'vacio', 'corazon']" @click="handleFavorite(sala)" v-if="cargando[sala.id] !== false && user">&#10084;</div>
-          <div class="corazon2"><div class="lds-heart" v-if="cargando[sala.id] == false && user"><div></div></div></div>
-          <h2>{{ sala.typeroom.name }}</h2>
-          <router-link :to="{ name: 'card-detail', params: { id: sala.id } }">
+          <h2>{{ sala?.name }}</h2>
+          <div :class="[favorite.includes(sala?.id) ? 'lleno' : 'vacio', 'corazon']" @click="handleFavorite(sala)" v-if="cargando[sala?.id] !== false && user">&#10084;</div>
+          <div class="corazon2"><div class="lds-heart" v-if="cargando[sala?.id] == false && user"><div></div></div></div>
+          <h2>{{ sala?.typeroom?.name }}</h2>
+          <router-link :to="{ name: 'card-detail', params: { id: sala?.id } }">
             <p class="infoDet">Detalles</p>
           </router-link>
         </div>

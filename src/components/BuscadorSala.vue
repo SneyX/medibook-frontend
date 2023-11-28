@@ -17,7 +17,7 @@
     <p>Filtros: </p>
     <p v-for="filtro in filtrosAplicados" :key="filtro">{{ filtro }} <span @click="quitarFiltro(filtro)">x</span></p>
   </div>
-  <section :class="theme"  id="resultados" v-if="resultados.length > 0">
+  <section :class="theme"  id="resultados" v-if="resultados?.length > 0">
     <h3>RESULTADOS DE BÚSQUEDA</h3>
     <div class="contCard">
       <CardSala :resultados="resultados" />

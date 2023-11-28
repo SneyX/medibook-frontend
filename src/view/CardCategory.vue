@@ -1,11 +1,11 @@
 <template>
 	<div class="container">
-		<div v-for="card in cards" :key="card.id" :class="[theme, 'card']" >
-			<router-link :to="{ name: 'card-detail', params: { id: card.id } }">
-			<img :key="card.id" :src="card.images[0].path" :alt="card.name">
+		<div v-for="card in cards" :key="card?.id" :class="[theme, 'card']" >
+			<router-link :to="{ name: 'card-detail', params: { id: card?.id } }">
+			<img :key="card?.id" :src="card?.images[0]?.path" :alt="card?.name">
 				<div :class="[theme, 'info']">
-					<h2> {{ card.name }} </h2>
-					<p> {{ card.description }} </p>
+					<h2> {{ card?.name }} </h2>
+					<p> {{ card?.description }} </p>
 				</div>
 			</router-link>
 		</div>

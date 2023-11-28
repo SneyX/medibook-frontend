@@ -12,8 +12,8 @@
         <p>Actions</p>
       </div>
       <div class="footerCont">
-        <div class="descripcion" v-for="car in card.characteristics" :key="car.id">
-          <p>id: {{ car.id }}</p>
+        <div class="descripcion" v-for="car in card.characteristics" :key="car?.id">
+          <p>id: {{ car?.id }}</p>
           <div class="iconNombre">
             <DinamicIcon :iconName="car?.urlicon" />
             <strong>{{ car?.name }}</strong>

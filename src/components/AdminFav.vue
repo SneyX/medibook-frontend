@@ -1,14 +1,14 @@
 <template>
-  <div class="mainTable" v-for="card in cards" :key="card.id">
+  <div class="mainTable" v-for="card in cards" :key="card?.id">
     <div class="info">
-      <p class="id">{{ card.id }}</p>
-      <p class="name">{{ card.name }}</p>
+      <p class="id">{{ card?.id }}</p>
+      <p class="name">{{ card?.name }}</p>
     </div>
     <div class="action">
-      <router-link :to="{ name: 'card-detail', params: { id: card.id } }">
+      <router-link :to="{ name: 'card-detail', params: { id: card?.id } }">
         <p>Detalles</p>
       </router-link>
-      <div class="corazon" @click="handleFavorite(card)" v-if="cargando[card.id] !== false">Eliminar de favoritos</div>
+      <div class="corazon" @click="handleFavorite(card)" v-if="cargando[card?.id] !== false">Eliminar de favoritos</div>
     </div>
   </div>
 </template>
