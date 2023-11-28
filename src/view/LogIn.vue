@@ -89,13 +89,11 @@ export default {
       const recipientEmail = this.$refs.username.value;
       console.log(recipientEmail);
 
-      // Validar que la dirección de correo electrónico no esté vacía y sea válida
       if (
         !recipientEmail ||
         !util.validarDatos(recipientEmail, "email").isValid
       ) {
         console.error("Recipient email is empty or invalid.");
-        // Puedes mostrar un mensaje al usuario informando sobre el problema si es necesario
         return;
       }
 
