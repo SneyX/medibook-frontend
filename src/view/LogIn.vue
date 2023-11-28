@@ -92,6 +92,7 @@ export default {
       }
       try {
         const res = await emailjs.send("service_f34uw5r", "template_1x7auwe", emailParams)
+        util.cargarPopUp(`Hemos re-enviado un mail de bienvenida a:\n ${this.$refs.username}`, "GRACIAS")
         console.log("SUCCESS!", res.text)
       } catch (error) {
         console.error("FAILED...", error)

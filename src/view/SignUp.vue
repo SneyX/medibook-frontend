@@ -92,8 +92,7 @@ export default {
       if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid && validation[4].acceptTerms.isValid) {
         const result = await postMethods.addUser(data)
         util.cargarLoader("")
-      if (result) {
-          util.cargarPopUp("Usuario agregado con éxito", "GRACIAS")
+        if (result) {
           this.sendEmail()
           this.resetForm()
           this.$store.commit('setUser', data)
@@ -104,13 +103,17 @@ export default {
       }
     },
     sendEmail() {
+      util.cargarLoader("Enviando mail")
       emailjs.init('DAB1-dX1vNhJi41D3')
       const form = this.$refs.form
       emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
       .then((result) => {
         console.log('Correo de confirmación enviado con éxito:', result.text)
+        util.cargarLoader("")
+        util.cargarPopUp(`Usuario agregado con éxito, \n Hemos enviado un mail de bienvenida a:\n ${this.$refs.username}`, "GRACIAS")
       })
       .catch((error) => {
+        util.cargarLoader("")
         console.error('Error al enviar el correo de confirmación:', error.text)
       })
     },
