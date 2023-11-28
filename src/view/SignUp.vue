@@ -15,8 +15,6 @@
         <label for="acceptTerms" class="link">
         <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
         Acepto las <router-link to="/politicas-y-medidas-de-seguridad" target="_blank">Políticas y Medidas de Seguridad</router-link></label>
-        
-
         <button type="submit" >Registrarse</button>
       </form>
 
@@ -45,7 +43,7 @@ export default {
   name: 'SignUp',
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     }
   },
   data() {
@@ -81,7 +79,7 @@ export default {
         { lastname: util.validarDatos(data.lastname,"apellido") },
         { username: util.validarDatos(data.username,"email"), },
         { password: util.validarDatos(data.password,"password") },
-        {acceptTerms: util.validarDatos(data.acceptTerms,"acceptTerms")}
+        { acceptTerms: util.validarDatos(data.acceptTerms,"acceptTerms") }
       ]
       for(let item of validation){
         const fieldName = Object.keys(item)[0]
@@ -91,16 +89,13 @@ export default {
           return
         }
       }
-
-
       if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid && validation[4].acceptTerms.isValid) {
-    const result = await postMethods.addUser(data);
-    util.cargarLoader("");
-
+        const result = await postMethods.addUser(data)
+        util.cargarLoader("")
       if (result) {
-          util.cargarPopUp("Usuario agregado con éxito", "GRACIAS");
+          util.cargarPopUp("Usuario agregado con éxito", "GRACIAS")
           this.sendEmail()
-          this.resetForm();
+          this.resetForm()
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
@@ -120,11 +115,11 @@ export default {
       })
     },
     resetForm() {
-      this.name = '';
-      this.lastName = '';
-      this.username = '';
-      this.password = '';
-      this.acceptTerms= false;
+      this.name = ''
+      this.lastName = ''
+      this.username = ''
+      this.password = ''
+      this.acceptTerms= false
     },
     checkPass(e){
       this.showMsg = util.validarDatos(e.target.value,"password").isValid
@@ -134,56 +129,56 @@ export default {
 </script>
 
 <style scoped>
-#form{
-  display: none;
-}
-.contenedor {
-  background-color: #15b4bc;
-  color: var(--text);
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 0;
-}
-.push{
-  background-color: #15b4bc;
-  min-height: 150px;
-}
-.signup-container {
-  width: 300px;
-  padding: 20px;
-  margin: 20px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background-color: var(--oscuro);
-}
-form {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-}
-label {
-  margin-bottom: 8px;
-}
-input {
-  padding: 8px;
-  margin-bottom: 16px;
-}
-button {
-  background-color: #15b4bc;
-  color: var(--text);
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: .5s ease-in-out;
-}
-button:hover {
-  background-color: #0f8389;
-  transition: .5s ease-in-out;
-}
-.link {
-    font-size: 1vw;
-}
+  #form{
+    display: none;
+  }
+  .contenedor {
+    background-color: #15b4bc;
+    color: var(--text);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .push{
+    background-color: #15b4bc;
+    min-height: 150px;
+  }
+  .signup-container {
+    width: 300px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--oscuro);
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  label {
+    margin-bottom: 8px;
+  }
+  input {
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  button {
+    background-color: #15b4bc;
+    color: var(--text);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+  }
+  button:hover {
+    background-color: #0f8389;
+    transition: .5s ease-in-out;
+  }
+  .link {
+      font-size: 1vw;
+  }
 </style>

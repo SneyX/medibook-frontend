@@ -55,12 +55,12 @@ const cargarPopUp = (texto, titulo) =>{
           texto:"El password no cumple el formato"
         }
         break;
-        case "acceptTerms":
-          result={
-            isValid:dato,
-            texto:"Debe aceptar las bases y condicones"
-          }
-          break;
+      case "acceptTerms":
+        result={
+          isValid:dato,
+          texto:"Debe aceptar las bases y condicones"
+        }
+        break;
     }
     return result
   }
