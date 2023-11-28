@@ -14,7 +14,7 @@ import UserInfo from './view/UserInfo'
 import FavoriteRoom from './view/FavoriteRoom'
 import AdministrarCaracteristicas from './view/AdministrarCaracteristicas'
 import AgregarCaracteristicas from './view/AgregarCaracteristicas'
-import PolíticasyMedidasdeSeguridad from './view/PolíticasyMedidasdeSeguridad'
+import PoliticasyMedidasdeSeguridad from './view/PoliticasyMedidasdeSeguridad'
 
 const routes = [
   { path: '/', component: BodyMain },
@@ -31,7 +31,7 @@ const routes = [
   { path: '/card-category/:id', name: 'card-category', component: CardCategory },
   { path: '/modify/:id', name: 'card-modify', component: CardModify },
   { path: '/modify/caracteristicas/:id', name: 'card-modify-caracteristicas', component: AdministrarCaracteristicas },
-  { path: '/politicas-y-medidas-de-seguridad', component: PolíticasyMedidasdeSeguridad },
+  { path: '/politicas-y-medidas-de-seguridad', component: PoliticasyMedidasdeSeguridad },
 ];
 
 const router = createRouter({

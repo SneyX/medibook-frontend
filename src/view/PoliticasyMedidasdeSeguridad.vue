@@ -110,7 +110,7 @@
 
 <script>
 export default {
-  name: "PolíticasyMedidasdeSeguridad",
+  name: "PoliticasyMedidasdeSeguridad",
   computed: {
     theme() {
       return this.$store.getters.getTheme;
