@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
-import BodyMain from './view/BodyMain.vue';
-import LogIn from './view/LogIn.vue';
-import SignUp from './view/SignUp.vue';
+import BodyMain from './view/BodyMain.vue'
+import LogIn from './view/LogIn.vue'
+import SignUp from './view/SignUp.vue'
 import CardDetail from './view/CardDetail'
 import CardCategory from './view/CardCategory'
 import AdministrarProducto from './view/AdministrarProducto'
@@ -15,6 +15,7 @@ import FavoriteRoom from './view/FavoriteRoom'
 import AdministrarCaracteristicas from './view/AdministrarCaracteristicas'
 import AgregarCaracteristicas from './view/AgregarCaracteristicas'
 import PoliticasyMedidasdeSeguridad from './view/PoliticasyMedidasdeSeguridad'
+import AgregarReserva from './view/AgregarReserva'
 
 const routes = [
   { path: '/', component: BodyMain },
@@ -24,6 +25,7 @@ const routes = [
   { path: '/admin/product', component: AgregarProducto },
   { path: '/admin/category', component: AgregarCategoria },
   { path: '/admin/caracteristicas', component: AgregarCaracteristicas },
+  { path: '/admin/reserva', component: AgregarReserva },
   { path: '/admin/users', component: UsersInfo },
   { path: '/admin/user', component: UserInfo },
   { path: '/admin/favorite', component: FavoriteRoom },
@@ -32,11 +34,11 @@ const routes = [
   { path: '/modify/:id', name: 'card-modify', component: CardModify },
   { path: '/modify/caracteristicas/:id', name: 'card-modify-caracteristicas', component: AdministrarCaracteristicas },
   { path: '/politicas-y-medidas-de-seguridad', component: PoliticasyMedidasdeSeguridad },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
+})
 
 export default router;
