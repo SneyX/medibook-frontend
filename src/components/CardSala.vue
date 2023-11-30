@@ -282,7 +282,7 @@
     padding: 0px 0px 1px 0px;
     height: 18px;
     width: 30px;
-    font-size: 2.5vw;
+    font-size: 2.2vw;
   }
   .btnCont p{
     padding: 1px 5px;
