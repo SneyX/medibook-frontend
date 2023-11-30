@@ -25,7 +25,7 @@ const routes = [
   { path: '/admin/product', component: AgregarProducto },
   { path: '/admin/category', component: AgregarCategoria },
   { path: '/admin/caracteristicas', component: AgregarCaracteristicas },
-  { path: '/admin/reserva', component: AgregarReserva },
+  { path: '/admin/reserva/:id', name: 'admin-reserva', component: AgregarReserva },
   { path: '/admin/users', component: UsersInfo },
   { path: '/admin/user', component: UserInfo },
   { path: '/admin/favorite', component: FavoriteRoom },

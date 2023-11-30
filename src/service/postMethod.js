@@ -187,6 +187,26 @@ const addCaracteristica = async data =>{
 		return false
 	}
 }
+const addBooking = async data =>{
+	const url = URL_BASE+"/bookings"
+	jwt = createStore.getters.getUser.jwt
+	const settings = {
+		method: "POST",
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	}
+	try {
+		const response = await fetch(url, settings)
+		const json = await response.json()
+		return json
+	} catch (e) {
+		console.log(e);
+		return false
+	}
+}
 
 const postMethods = {
 	addUser: addUser,
@@ -198,6 +218,7 @@ const postMethods = {
 	addImgTyperoom: addImgTyperoom,
 	sendEmail: sendEmail,
 	addCaracteristica: addCaracteristica,
+	addBooking: addBooking,
 }
 
 

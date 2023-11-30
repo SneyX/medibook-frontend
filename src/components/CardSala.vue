@@ -16,6 +16,9 @@
           <router-link :to="{ name: 'card-detail', params: { id: sala?.id } }">
             <p class="infoDet">Detalles</p>
           </router-link>
+          <router-link class="name" :to="{ name: 'admin-reserva', params: { id: sala?.id } }" v-if="user">
+            <p class="infoDet">Reservar</p>
+          </router-link>
         </div>
       </swiper-slide>
     </Swiper>

@@ -20,7 +20,7 @@ export default {
   emits: ['update-users'],
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     },
     user(){
       return this.$store.getters?.getUser

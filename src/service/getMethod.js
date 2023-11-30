@@ -203,6 +203,45 @@ const getCaracteristicas = async () =>{
 	}
 }
 
+const getBookings = async () =>{
+	jwt = createStore.getters.getUser.jwt
+	const url = URL_BASE+"/bookings/listbookings"
+	const settings = {
+		method: 'GET',
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		}
+	}
+	try {
+		const response = await fetch(url, settings)
+		const json = await response.json()
+		return json
+	} catch (e) {
+		console.log(e)
+		return false
+	}
+}
+const getBooking = async id =>{
+	jwt = createStore.getters.getUser.jwt
+	const url = `${URL_BASE}/bookings/listUserbookings/${id}`
+	const settings = {
+		method: 'GET',
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		}
+	}
+	try {
+		const response = await fetch(url, settings)
+		const json = await response.json()
+		return json
+	} catch (e) {
+		console.log(e)
+		return false
+	}
+}
+
 const getMethod = {
 	getUsers: getUsers,
 	getUser: getUser,
@@ -214,6 +253,8 @@ const getMethod = {
 	getTypeRoom: getTypeRoom,
 	getUserRol: getUserRol,
 	getCaracteristicas: getCaracteristicas,
+	getBookings: getBookings,
+	getBooking: getBooking,
 }
 
 export default getMethod

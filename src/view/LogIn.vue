@@ -56,8 +56,8 @@ export default {
       }
       util.cargarLoader("Iniciando..")
       const result = await postMethods.logIn(data)
-      console.log(result)
-      if (result) {
+      if (result.Message == 'Autenticacion Correcta') {
+        console.log(result)
         let preUser = {
           username: this.username,
           password: this.password,
