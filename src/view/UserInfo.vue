@@ -1,9 +1,10 @@
 <template>
   <div class="user-profile">
     <div class="contenedor">
-      <h2>ADMINISTRACIÓN DE USUARIOS
+      <div class="header">
+        <h2>ADMINISTRACIÓN DE USUARIOS</h2>
         <div class="cerrar" @click="goBack">&lt;</div>
-      </h2>
+      </div>
       <p>{{user.id}}</p>
       <p>{{user.name}}</p>
       <p>{{user.lastname}}</p>
@@ -56,7 +57,7 @@ export default {
   justify-content: center;
   color: #15b4bc;
   border: 3px #15b4bc solid;
-  background-color: #99dcdd;
+  background-color: var(--oscuro);
   font-size: 30px;
   font-weight: bold;
   width: 45px;
@@ -64,6 +65,12 @@ export default {
   border-radius: 50%;
   cursor: pointer;
   margin-right: 40px;
+}
+.header{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .mainTable {
   width: 100%;

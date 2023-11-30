@@ -1,7 +1,9 @@
 <template>
   <div class="contenedor">
-    <h2>PANEL DE  FAVORITOS</h2>
-    <div class="cerrar" @click="goBack">&lt;</div>
+    <div class="header">
+      <h2>PANEL DE  FAVORITOS</h2>
+      <div class="cerrar" @click="goBack">&lt;</div>
+    </div>
     <div class="mainTable">
       <div class="salaCont">
         <p>Favoritas</p>
@@ -70,6 +72,12 @@ export default {
     justify-content: flex-start;
     padding: 50px;
   }
+  .header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .mainTable{
     width: 100%;
     height: 50px;
@@ -88,7 +96,7 @@ export default {
     justify-content: center;
     color: #15b4bc;
     border: 3px #15b4bc solid;
-    background-color: #99dcdd;
+    background-color: var(--oscuro);
     font-size: 30px;
     font-weight: bold;
     width: 45px;
