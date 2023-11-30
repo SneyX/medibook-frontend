@@ -42,6 +42,9 @@
 <script>
 import VueCal from '/node_modules/vue-cal/dist/vue-cal.cjs.js'
 import 'vue-cal/dist/vuecal.css'
+// import postMethods from '@/service/postMethod'
+import getMethod from '@/service/getMethod'
+// import deleteMethods from '@/service/deleteMethod'
 
 const datos = {
   events: []
@@ -64,37 +67,13 @@ export default {
       return this.$store.getters?.getUser
     },
   },
-  created() {
-    const lunes = this.previousFirstDayOfWeek.format()
-    console.log(lunes)
-    /* const martes = this.previousFirstDayOfWeek.addDays(1).format()
-    const miercoles = this.previousFirstDayOfWeek.addDays(2).format()
-    const jueves = this.previousFirstDayOfWeek.addDays(3).format()
-    const viernes = this.previousFirstDayOfWeek.addDays(4).format() 
-    {
-      "date": fecha,
-      "shift": `${turno}`,
-      "room":{
-        "id": 27
-      },
-      "userEntity": {
-        "id": 2
-      }
-    }
-    */
-    this.datos.events.push(
-      {
-        start: `${lunes} 09:00`,
-        end: `${lunes} 10:00`,
-        title: 'Turno 1',
-        content: '',
-        resizable: false,
-      },
-    )
+  async created() {
+    await this.completarCalendario()
   },
   methods:{
-    reservarTurno(e){
-      const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
+    async reservarTurno(e){
+      console.log(e)
+      /* const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
       const turno = e.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
       const turnoDate = new Date(`2000-01-01 ${turno}`)
       turnoDate.setHours(turnoDate.getHours() + 1)
@@ -110,7 +89,9 @@ export default {
           "id": this.user.id
         }
       }
-      console.log(data)
+
+
+      await postMethods.addBooking(data)
       this.datos.events.push(
         {
           start: `${e.format()} ${turno}`,
@@ -119,7 +100,40 @@ export default {
           content: '',
           resizable: false,
         },
-      )
+      ) */
+    },
+    convertirFecha(apiDate) {
+      const meses = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ]
+      const dia = apiDate.toString().slice(6, 8)
+      const mes = meses.indexOf(apiDate.slice(3, 6)) + 1
+      const año = apiDate.toString().slice(8, 12)
+
+      const fechaFormateada = `${año}-${mes.toString().padStart(2, '0')}-${dia.padStart(2, '0')}`
+      return fechaFormateada
+    },
+    async completarCalendario(){
+      const reservas = await getMethod.getBookings()
+      reservas.forEach(res => {
+        let{shift, date} = res
+        const fechaFormateada = this.convertirFecha(date)
+        const turno = shift
+        const turnoDate = new Date(`2000-01-01 ${turno}`)
+        turnoDate.setHours(turnoDate.getHours() + 1)
+        const turno2 = turnoDate.toLocaleTimeString('en-US', { hour12:false, hour: '2-digit', minute: '2-digit' })
+
+        this.datos.events.push(
+          {
+            start: `${fechaFormateada} ${turno}`,
+            end: `${fechaFormateada} ${turno2}`,
+            title: 'RESERVADO',
+            resizable: false,
+            class: "reservado",
+            background: true
+          },
+        )
+      })
     }
   }
 };
@@ -158,7 +172,7 @@ export default {
       .cal2Cont {
         max-width: 800px;
         .cal2 {
-          border: 4px solid red;
+          border: 4px solid #15b4bc;
           width: 75%;
           .vuecal__flex, .vuecal__menu{
             background-color: red;
@@ -170,7 +184,18 @@ export default {
       }
       .cal1{
         height: 400px;
+        border: 4px solid #15b4bc;
       }
+    }
+  }
+
+  .vuecal__event {
+    background-color: rgba(173, 216, 230, 0.5);
+    box-sizing: border-box;
+    padding: 5px;
+    
+    &.reservado {
+      background-color: red;
     }
   }
 

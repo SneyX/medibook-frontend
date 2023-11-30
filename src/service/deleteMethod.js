@@ -105,6 +105,24 @@ const deleteCaracteristica = async id => {
 		return false
 	}
 }
+const deleteBooking = async id => {
+	const url = URL_BASE+"/bookings/"+id
+	jwt = createStore.getters.getUser.jwt
+	const settings = {
+		method: "DELETE",
+		headers: {
+			'Authorization' : "Bearer " + jwt,
+			'Content-Type': 'application/json'
+		},
+	}
+	try {
+		const response = await fetch(url, settings)
+		return response
+	} catch (error) {
+		console.log(error)
+		return false
+	}
+}
 
 const deleteMethods = {
 	deleteDoctor: deleteDoctor,
@@ -112,6 +130,7 @@ const deleteMethods = {
 	deleteTypeRoom: deleteTypeRoom,
 	deleteUser: deleteUser,
 	deleteCaracteristica: deleteCaracteristica,
+	deleteBooking: deleteBooking,
 }
 
 export default deleteMethods
