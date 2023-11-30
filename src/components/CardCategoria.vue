@@ -162,7 +162,7 @@
   .btnCont button{
     padding: 0px 0px 1px 0px;
     height: 18px;
-    width: 25px;
+    width: 30px;
     font-size: 2.5vw;
   }
   .btnCont p{
