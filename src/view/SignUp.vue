@@ -12,11 +12,11 @@
         <input type="text" id="username" v-model="username" placeholder="En formato xxxx@xxx.xxx"/>
         <label for="password">Contraseña:</label>
         <input type="password" id="password" v-model="password" placeholder="8-20: May, Min, !@#$%^&*()_+."/>
-        <button type="submit" :class="[acceptTerms ? '' : 'off']">Registrarse</button>
         <label for="acceptTerms" class="link">
           <input type="checkbox"  id="acceptTerms" v-model="acceptTerms"/>
           Acepto las <router-link to="/politicas-y-medidas-de-seguridad" target="_blank">Políticas y Medidas de Seguridad</router-link>
         </label>
+        <button type="submit" :class="[acceptTerms ? '' : 'off']">Registrarse</button>
       </form>
 
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
@@ -193,6 +193,7 @@ export default {
     a{
       padding: 0;
       margin: 0;
+      text-decoration: underline;
     }
     p{
       padding: 0;
