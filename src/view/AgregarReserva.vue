@@ -42,7 +42,7 @@
 <script>
 import VueCal from '/node_modules/vue-cal/dist/vue-cal.cjs.js'
 import 'vue-cal/dist/vuecal.css'
-// import postMethods from '@/service/postMethod'
+import postMethods from '@/service/postMethod'
 import getMethod from '@/service/getMethod'
 // import deleteMethods from '@/service/deleteMethod'
 
@@ -73,7 +73,7 @@ export default {
   methods:{
     async reservarTurno(e){
       console.log(e)
-      /* const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
+      const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
       const turno = e.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
       const turnoDate = new Date(`2000-01-01 ${turno}`)
       turnoDate.setHours(turnoDate.getHours() + 1)
@@ -100,7 +100,7 @@ export default {
           content: '',
           resizable: false,
         },
-      ) */
+      )
     },
     convertirFecha(apiDate) {
       const meses = [
