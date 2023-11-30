@@ -1,8 +1,8 @@
 <template>
   <div :class="[theme, 'contenedor']">
     <div class="login-container">
+      <div class="cerrar goBack" @click="goBack">&lt;</div>
       <h2>AGREGAR CATEGORÍA</h2>
-      <div class="cerrar" @click="goBack">&lt;</div>
       <form ref="loginForm" @submit.prevent="submitForm">
         
         <label for="nombre">NOMBRE*</label>
@@ -111,71 +111,75 @@ export default {
 </script>
 
 <style scoped>
-.contenedor {
-  background-color: #15b4bc;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-.contenedor:hover{
-  background-color: #15b4bc;
-}
+  .contenedor {
+    background-color: #15b4bc;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .contenedor:hover{
+    background-color: #15b4bc;
+  }
 
-.login-container {
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background-color: var(--oscuro);
-}
-.cerrar{
+  .login-container {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--oscuro);
+  }
+  .cerrar{
     display: flex;
     align-items: center;
     justify-content: center;
     color: #15b4bc;
     border: 3px #15b4bc solid;
-    background-color: #99dcdd;
+    background-color: var(--oscuro);
     font-size: 30px;
     font-weight: bold;
     width: 45px;
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
-    margin-right: 40px;
+  }
+  .goBack{
+    position: relative;
+    left: 0;
+    top: 0;
   }
 
-form {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-}
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
 
-label {
-  margin-bottom: 8px;
-}
+  label {
+    margin-bottom: 8px;
+  }
 
-select{
-  padding: 10px;
-}
+  select{
+    padding: 10px;
+  }
 
-input {
-  padding: 8px;
-  margin-bottom: 16px;
-}
+  input {
+    padding: 8px;
+    margin-bottom: 16px;
+  }
 
-button {
-  background-color: #15b4bc;
-  color: var(--text);
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: .5s ease-in-out;
-  margin-top: 15px;
-}
-button:hover{
-  background-color: #0f8389;
-  transition: .5s ease-in-out;
-}
+  button {
+    background-color: #15b4bc;
+    color: var(--text);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+    margin-top: 15px;
+  }
+  button:hover{
+    background-color: #0f8389;
+    transition: .5s ease-in-out;
+  }
 </style>

@@ -118,7 +118,7 @@ export default {
       justify-content: center;
       color: #15b4bc;
       border: 3px #15b4bc solid;
-      background-color: #99dcdd;
+      background-color: var(--oscuro);
       font-size: 30px;
       font-weight: bold;
       width: 45px;

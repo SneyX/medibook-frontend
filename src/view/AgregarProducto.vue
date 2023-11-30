@@ -1,8 +1,8 @@
 <template>
   <div :class="[theme, 'contenedor']">
     <div class="login-container">
+      <div class="cerrar goBack" @click="goBack">&lt;</div>
       <h2>AGREGAR SALA</h2>
-      <div class="cerrar" @click="goBack">&lt;</div>
       <form ref="loginForm" @submit.prevent="submitForm">
         <label for="nombre">NOMBRE*</label>
         <input ref="nombre" type="text" id="nombre" />
@@ -217,6 +217,12 @@ export default {
   height: 100%;
   min-height: calc(100vh - 300px);
   padding-top: 50px;
+  .goBack{
+    position: relative;
+    left: 0;
+    top: 0;
+    background-color: var(--oscuro);
+  }
 }
 
 .login-container {
@@ -233,7 +239,7 @@ export default {
   justify-content: center;
   color: #15b4bc;
   border: 3px #15b4bc solid;
-  background-color: #99dcdd;
+  background-color: var(--oscuro);
   font-size: 30px;
   font-weight: bold;
   width: 45px;
@@ -242,6 +248,7 @@ export default {
   cursor: pointer;
   margin-right: 40px;
 }
+
 form {
   display: flex;
   flex-direction: column;
