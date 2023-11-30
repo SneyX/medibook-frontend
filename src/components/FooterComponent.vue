@@ -104,8 +104,9 @@ export default {
     margin-bottom: 0px;
     width:200px;
     margin-right: 5px;
-    padding-left: 50px;
+    padding-left: 20px;
   }
+
   .footerInfompresa {
     width:200px;
 
