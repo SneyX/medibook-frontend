@@ -215,7 +215,6 @@
     transform-origin: 20px 20px;
   }
   .lds-heart div {
-
     top:   0;
     left: 0;
     position: absolute;
@@ -301,12 +300,18 @@
     font-size: 15px;
   }
   .corazon2{
-    position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 20px;
+    height: 20px;
     top: 67px;
-    right: 7px;
+    right: 15px;
   }
+  .lds-heart div {
+top: -15px;
+left: -10px;
+
+width: 20px;
+height: 20px;
+}
   }
   </style>
   
