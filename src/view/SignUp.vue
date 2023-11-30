@@ -5,17 +5,18 @@
 
       <form @submit.prevent="submitForm">
         <label for="name">Nombre:</label>
-        <input ref="name" type="text" id="name" :value="name" placeholder="Entre 3 y 20 Letras"/>
+        <input type="text" id="name" v-model="name" placeholder="Entre 3 y 20 Letras"/>
         <label for="lastName">Apellido:</label>
-        <input ref="lastName" type="text" id="lastName" :value="lastName" placeholder="Entre 3 y 20 Letras"/>
+        <input type="text" id="lastName" v-model="lastName" placeholder="Entre 3 y 20 Letras"/>
         <label for="username">Correo Electrónico:</label>
-        <input ref="username" type="text" id="username" :value="username" placeholder="En formato xxxx@xxx.xxx"/>
+        <input type="text" id="username" v-model="username" placeholder="En formato xxxx@xxx.xxx"/>
         <label for="password">Contraseña:</label>
-        <input ref="password" type="password" id="password" :value="password" placeholder="8-20: May, Min, !@#$%^&*()_+." @change="checkPass"/>
+        <input type="password" id="password" v-model="password" placeholder="8-20: May, Min, !@#$%^&*()_+."/>
+        <button type="submit" :class="[acceptTerms ? '' : 'off']">Registrarse</button>
         <label for="acceptTerms" class="link">
-        <input type="checkbox"  id="acceptTerms"  v-model="acceptTerms"  />
-        Acepto las <router-link to="/politicas-y-medidas-de-seguridad" target="_blank">Políticas y Medidas de Seguridad</router-link></label>
-        <button type="submit" >Registrarse</button>
+          <input type="checkbox"  id="acceptTerms" v-model="acceptTerms"/>
+          Acepto las <router-link to="/politicas-y-medidas-de-seguridad" target="_blank">Políticas y Medidas de Seguridad</router-link>
+        </label>
       </form>
 
       <!-- este formulario no es visible, solo es para enviar el mail al registro -->
@@ -54,24 +55,25 @@ export default {
       password: '',
       showMsg:true,
       msg:"La contraseña debe cumplir con los requisitos: \n Al menos una letra minúscula y una maypuscula. \n Un caracter especial: !@#$%^&*()_+ \n Tener una longitud entre 8 y 12 caracteres.",
-      emailConfirmationSent: false,
-      emailConfirmationDelivered: false,
       acceptTerms: false
     };
   },
   methods: {
+    /* aceptarTerminos(){
+      this.acceptTerms = !this.acceptTerms
+    }, */
     async submitForm() {
-      this.name = this.$refs.name.value
-      this.lastName = this.$refs.lastName.value
-      this.username = this.$refs.username.value
-      this.password = this.$refs.password.value
+      if (!this.acceptTerms) {
+        util.cargarLoader("")
+        util.cargarPopUp("Debe aceptar los términos y condiciones", "")
+        return
+      }
 
       const data = {
         name: this.name,
         lastname: this.lastName,
         username: this.username,
         password: this.password,
-        acceptTerms: this.acceptTerms,
       }
       
       util.cargarLoader("Agregando usuario")
@@ -79,8 +81,8 @@ export default {
         { lastname: util.validarDatos(data.lastname,"apellido") },
         { username: util.validarDatos(data.username,"email"), },
         { password: util.validarDatos(data.password,"password") },
-        { acceptTerms: util.validarDatos(data.acceptTerms,"acceptTerms") }
       ]
+      
       for(let item of validation){
         const fieldName = Object.keys(item)[0]
         if (!item[fieldName].isValid) {
@@ -89,33 +91,31 @@ export default {
           return
         }
       }
-      if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid && validation[4].acceptTerms.isValid) {
+      
+      if (validation[0].name.isValid && validation[1].lastname.isValid && validation[2].username.isValid && validation[3].password.isValid) {
         const result = await postMethods.addUser(data)
         util.cargarLoader("")
-        if (result) {
-          this.sendEmail()
+        if (result.ok) {
+          await this.sendEmail()
           this.resetForm()
           this.$store.commit('setUser', data)
           this.$router.push({ path: '/login' })
         } else {
-          util.cargarPopUp("Problema en el servidor", "ERROR")
+          util.cargarPopUp("Ya existe un usuario con ese correo electrónico", "ERROR")
         }
       }
     },
-    sendEmail() {
+    async sendEmail() {
       util.cargarLoader("Enviando mail")
       emailjs.init('DAB1-dX1vNhJi41D3')
       const form = this.$refs.form
-      emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
-      .then((result) => {
-        console.log('Correo de confirmación enviado con éxito:', result.text)
+      const result = await emailjs.sendForm('service_f34uw5r', 'template_1x7auwe', form)
+      if(result){
         util.cargarLoader("")
-        util.cargarPopUp(`Usuario agregado con éxito, \n Hemos enviado un mail de bienvenida a:\n ${this.$refs.username}`, "GRACIAS")
-      })
-      .catch((error) => {
-        util.cargarLoader("")
-        console.error('Error al enviar el correo de confirmación:', error.text)
-      })
+        util.cargarPopUp(`Usuario agregado con éxito, \n Hemos enviado un mail de bienvenida a:\n ${this.username}`, "GRACIAS")
+      }else{
+        util.cargarPopUp(`No hemos podido enviar email a:\n ${this.username}`, "ERROR")
+      }
     },
     resetForm() {
       this.name = ''
@@ -124,14 +124,11 @@ export default {
       this.password = ''
       this.acceptTerms= false
     },
-    checkPass(e){
-      this.showMsg = util.validarDatos(e.target.value,"password").isValid
-    }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   #form{
     display: none;
   }
@@ -182,6 +179,32 @@ export default {
     transition: .5s ease-in-out;
   }
   .link {
-      font-size: 1vw;
+    padding:10px 0;
+    margin: 0;
+    font-size: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    input {
+      padding: 0;
+      margin: 0;
+    }
+    a{
+      padding: 0;
+      margin: 0;
+    }
+    p{
+      padding: 0;
+      margin: 0;
+    }
   }
+  .off{
+    cursor: not-allowed;
+    background-color: grey;
+  }
+  .off:hover{
+    background-color: grey;
+  }
+  
 </style>
