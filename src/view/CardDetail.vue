@@ -255,6 +255,7 @@ export default {
     background-color: #0f8389;
     color: #99DCDD;
   }
+
   @media only screen and (max-width:480px ){
     .headerContainer{
       width: 100%;
@@ -292,5 +293,28 @@ export default {
     .footerCont{
       width: 100%;
     }
+    .mainTable {
+    display: block;
+    margin: 10px;
+  }
+
+  .caracteristica {
+    margin-bottom: 10px;
+  }
+
+  .name {
+    font-size: 16px;
+  }
+
+  .nameIcon {
+    display: flex;
+    align-items: center;
+  }
+
+  .icono {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
   }
 </style>
