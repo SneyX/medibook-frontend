@@ -170,7 +170,12 @@ export default {
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        background-color: #0d7277;
+                        color: white;
                         .vuecal__event-title{
+                          margin: 0 5px;
+                        }
+                        .vuecal__event-content{
                           margin: 0 5px;
                         }
                         /* .vuecal__event-time{

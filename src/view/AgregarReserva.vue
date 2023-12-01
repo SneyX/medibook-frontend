@@ -10,6 +10,7 @@
           hide-view-selector
           :time="false"
           :transitions="false"
+          :min-date="minDate"
           active-view="month"
           :events="datos.events"
           :disable-views="['week', 'day']"
@@ -32,6 +33,7 @@
           :events="datos.events"
           @cell-click="reservarTurno($event)"
           @cell-focus="fechaSeleccionada = $event.date || $event"
+          :on-event-click="onEventClick"
         >
         </vue-cal>
       </div>
@@ -44,6 +46,7 @@ import VueCal from '/node_modules/vue-cal/dist/vue-cal.cjs.js'
 import 'vue-cal/dist/vuecal.css'
 import postMethods from '@/service/postMethod'
 import getMethod from '@/service/getMethod'
+import util from '@/utils/utils'
 // import deleteMethods from '@/service/deleteMethod'
 
 const datos = {
@@ -57,6 +60,7 @@ export default {
     return {
       datos,
       fechaSeleccionada: new Date(),
+      minDate: null
     }
   },
   computed: {
@@ -69,6 +73,7 @@ export default {
   },
   async created() {
     await this.completarCalendario()
+    this.minDate=this.fechaSeleccionada
   },
   beforeUnmount(){
     this.datos.events = []
@@ -77,10 +82,6 @@ export default {
     async reservarTurno(e){
       const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
       const turno = e.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
-      const turnoDate = new Date(`2000-01-01 ${turno}`)
-      turnoDate.setHours(turnoDate.getHours() + 1)
-      const turno2 = turnoDate.toLocaleTimeString('en-US', { hour12:false, hour: '2-digit', minute: '2-digit' })
-
       const data = {
         "date": fecha,
         "shift": `${turno}`,
@@ -91,18 +92,10 @@ export default {
           "id": this.user.id
         }
       }
-
-
+      util.cargarLoader("Agregando reserva")
       await postMethods.addBooking(data)
-      this.datos.events.push(
-        {
-          start: `${e.format()} ${turno}`,
-          end: `${e.format()} ${turno2}`,
-          title: 'Turno 1',
-          content: '',
-          resizable: false,
-        },
-      )
+      await this.completarCalendario()
+      util.cargarLoader("")
     },
     convertirFecha(apiDate) {
       const meses = [
@@ -119,7 +112,8 @@ export default {
       const reservas = await getMethod.getBookings()
       const reservasSala = reservas.filter(res=>res.room.id == this.$route.params.id)
       reservasSala.forEach(res => {
-        let{shift, date} = res
+        let{shift, date , userEntity} = res
+        let { name, lastname } = userEntity
         const fechaFormateada = this.convertirFecha(date)
         const turno = shift
         const turnoDate = new Date(`2000-01-01 ${turno}`)
@@ -130,13 +124,17 @@ export default {
           {
             start: `${fechaFormateada} ${turno}`,
             end: `${fechaFormateada} ${turno2}`,
-            title: 'RESERVADO',
+            title: 'RESERVADO de ',
             resizable: false,
             class: "reservado",
+            content: ` por ${lastname}, ${name}`,
             background: true
           },
         )
       })
+    },
+    onEventClick(e){
+      console.log(e)
     }
   }
 };
