@@ -19,6 +19,7 @@ export default createStore({
     user:{},
     userRooms:[],
     filtros:[],
+    reserva:[],
   },
   mutations: {
     setTheme(state, theme) {
@@ -44,6 +45,9 @@ export default createStore({
     },
     setFiltros(state, filtros){
       state.filtros = filtros
+    },
+    setReserva(state, reserva){
+      state.reserva = reserva
     },
     setDialog(state, dialog){
       state.dialog = dialog
@@ -77,6 +81,9 @@ export default createStore({
     setFiltros({ commit }, filtros) {
       commit("setFiltros", filtros)
     },
+    setReserva({ commit }, reserva) {
+      commit("setReserva", reserva)
+    },
     setDialog({ commit }, dialog) {
       commit("setDialog", dialog)
     },
@@ -98,6 +105,7 @@ export default createStore({
     getTypeRooms: state => state.typeRooms,
     getCaracteristicas: state => state.caracteristicas,
     getFiltros: state => state.filtros,
+    getReserva: state => state.reserva,
     getDialog: state => state.dialog,
     getUser: state => state.user,
     getUserRooms: state => state.userRooms,

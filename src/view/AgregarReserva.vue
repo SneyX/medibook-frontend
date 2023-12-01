@@ -110,9 +110,9 @@ export default {
       ]
       const dia = apiDate.toString().slice(6, 8)
       const mes = meses.indexOf(apiDate.slice(3, 6)) + 1
-      const año = apiDate.toString().slice(8, 12)
+      const anio = apiDate.toString().slice(8, 12)
 
-      const fechaFormateada = `${año}-${mes.toString().padStart(2, '0')}-${dia.padStart(2, '0')}`
+      const fechaFormateada = `${anio}-${mes.toString().padStart(2, '0')}-${dia.padStart(2, '0')}`
       return fechaFormateada
     },
     async completarCalendario(){
@@ -177,6 +177,9 @@ export default {
         .cal2 {
           border: 4px solid #15b4bc;
           width: 75%;
+          .vuecal__header{
+            background-color: red;
+          }
           .vuecal__flex, .vuecal__menu{
             background-color: red;
           }
@@ -192,12 +195,13 @@ export default {
     }
   }
 
+
   .vuecal__event {
     background-color: rgba(173, 216, 230, 0.5);
     box-sizing: border-box;
     padding: 5px;
     
-    &.reservado {
+    &__reservado {
       background-color: red;
     }
   }
