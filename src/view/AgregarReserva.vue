@@ -175,7 +175,7 @@ export default {
       .cal2Cont {
         max-width: 800px;
         .cal2 {
-          border: 4px solid #15b4bc;
+          border: 4px solid #0d7277;
           width: 75%;
           .vuecal__header{
             background-color: red;
