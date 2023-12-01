@@ -255,7 +255,6 @@ export default {
     background-color: #0f8389;
     color: #99DCDD;
   }
-
   @media only screen and (max-width:480px ){
     .headerContainer{
       width: 100%;
