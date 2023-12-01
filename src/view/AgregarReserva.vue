@@ -115,7 +115,10 @@ export default {
     },
     async completarCalendario(){
       const reservas = await getMethod.getBookings()
-      reservas.forEach(res => {
+      console.log(reservas)
+      const reservasSala = reservas.filter(res=>res.room.id == this.$route.params.id)
+      console.log(reservasSala)
+      reservasSala.forEach(res => {
         let{shift, date} = res
         const fechaFormateada = this.convertirFecha(date)
         const turno = shift
