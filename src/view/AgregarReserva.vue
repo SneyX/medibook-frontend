@@ -70,9 +70,11 @@ export default {
   async created() {
     await this.completarCalendario()
   },
+  beforeUnmount(){
+    this.datos.events = []
+  },
   methods:{
     async reservarTurno(e){
-      console.log(e)
       const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
       const turno = e.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
       const turnoDate = new Date(`2000-01-01 ${turno}`)
@@ -115,9 +117,7 @@ export default {
     },
     async completarCalendario(){
       const reservas = await getMethod.getBookings()
-      console.log(reservas)
       const reservasSala = reservas.filter(res=>res.room.id == this.$route.params.id)
-      console.log(reservasSala)
       reservasSala.forEach(res => {
         let{shift, date} = res
         const fechaFormateada = this.convertirFecha(date)
