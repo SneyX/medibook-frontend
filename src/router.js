@@ -16,6 +16,7 @@ import AdministrarCaracteristicas from './view/AdministrarCaracteristicas'
 import AgregarCaracteristicas from './view/AgregarCaracteristicas'
 import PoliticasyMedidasdeSeguridad from './view/PoliticasyMedidasdeSeguridad'
 import AgregarReserva from './view/AgregarReserva'
+import HistorialReserva from './view/HistorialReserva'
 
 const routes = [
   { path: '/', component: BodyMain },
@@ -29,6 +30,7 @@ const routes = [
   { path: '/admin/users', component: UsersInfo },
   { path: '/admin/user', component: UserInfo },
   { path: '/admin/favorite', component: FavoriteRoom },
+  { path: '/historial', component: HistorialReserva },
   { path: '/card-detail/:id', name: 'card-detail', component: CardDetail },
   { path: '/card-category/:id', name: 'card-category', component: CardCategory },
   { path: '/modify/:id', name: 'card-modify', component: CardModify },

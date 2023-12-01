@@ -222,7 +222,7 @@ const getBookings = async () =>{
 		return false
 	}
 }
-const getBooking = async id =>{
+const getUserBooking = async id =>{
 	jwt = createStore.getters.getUser.jwt
 	const url = `${URL_BASE}/bookings/listUserbookings/${id}`
 	const settings = {
@@ -254,7 +254,7 @@ const getMethod = {
 	getUserRol: getUserRol,
 	getCaracteristicas: getCaracteristicas,
 	getBookings: getBookings,
-	getBooking: getBooking,
+	getUserBooking: getUserBooking,
 }
 
 export default getMethod

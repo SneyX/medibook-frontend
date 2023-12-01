@@ -7,7 +7,10 @@
       </router-link>
       <router-link to="/login" v-if="(path == '/' || path == '/signup') && jwt == ''">
         <BotonPrincipal class="btnInicio" texto="INICIAR SESIÓN" size="19"/>
-      </router-link>  
+      </router-link>
+      <router-link to="/historial" v-if="path != '/historial' && jwt != '' && (rol == 'ADMIN' || rol == 'USER')">
+        <BotonPrincipal class="btnAgrSala" texto="RESERVAS" size="19"/>
+      </router-link>
       <router-link to="/admin" v-if="path != '/admin' && jwt != '' && rol == 'ADMIN'">
         <BotonPrincipal class="btnAgrSala" texto="ADMINISTRAR" size="19"/>
       </router-link>
@@ -20,9 +23,6 @@
       <router-link to="/admin/caracteristicas" v-if="(path == '/admin' || path == '/admin/product') && jwt != '' && rol == 'ADMIN'">
         <BotonPrincipal class="btnAgrSala" texto="+ CARACTERISTICAS" size="19"/>
       </router-link>
-      <!-- <router-link to="/admin/reserva">
-        <BotonPrincipal class="btnAgrSala" texto="RESERVAS" size="19"/>
-      </router-link> -->
       <UserProfile v-if="(path != '/login' || path == '/signup') && jwt != ''"/>
       <!-- <BotonPrincipal class="btnTheme" texto="🌓" @click="toggleTheme" style="border-radius: 50%; padding: .8vw;" /> -->
     </div>
