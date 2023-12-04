@@ -135,7 +135,7 @@ export default {
             title: 'RESERVADO de ',
             resizable: false,
             class: "reservado",
-            content: ` por ${lastname}, ${name}`,
+            content: ` por ${lastname}, ${name} - click para eliminar -`,
             background: true
           },
         )

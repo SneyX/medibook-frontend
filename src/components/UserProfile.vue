@@ -15,61 +15,61 @@
 
 <script>
 export default {
-name: 'UserProfile',
-props: {
-  options: {
-    type: Array,
-    default: () => ['Administrar', 'Mi Perfil', 'Favoritos', 'Cerrar Sesión', 'Reservas'],
+  name: 'UserProfile',
+  props: {
+    options: {
+      type: Array,
+      default: () => ['Administrar', 'Mi Perfil', 'Favoritos', 'Cerrar Sesión', 'Reservas'],
+    },
   },
-},
-data() {
-  return {
-    isOpen: false,
-    userName: ""
-  };
-},
-created() {
-  this.obtenerNombre();
-},
-methods: {
-  toggleMenu() {
-    this.isOpen = !this.isOpen;
+  data() {
+    return {
+      isOpen: false,
+      userName: ""
+    };
   },
-  handleMouseLeave(){
-    this.toggleMenu()
+  created() {
+    this.obtenerNombre();
   },
-  actionMenu(option){
-    this.toggleMenu()
-    switch (option) {
-      case "Cerrar Sesión":
-        this.$store.dispatch('setUser',{})
-        this.$router.push({ path: '/' })
-        break;
-      case "Administrar":
-        this.$router.push({ path: '/admin/users' })
-        break;
-      case "Mi Perfil":
-        this.$router.push({ path: '/admin/user' })
-        break;
-      case "Favoritos":
-        this.$router.push({ path: '/admin/favorite' })
-        break;
-      case "Reservas":
-        this.$router.push({ path: '/historial' })
-        break;
+  methods: {
+    toggleMenu() {
+      this.isOpen = !this.isOpen;
+    },
+    handleMouseLeave(){
+      this.toggleMenu()
+    },
+    actionMenu(option){
+      this.toggleMenu()
+      switch (option) {
+        case "Cerrar Sesión":
+          this.$store.dispatch('setUser',{})
+          this.$router.push({ path: '/' })
+          break;
+        case "Administrar":
+          this.$router.push({ path: '/admin/users' })
+          break;
+        case "Mi Perfil":
+          this.$router.push({ path: '/admin/user' })
+          break;
+        case "Favoritos":
+          this.$router.push({ path: '/admin/favorite' })
+          break;
+        case "Reservas":
+          this.$router.push({ path: '/historial' })
+          break;
+      }
+    },
+    action(){
+      this.$router.push({ path: '/admin/favorite' })
+    },
+    obtenerNombre(){
+      const user = this.$store.getters.getUser
+      const inicialNombre = user.name.slice(0, 1)
+      const inicialApellido = user.lastname.slice(0, 1)
+      this.userName = inicialNombre+inicialApellido
     }
   },
-  action(){
-    this.$router.push({ path: '/admin/favorite' })
-  },
-  obtenerNombre(){
-    const user = this.$store.getters.getUser
-    const inicialNombre = user.name.slice(0, 1)
-    const inicialApellido = user.lastname.slice(0, 1)
-    this.userName = inicialNombre+inicialApellido
-  }
-},
-};
+}
 </script>
 <style scoped>
   .user-profile {
@@ -92,6 +92,7 @@ methods: {
   .profile-picture {
     width: 3vw;
     height: 3vw;
+    padding: 20px;
     border-radius: 50%;
     background-color: #ccc;
     border: 2px solid #000;

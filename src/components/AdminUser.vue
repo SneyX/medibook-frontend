@@ -6,9 +6,6 @@
       <p class="name">{{ user?.role }}</p>
     </div>
     <div class="action">
-      <!-- <router-link :to="{ name: 'user-modify', params: { id: user.id }, props: {card: card} }">
-        <p>Modificar</p>
-      </router-link> -->
       <p @click="changeRol(user)">Rol</p>
     </div>
   </div>

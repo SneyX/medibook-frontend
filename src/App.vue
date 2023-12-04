@@ -172,6 +172,7 @@ export default {
                         justify-content: center;
                         background-color: #0d7277;
                         color: white;
+                        cursor: pointer;
                         .vuecal__event-title{
                           margin: 0 5px;
                         }
