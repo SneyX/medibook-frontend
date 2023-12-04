@@ -19,7 +19,7 @@ export default {
   props: {
     options: {
       type: Array,
-      default: () => ['Administrar', 'Mi Perfil', 'Favoritos', 'Cerrar Sesión', 'Reservas'],
+      default: () => ['Administrar', 'Mi Perfil', 'Favoritos', 'Reservas', 'Cerrar Sesión'],
     },
   },
   data() {
@@ -80,19 +80,19 @@ export default {
   }
   .favoritos{
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 0 10px;
+    border-bottom: 0px solid #15b4bc;
     border-radius: 15px;
-    transition: .5s ease-in-out;
   }
   .favoritos:hover{
-    background-color: #0f8389;
-    color: #99DCDD;
-    border: 2px solid #0d7277;
+    border: 1px solid #15b4bc;
+    border-bottom: 3px solid #15b4bc;
   }
   .profile-picture {
     width: 3vw;
     height: 3vw;
     padding: 20px;
+    margin: 0 5px;
     border-radius: 50%;
     background-color: #ccc;
     border: 2px solid #000;
@@ -131,11 +131,13 @@ export default {
   }
   .menu.is-open {
     display: block;
-    width: 250px;
+    width: auto;
+    min-width: 200px;
     height: 250px;
+    border: 2px solid #0d7277;
     position: absolute;
     left: 100%;
-    top: 0%;
+    top: -30%;
     transform: translate( -100%, 50%);
   }
   .menu {
@@ -195,6 +197,6 @@ export default {
       padding: 0px;
       margin-left: -22vw;
       margin-right: 1vw;
-  }
+    }
   }
 </style>
