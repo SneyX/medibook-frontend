@@ -16,6 +16,12 @@
       <div class="verMas">
         <p @click="cargarSlider">ver más</p>
       </div>
+
+      <div>
+        <h2>Compartir</h2>
+        <ShareButton  :text="shareText" :url="currentUrl"></ShareButton>
+      </div>
+
       <div class="footerCont">
         <p><strong>TIPO DE SALA: </strong>{{ card?.typeroom?.name }}</p>
         <div class="descripcion">
@@ -44,12 +50,14 @@ import util from '@/utils/utils'
 import getMethod from '@/service/getMethod'
 import DataDialog from '@/components/DataDialog.vue'
 import DinamicIcon from '@/components/DinamicIcon'
+import ShareButton from '@/components/ShareButton.vue'
 
 export default {
   name: 'CardDetail',
   components:{
     DataDialog,
     DinamicIcon,
+    ShareButton,
   },
   computed: {
     theme() {
@@ -60,10 +68,14 @@ export default {
       const ids = fav.map(room => room.id)
       return ids
     },
+    currentUrl() {
+      return window.location.href;
+    },
   },
   data(){
     return {
-      card:[]
+      card:[],
+      shareText: 'Reserva esta sala de Medibook!',
     }
   },
   async created() {
