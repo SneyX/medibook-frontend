@@ -69,13 +69,14 @@ export default {
       return ids
     },
     currentUrl() {
-      return window.location.href;
+      return "http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/"
+    //  return window.location.href;
     },
   },
   data(){
     return {
       card:[],
-      shareText: 'Reserva esta sala de Medibook!',
+      shareText: 'Reserva tu sala en Medibook!',
     }
   },
   async created() {
