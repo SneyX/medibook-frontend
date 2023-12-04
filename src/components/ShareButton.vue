@@ -45,25 +45,36 @@
     }
 </script>
 <style scoped>
+.redes {
+  position: relative;
+}
 .redes a:first-child img{
     filter: brightness(0) saturate(100%) invert(30%) sepia(99%) saturate(419%) hue-rotate(134deg) brightness(95%) contrast(90%);
 width: 3vw;
-margin-bottom: 4px;
+position: absolute;
+top: -45px;
+left: 120px;
 }
 .tw {
+    position: absolute;
     width: 6vw;
+    top: -47px;
+    left: 160px;
 }
 .redes{
     margin-left: 30px;
 }
 @media only screen and (max-width:480px ){
     .redes a:first-child img{
-width: 10vw;
-margin: 0px 0px 2px 0px;
-}
+        width: 7dvw;
+        top: -50px;
+        left: -20px;
+    }
 .tw {
-    width: 20vw;
+    width: 14vw;
     margin: 0px;
+    top: -51px;
+    left: 10px;
 }
 
 }

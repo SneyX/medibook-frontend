@@ -17,7 +17,7 @@
         <p @click="cargarSlider">ver más</p>
       </div>
 
-      <div>
+      <div class="compartir">
         <h2>Compartir</h2>
         <ShareButton  :text="shareText" :url="currentUrl"></ShareButton>
       </div>
@@ -327,6 +327,11 @@ export default {
     width: 20px;
     height: 20px;
     margin-right: 5px;
+  }
+  .compartir h2{
+    font-size: 5vw;
+    margin-left: -160px;
+    margin-bottom: 20px;
   }
   }
 </style>
