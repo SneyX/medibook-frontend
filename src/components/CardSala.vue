@@ -73,7 +73,6 @@
         if (user) {
           this.cargando[sala.id] = false
           const res = await putMethod.updateFavorite(sala, user)
-          console.log(res)
           this.$store.dispatch('setUserRooms',res.roomsFavorite)
           this.cargando[sala.id] = true
         } else {
