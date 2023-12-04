@@ -149,6 +149,7 @@ export default {
     width: 90%;
     height: auto;
     padding: 25px;
+
     .contenedor{
       display: flex;
       align-items: center;
@@ -203,5 +204,30 @@ export default {
       background-color: red;
     }
   }
+  @media only screen and (max-width:480px ){
+    .contenedor {
+      flex-direction: column;
+
+      .calendarios {
+        margin: 10px;       }
+
+      .cal1Cont, .cal2Cont {
+        width: 100%;
+      }
+
+      .cal2Cont {
+        .cal2 {
+          width: 95vw;
+          margin-left: 10vw;
+        }
+      }
+    }
+    .cal1 {
+      width: 90vw;
+      margin-left: 10vw;
+        }
+
+  }
+
 
 </style>
