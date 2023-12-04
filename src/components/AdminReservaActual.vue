@@ -3,6 +3,7 @@
     <div class="info">
       <p class="id">{{ card?.id }}</p>
       <p class="name">{{ card?.room?.name }}</p>
+      <p class="reserva">{{ reserva[cards?.indexOf(card)] }}</p>
       <p class="fecha">{{ fecha[cards?.indexOf(card)] }}</p>
     </div>
     <div class="action">
@@ -34,6 +35,7 @@ export default {
   data() {
     return {
       fecha: [],
+      reserva: [],
     }
   },
   mounted() {
@@ -53,8 +55,9 @@ export default {
           util.cargarLoader("Eliminando reserva")
           await deleteMethods.deleteBooking(card.id)
           const updatedRooms = await getMethod.getBookings()
+          this.$store.dispatch('setReserva', [])
           this.$store.dispatch('setReserva', updatedRooms)
-          this.$emit('update-cards', updatedRooms)
+          this.$emit('update-cards', updatedRooms, 'actual')
           util.cargarLoader("")
         },
         cancel: ()=> {
@@ -91,7 +94,16 @@ export default {
         const anio = date.slice(8, 12)
         const fechaFormateada = `${dia} ${diaFecha} de ${mes} del ${anio} de ${turno} a ${turno2}`
         return fechaFormateada
-      });
+      })
+      this.reserva = this.cards.map(res => {
+        const { dateBooking } = res
+        const dia = diasSp[diasEn.indexOf(dateBooking.slice(0, 3))]
+        const diaFecha = dateBooking.slice(6, 8)
+        const mes = mesesSp[mesesEn.indexOf(dateBooking.slice(3, 6))]
+        const anio = dateBooking.slice(8, 12)
+        const fechaFormateada = `${dia} ${diaFecha} de ${mes} del ${anio}`
+        return fechaFormateada
+      })
     }
   }
 }
@@ -120,14 +132,21 @@ export default {
         justify-content: center;
       }
       .name{
-        width: 45%;
+        width: 25%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .reserva{
+        width: 25%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
       }
       .fecha{
-        width: 45%;
+        width: 40%;
         height: 100%;
         display: flex;
         align-items: center;

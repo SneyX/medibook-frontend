@@ -104,6 +104,20 @@
       </select>
     </div>
   </div>
+  <div v-if="dialog?.type == 'deleteReserva'" class="contenedor">
+    <div class="resCont">
+      <div class="reservaCont">
+        <h2>Estás por elimninar la siguiente reserva</h2>
+        <p>SALA: {{dialog?.room}}</p>
+        <p>FECHA: {{dialog?.fecha}}</p>
+        <p>TURNO: {{dialog?.turno}}</p>
+      </div>
+      <div class="resBtnCont">
+        <div class="resBtn ok" @click="dialog?.acept">ACEPTAR</div>
+        <div class="resBtn cancel" @click="dialog?.cancel">CANCELAR</div>
+      </div>
+    </div>
+  </div>
   <div v-if="dialog?.type == 'slider'" class="contenedor" id="slider">
     <Swiper
       class="Swiper"
@@ -556,6 +570,60 @@ export default {
         button:hover {
           background-color: #069fa7;
           transition: 0.5s ease-in-out;
+        }
+      }
+    }
+    .resCont{
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      max-width: 700px;
+      height: auto;
+      background-color: #07d0db;
+      border: 2px solid #0d7277;
+      border-radius: 15px;
+      color: #0a585c;
+      padding: 25px;
+      .reservaCont{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 80%;
+      }
+      .resBtnCont{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 80%;
+        .resBtn{
+          padding: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+        }
+        .ok{
+          background-color: #0d7277;
+          color: #99dcdd;
+          border: 1px solid #0a585c;
+          transition: .5s ease-in-out;
+        }
+        .cancel{
+          background-color: #99dcdd;
+          color: #0a585c;
+          border: 1px solid #07d0db;
+          transition: .5s ease-in-out;
+        }
+        .ok:hover{
+          box-shadow: 1px 1px 5px 5px #0a585c;
+        }
+        .cancel:hover{
+          box-shadow: 1px 1px 5px 10px #99dcdd;
         }
       }
     }

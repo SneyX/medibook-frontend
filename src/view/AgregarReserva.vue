@@ -15,7 +15,7 @@
           :events="datos.events"
           :disable-views="['week', 'day']"
           @cell-click="fechaSeleccionada = $event"
-        ></vue-cal>
+          ></vue-cal>
         <div class="fecha">
           Fecha seleccionada: '{{ fechaSeleccionada.format() }}'
         </div>
@@ -39,15 +39,17 @@
       </div>
     </div>
   </div>
+  <DataDialogVue />
 </template>
 
 <script>
 import VueCal from '/node_modules/vue-cal/dist/vue-cal.cjs.js'
+import DataDialogVue from '@/components/DataDialog.vue'
 import 'vue-cal/dist/vuecal.css'
 import postMethods from '@/service/postMethod'
 import getMethod from '@/service/getMethod'
 import util from '@/utils/utils'
-// import deleteMethods from '@/service/deleteMethod'
+import deleteMethods from '@/service/deleteMethod'
 
 const datos = {
   events: []
@@ -55,7 +57,10 @@ const datos = {
 
 export default {
   name: 'AgregarReserva',
-  components: { VueCal },
+  components: { 
+    VueCal,
+    DataDialogVue,
+   },
   data() {
     return {
       datos,
@@ -73,7 +78,7 @@ export default {
   },
   async created() {
     await this.completarCalendario()
-    this.minDate=this.fechaSeleccionada
+    this.minDate = new Date()
   },
   beforeUnmount(){
     this.datos.events = []
@@ -82,9 +87,11 @@ export default {
     async reservarTurno(e){
       const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
       const turno = e.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
+      const dateBooking = new Date().toString().slice(0, 16).replace(/\s+/g, '')
       const data = {
         "date": fecha,
         "shift": `${turno}`,
+        "dateBooking":dateBooking,
         "room":{
           "id": this.$route.params.id
         },
@@ -94,6 +101,7 @@ export default {
       }
       util.cargarLoader("Agregando reserva")
       await postMethods.addBooking(data)
+      this.datos.events = []
       await this.completarCalendario()
       util.cargarLoader("")
     },
@@ -133,8 +141,32 @@ export default {
         )
       })
     },
-    onEventClick(e){
-      console.log(e)
+    async onEventClick(e){
+      const reservas = await getMethod.getBookings()
+      const turno = e.start.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
+      const fecha = e.start.toString().slice(0, 16).replace(/\s+/g, '')
+      const result = reservas.filter(res=> res.shift == turno && res.date == fecha)
+      const fechaData = this.convertirFecha(fecha)
+      let dialog = {
+        type: 'deleteReserva',
+        fecha: fechaData,
+        turno: result[0].shift,
+        room: result[0].room.name,
+        acept: async ()=>{
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
+          util.cargarLoader("Eliminando reserva")
+          await deleteMethods.deleteBooking(result[0].id)
+          this.datos.events = []
+          await this.completarCalendario()
+          util.cargarLoader("")
+        },
+        cancel: ()=> {
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
+        }
+      }
+      this.$store.dispatch('setDialog',dialog)
     }
   }
 };

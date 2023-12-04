@@ -16,7 +16,8 @@
       <div class="info">
         <p class="id">id</p>
         <p class="name">Sala</p>
-        <p class="fecha">Fecha</p>
+        <p class="reserva">Reserva</p>
+        <p class="fecha">Fecha de uso</p>
       </div>
       <div class="action">
         <p>Acciones</p>
@@ -87,9 +88,18 @@ export default {
       util.cargarLoader("")
       this.completeCards = true
     },
-    async updateCards(updatedRooms) {
+    async updateCards(updatedRooms, type) {
       this.cards = updatedRooms
-      this.$store.dispatch('setReserva', updatedRooms)
+      switch (type) {
+        case 'finalizadas':
+          await this.generarCards()
+          this.displaysala = true
+        break
+        case 'actual':
+          await this.generarCards2()
+          this.displaysala = false
+        break
+      }
     },
     async displayHandler(value){
       switch (value) {
@@ -193,8 +203,11 @@ export default {
   .id {
     width: 10%;
   }
-  .name, .fecha {
-    width: 45%;
+  .name, .reserva {
+    width: 25%;
+  }
+  .fecha{
+    width: 40%;
   }
   .action {
     width: 35%;
