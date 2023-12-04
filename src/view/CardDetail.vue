@@ -1,5 +1,12 @@
 <template>
   <div :class="[theme, 'card']">
+    <head>
+      <!-- Otras metaetiquetas -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="Título del Tweet">
+      <meta name="twitter:description" content="Descripción del Tweet">
+      <meta name="twitter:image" content="https://media.licdn.com/dms/image/C5603AQGV3dYmv-qy2w/profile-displayphoto-shrink_200_200/0/1604706410266?e=1707350400&v=beta&t=7Zdky8KyRSLA9yzufhKKEtp6R_dSDscnJiHU8m5EHy4">
+    </head>
     <div class="card-container">
       <div class="headerContainer">
         <h2>DETALLE DE SALA - {{ card?.name }}</h2>
