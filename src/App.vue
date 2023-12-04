@@ -1,5 +1,4 @@
 <template>
-<!-- importo las fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -15,10 +14,10 @@
 </template>
 
 <script>
-import HeaderPrincipal from './components/HeaderPrincipal.vue';
-import LoaderMain from './components/LoaderMain.vue';
-import FooterComponent from './components/FooterComponent.vue';
-import PopUp from './components/PopUp.vue';
+import HeaderPrincipal from './components/HeaderPrincipal.vue'
+import LoaderMain from './components/LoaderMain.vue'
+import FooterComponent from './components/FooterComponent.vue'
+import PopUp from './components/PopUp.vue'
 
 export default {
   name: 'App',
