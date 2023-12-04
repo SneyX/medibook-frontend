@@ -47,8 +47,8 @@ export default {
       if (user) {
         util.cargarLoader("eliminando de favoritos")
         const res = await putMethod.updateFavorite(sala, user)
-        this.$store.dispatch('setUserRooms',res.rooms)
-        this.$emit('update-favs', res.rooms)
+        this.$store.dispatch('setUserRooms',res.roomsFavorite)
+        this.$emit('update-favs', res.roomsFavorite)
         util.cargarLoader("")
       }
     }

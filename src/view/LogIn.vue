@@ -72,7 +72,7 @@ export default {
           password: this.password,
           jwt: result.token,
           rol: user?.role,
-          rooms: user?.rooms || [],
+          rooms: user?.roomsFavorite || [],
         }
         this.resetForm()
         this.$store.dispatch("setUser", userForStore)
@@ -91,9 +91,8 @@ export default {
         username: this.username
       }
       try {
-        const res = await emailjs.send("service_f34uw5r", "template_1x7auwe", emailParams)
+        await emailjs.send("service_f34uw5r", "template_1x7auwe", emailParams)
         util.cargarPopUp(`Hemos re-enviado un mail de bienvenida a:\n ${this.username}`, "GRACIAS")
-        console.log("SUCCESS!", res.text)
       } catch (error) {
         util.cargarPopUp(`No hemos podido enviar email a:\n ${this.username}`, "ERROR")
         console.error("FAILED...", error)
