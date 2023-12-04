@@ -65,7 +65,7 @@
     data() {
       return {
           cargando: reactive({}),
-        };
+        }
       },
     methods: {
       async handleFavorite(sala){
@@ -76,7 +76,7 @@
           this.$store.dispatch('setUserRooms',res.roomsFavorite)
           this.cargando[sala.id] = true
         } else {
-          console.log("no");
+          console.log("no")
         }
       }
     },

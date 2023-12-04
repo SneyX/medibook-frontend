@@ -9,7 +9,7 @@
         <BotonPrincipal class="btnInicio" texto="INICIAR SESIÓN" size="19"/>
       </router-link>
       <router-link to="/historial" v-if="path != '/historial' && jwt != '' && (rol == 'ADMIN' || rol == 'USER')">
-        <BotonPrincipal class="btnAgrSala" texto="RESERVAS" size="19"/>
+        <BotonPrincipal class="btnAgrSala" texto="MIS RESERVAS" size="19"/>
       </router-link>
       <router-link to="/admin" v-if="path != '/admin' && jwt != '' && rol == 'ADMIN'">
         <BotonPrincipal class="btnAgrSala" texto="ADMINISTRAR" size="19"/>

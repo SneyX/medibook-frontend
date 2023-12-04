@@ -1,5 +1,6 @@
 <template>
   <div class="mainContainer">
+    <h1>RESERVAR SALA</h1>
     <div class="contenedor">
       <div class="calendarios cal1Cont">
         <vue-cal
@@ -60,7 +61,7 @@ export default {
   components: { 
     VueCal,
     DataDialogVue,
-   },
+  },
   data() {
     return {
       datos,
@@ -88,22 +89,37 @@ export default {
       const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
       const turno = e.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
       const dateBooking = new Date().toString().slice(0, 16).replace(/\s+/g, '')
-      const data = {
-        "date": fecha,
-        "shift": `${turno}`,
-        "dateBooking":dateBooking,
-        "room":{
-          "id": this.$route.params.id
+      const fechaData = this.convertirFecha(fecha)
+      let dialog = {
+        type: 'postReserva',
+        fecha: fechaData,
+        turno: turno,
+        acept: async ()=>{
+          const data = {
+            "date": fecha,
+            "shift": `${turno}`,
+            "dateBooking":dateBooking,
+            "room":{
+              "id": this.$route.params.id
+            },
+            "userEntity": {
+              "id": this.user.id
+            }
+          }
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
+          util.cargarLoader("Agregando reserva")
+          await postMethods.addBooking(data)
+          this.datos.events = []
+          await this.completarCalendario()
+          util.cargarLoader("")
         },
-        "userEntity": {
-          "id": this.user.id
+        cancel: ()=> {
+          dialog = {}
+          this.$store.dispatch('setDialog',dialog)
         }
       }
-      util.cargarLoader("Agregando reserva")
-      await postMethods.addBooking(data)
-      this.datos.events = []
-      await this.completarCalendario()
-      util.cargarLoader("")
+      this.$store.dispatch('setDialog',dialog)
     },
     convertirFecha(apiDate) {
       const meses = [
@@ -178,10 +194,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90%;
+    flex-direction: column;
+    width: 100%;
     height: auto;
     padding: 25px;
-
+    h1{
+      color: #0d7277;
+    }
     .contenedor{
       display: flex;
       align-items: center;

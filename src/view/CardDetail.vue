@@ -3,6 +3,9 @@
     <div class="card-container">
       <div class="headerContainer">
         <h2>DETALLE DE SALA - {{ card?.name }}</h2>
+        <router-link class="name" :to="{ name: 'admin-reserva', params: { id: routeId } }">
+          <p class="infoDet">Reservar</p>
+        </router-link>
         <div class="cerrar" @click="goBack">&lt;</div>
       </div>
       <div class="mainContainer">
@@ -70,7 +73,9 @@ export default {
     },
     currentUrl() {
       return "http://1023c04-grupo4.s3-website.us-east-2.amazonaws.com/"
-    //  return window.location.href;
+    },
+    routeId(){
+      return this.$route.params.id
     },
   },
   data(){
@@ -267,6 +272,19 @@ export default {
   .verMas p:hover {
     background-color: #0f8389;
     color: #99DCDD;
+  }
+
+  .infoDet{
+    padding: 10px;
+    background-color: #0f8389;
+    border: 1px solid #0f8389;
+    color: white;
+    border-radius: 15px;
+    transition: .5s ease-in-out;
+  }
+  .infoDet:hover{
+    background-color: white;
+    color: #0f8389;
   }
   @media only screen and (max-width:480px ){
     .headerContainer{

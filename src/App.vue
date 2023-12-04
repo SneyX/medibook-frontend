@@ -160,6 +160,7 @@ export default {
             }
             .day-view{
               .vuecal__flex{
+                cursor: pointer;
                 .vuecal__cell{
                   /* .vuecal__now-line{
 

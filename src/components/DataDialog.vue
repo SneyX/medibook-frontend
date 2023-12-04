@@ -118,6 +118,19 @@
       </div>
     </div>
   </div>
+  <div v-if="dialog?.type == 'postReserva'" class="contenedor">
+    <div class="resCont">
+      <div class="reservaCont">
+        <h2>Estás por agregar la siguiente reserva</h2>
+        <p>FECHA: {{dialog?.fecha}}</p>
+        <p>TURNO: {{dialog?.turno}}</p>
+      </div>
+      <div class="resBtnCont">
+        <div class="resBtn ok" @click="dialog?.acept">ACEPTAR</div>
+        <div class="resBtn cancel" @click="dialog?.cancel">CANCELAR</div>
+      </div>
+    </div>
+  </div>
   <div v-if="dialog?.type == 'slider'" class="contenedor" id="slider">
     <Swiper
       class="Swiper"
