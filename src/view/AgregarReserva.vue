@@ -110,13 +110,13 @@ export default {
           this.$store.dispatch('setDialog',dialog)
           util.cargarLoader("Agregando reserva")
           const res = await postMethods.addBooking(data)
-          console.log(res)
           if (res) {
             this.datos.events = []
             await this.completarCalendario()
             util.cargarLoader("")
             util.cargarPopUp("Reserva agregada con éxito","CONFIRMACIÓN")
           } else{
+            util.cargarLoader("")
             util.cargarPopUp("Ha ocurrido un error, no pudimos agregar la reserva","ERROR")
           }
         },

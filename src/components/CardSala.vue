@@ -14,11 +14,12 @@
           <div class="corazon2"><div class="lds-heart" v-if="cargando[sala?.id] == false && user"><div></div></div></div>
           <h2>{{ sala?.typeroom?.name }}</h2>
           <router-link :to="{ name: 'card-detail', params: { id: sala?.id } }">
-            <p class="infoDet">Detalles</p>
+            <p>Detalles</p>
           </router-link>
           <router-link class="name" :to="{ name: 'admin-reserva', params: { id: sala?.id } }" v-if="user">
-            <p class="infoDet">Reservar</p>
+            <p>Reservar</p>
           </router-link>
+          <p class="infoDet" v-if="!user" @click="msjLogin()">Reservar</p>
         </div>
       </swiper-slide>
     </Swiper>
@@ -36,6 +37,7 @@
   import { ref, reactive  } from 'vue'
   import 'swiper/css'
   import putMethod from '@/service/putMethod'
+  import util from '@/utils/utils'
 
   export default {
     name:'CardSala',
@@ -78,7 +80,11 @@
         } else {
           console.log("no")
         }
-      }
+      },
+      msjLogin(){
+        util.cargarPopUp('Debe iniciar sesión para poder realizar reservas',"LOGIN")
+        this.$router.push({ path: '/login' })
+      },
     },
     setup() {
       const swiperRef = ref(null)
@@ -88,7 +94,7 @@
       swiperRef.value = swiper
       }
       const onSlideChange = () => {
-        currentIndex.value = swiperRef.value.activeIndex;
+        currentIndex.value = swiperRef.value.activeIndex
         if (currentIndex.value - 3 != swiperRef.value.activeIndex) {
           currentIndex.value++
         }
@@ -260,58 +266,61 @@
       transform: scale(0.9);
     }
   }
+  .infoDet{
+    cursor: pointer;
+  }
   @media only screen and (max-width:480px ){ 
     .swiper{
-    width: 360px;
-  }
-  img{
-    width: 100px;
-    height: 90px;
-  }
-  .info p {
-    font-size: 2vw;
-  } 
-  .info h2{
-        font-size: 3vw;
-  }
-  .btnCont{
-    margin-top: 10px;
-    height: 30px;
-  }
-  .btnCont button{
-    padding: 0px 0px 1px 0px;
-    height: 18px;
-    width: 30px;
-    font-size: 2.2vw;
-  }
-  .btnCont p{
-    padding: 1px 5px;
-    margin: 0 5px;
-    height: 20px;
-    width: 35px;
-    font-size: 2vw;
-  }
-  .corazon{
-    padding: 0px;
-    width: 20px;
-    height: 20px;
-    top: 67px;
-    right: 16px;
-    font-size: 15px;
-  }
-  .corazon2{
-    width: 20px;
-    height: 20px;
-    top: 67px;
-    right: 15px;
-  }
-  .lds-heart div {
-top: -15px;
-left: -10px;
+      width: 360px;
+    }
+    img{
+      width: 100px;
+      height: 90px;
+    }
+    .info p {
+      font-size: 2vw;
+    } 
+    .info h2{
+          font-size: 3vw;
+    }
+    .btnCont{
+      margin-top: 10px;
+      height: 30px;
+    }
+    .btnCont button{
+      padding: 0px 0px 1px 0px;
+      height: 18px;
+      width: 30px;
+      font-size: 2.2vw;
+    }
+    .btnCont p{
+      padding: 1px 5px;
+      margin: 0 5px;
+      height: 20px;
+      width: 35px;
+      font-size: 2vw;
+    }
+    .corazon{
+      padding: 0px;
+      width: 20px;
+      height: 20px;
+      top: 67px;
+      right: 16px;
+      font-size: 15px;
+    }
+    .corazon2{
+      width: 20px;
+      height: 20px;
+      top: 67px;
+      right: 15px;
+    }
+    .lds-heart div {
+      top: -15px;
+      left: -10px;
 
-width: 20px;
-height: 20px;
-}
+      width: 20px;
+      height: 20px;
+    }
   }
   </style>
   
