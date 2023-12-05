@@ -109,10 +109,16 @@ export default {
           dialog = {}
           this.$store.dispatch('setDialog',dialog)
           util.cargarLoader("Agregando reserva")
-          await postMethods.addBooking(data)
-          this.datos.events = []
-          await this.completarCalendario()
-          util.cargarLoader("")
+          const res = await postMethods.addBooking(data)
+          console.log(res)
+          if (res) {
+            this.datos.events = []
+            await this.completarCalendario()
+            util.cargarLoader("")
+            util.cargarPopUp("Reserva agregada con éxito","CONFIRMACIÓN")
+          } else{
+            util.cargarPopUp("Ha ocurrido un error, no pudimos agregar la reserva","ERROR")
+          }
         },
         cancel: ()=> {
           dialog = {}
@@ -158,31 +164,36 @@ export default {
       })
     },
     async onEventClick(e){
-      const reservas = await getMethod.getBookings()
+      const reservas = await getMethod.getUserBooking(this.user.id)
       const turno = e.start.toString().slice(16, 18).replace(/\s+/g, '').concat(":00")
       const fecha = e.start.toString().slice(0, 16).replace(/\s+/g, '')
       const result = reservas.filter(res=> res.shift == turno && res.date == fecha)
       const fechaData = this.convertirFecha(fecha)
-      let dialog = {
-        type: 'deleteReserva',
-        fecha: fechaData,
-        turno: result[0].shift,
-        room: result[0].room.name,
-        acept: async ()=>{
-          dialog = {}
-          this.$store.dispatch('setDialog',dialog)
-          util.cargarLoader("Eliminando reserva")
-          await deleteMethods.deleteBooking(result[0].id)
-          this.datos.events = []
-          await this.completarCalendario()
-          util.cargarLoader("")
-        },
-        cancel: ()=> {
-          dialog = {}
-          this.$store.dispatch('setDialog',dialog)
+      if (result.length > 0) {
+        let dialog = {
+          type: 'deleteReserva',
+          fecha: fechaData,
+          turno: result[0].shift,
+          room: result[0].room.name,
+          acept: async ()=>{
+            dialog = {}
+            this.$store.dispatch('setDialog',dialog)
+            util.cargarLoader("Eliminando reserva")
+            await deleteMethods.deleteBooking(result[0].id)
+            this.datos.events = []
+            await this.completarCalendario()
+            util.cargarLoader("")
+            util.cargarPopUp("Reserva eliminada con éxito","CONFIRMACIÓN")
+          },
+          cancel: ()=> {
+            dialog = {}
+            this.$store.dispatch('setDialog',dialog)
+          }
         }
+        this.$store.dispatch('setDialog',dialog)
+      } else {
+        util.cargarPopUp("No tiene permiso para eliminar esta reserva","Permiso denegado")
       }
-      this.$store.dispatch('setDialog',dialog)
     }
   }
 };

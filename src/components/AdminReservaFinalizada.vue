@@ -32,6 +32,14 @@ export default {
       default:()=>[],
     }
   },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
+    user(){
+      return this.$store.getters?.getUser
+    },
+  },
   data() {
     return {
       fecha: [],
@@ -43,29 +51,33 @@ export default {
   },
   methods:{
     async deleteCard(card) {
-      let dialog = {
-        type: 'delete',
-        texto: 'Está seguro que desea eliminar la reserva de esta sala?',
-        id: card.id,
-        name: card.room.name,
-        description: card.room.description,
-        acept: async () =>{
-          dialog = {}
-          this.$store.dispatch('setDialog',dialog)
-          util.cargarLoader("Eliminando reserva")
-          await deleteMethods.deleteBooking(card.id)
-          const updatedRooms = await getMethod.getBookings()
-          this.$store.dispatch('setReserva', [])
-          this.$store.dispatch('setReserva', updatedRooms)
-          this.$emit('update-cards', updatedRooms, 'finalizadas')
-          util.cargarLoader("")
-        },
-        cancel: ()=> {
-          dialog = {}
-          this.$store.dispatch('setDialog',dialog)
+      if (this.user) {
+        let dialog = {
+          type: 'delete',
+          texto: 'Está seguro que desea eliminar la reserva de esta sala?',
+          id: card.id,
+          name: card.room.name,
+          description: card.room.description,
+          acept: async () =>{
+            dialog = {}
+            this.$store.dispatch('setDialog',dialog)
+            util.cargarLoader("Eliminando reserva")
+            await deleteMethods.deleteBooking(card.id)
+            const updatedRooms = await getMethod.getUserBooking(this.user.id)
+            this.$store.dispatch('setReserva', [])
+            this.$store.dispatch('setReserva', updatedRooms)
+            this.$emit('update-cards', updatedRooms, 'finalizadas')
+            util.cargarLoader("")
+          },
+          cancel: ()=> {
+            dialog = {}
+            this.$store.dispatch('setDialog',dialog)
+          }
         }
+        this.$store.dispatch('setDialog',dialog)
+      } else {
+        util.cargarPopUp("Por favor, vuelva a iniciar sesión","Permiso denegado")
       }
-      this.$store.dispatch('setDialog',dialog)
     },
     formatearFecha(){
       const diasEn = [
