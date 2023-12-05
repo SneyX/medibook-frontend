@@ -97,7 +97,7 @@
     <div class="filterCont">
       <div class="cerrar" @click="close()">x</div>
       <select name="filter" id="filter" @change="onFilterChange($event)">
-        <option value="seleccionar filtro">seleccionar filtro</option>
+        <option value="seleccionar filtro">Filtro por categoría</option>
         <option v-for="filtro in filtros" :value="filtro?.name" :key="filtro.id" >
           {{ filtro?.name }}
         </option>
