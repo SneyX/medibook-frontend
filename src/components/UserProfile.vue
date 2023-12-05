@@ -137,7 +137,7 @@ export default {
     border: 2px solid #0d7277;
     position: absolute;
     left: 100%;
-    top: -30%;
+    top: 0%;
     transform: translate( -100%, 50%);
   }
   .menu {
