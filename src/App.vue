@@ -193,5 +193,54 @@ export default {
       }
     }
   }
+  .calContDialog{
+    .vuecal{
+      .vuecal__header{
+        border-bottom: 4px solid #0d7277;
+        background-color: #15b4bc;
+        .vuecal__menu{
+          background-color: #15b4bc;
+          width: 100%;
+          border-bottom: 2px solid #0d7277;
+          .vuecal__view-btn{
+            border: none;
+            background-color: #15b4bc;
+          }
+        }
+        .vuecal__title-bar{
+          border: none;
+          background-color: #15b4bc;
+        }
+      }
+      .vuecal__body{
+        .vuecal__flex{
+          .vuecal__bg{
+            background-color: #15b4bc;
+            .vuecal__flex{
+              .month-view{
+                .vuecal__flex{
+                  .vuecal__cell{
+                    cursor: pointer;
+                  }
+                  .vuecal__cell--out-of-scope{
+                    cursor: not-allowed;
+                  }
+                  .vuecal__cell--out-of-scope::before{
+                    cursor: not-allowed;
+                  }
+                  .vuecal__cell--disabled{
+                    cursor: not-allowed;
+                  }
+                  .vuecal__cell--disabled::before{
+                    cursor: not-allowed;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
  
 </style>

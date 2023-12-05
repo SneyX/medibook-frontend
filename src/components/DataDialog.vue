@@ -94,14 +94,34 @@
     </div>
   </div>
   <div v-if="dialog?.type == 'filter'" class="contenedor">
-    <div class="filterCont">
+    <div class="filterCont" v-if="noCalendar">
       <div class="cerrar" @click="close()">x</div>
-      <select name="filter" id="filter" @change="onFilterChange($event)">
+      <select name="filter" id="filter" class="filter" @change="onFilterChange($event)">
         <option value="seleccionar filtro">Filtro por categoría</option>
         <option v-for="filtro in filtros" :value="filtro?.name" :key="filtro.id" >
           {{ filtro?.name }}
         </option>
       </select>
+      <div class="filter" @click="openCalendar()">
+        <p>Filtro por fecha</p>
+      </div>
+    </div>
+    <div class="calendarCont" v-if="!noCalendar">
+      <div class="calendarios calContDialog">
+        <vue-cal
+          locale="es"
+          class="cal1"
+          :xsmall="true"
+          :selected-date="fechaSeleccionada"
+          hide-view-selector
+          :time="false"
+          :transitions="false"
+          :min-date="minDate"
+          active-view="month"
+          :disable-views="['week', 'day']"
+          @cell-click="filtrarFecha($event)"
+          ></vue-cal>
+      </div>
     </div>
   </div>
   <div v-if="dialog?.type == 'deleteReserva'" class="contenedor">
@@ -154,6 +174,8 @@ import DinamicIcon from "@/components/DinamicIcon.vue"
 import util from "@/utils/utils"
 import putMethod from "@/service/putMethod"
 import IconList from "./IconList.vue"
+import VueCal from '/node_modules/vue-cal/dist/vue-cal.cjs.js'
+import 'vue-cal/dist/vuecal.css'
 
 export default {
   name: "DataDialog",
@@ -163,6 +185,7 @@ export default {
     SwiperSlide,
     IconList,
     DinamicIcon,
+    VueCal,
   },
   emits: ["update-type", "update-rol", "update-caracteristicas"],
   computed: {
@@ -178,9 +201,26 @@ export default {
       selected: null,
       display: true,
       iconName: "",
+      noCalendar: true,
+      fechaSeleccionada: new Date(),
+      minDate: null,
+    }
+  },
+  async created() {
+    if (this.dialog?.type == 'filter') {
+      this.minDate = new Date()
     }
   },
   methods: {
+    async filtrarFecha(e){
+      const fecha = e.toString().slice(0, 16).replace(/\s+/g, '')
+      this.noCalendar = true
+      this.dialog?.acept(fecha, true)
+      this.$store.dispatch("setDialog", {})
+    },
+    openCalendar(){
+      this.noCalendar = false
+    },
     recategorizeCard() {
       this.$emit("update-type", this.selected)
     },
@@ -189,7 +229,7 @@ export default {
     },
     onFilterChange(event) {
       const selectedFilter = event.target.value
-      this.dialog?.acept(selectedFilter)
+      this.dialog?.acept(selectedFilter, false)
       this.$store.dispatch("setDialog", {})
     },
     close() {
@@ -283,7 +323,7 @@ export default {
         position: absolute;
         display: flex;
         align-self: flex-end;
-        padding: 15px 20px;
+        padding: 5px 12px;
         background-color: #15b4bc;
         border: 1px solid #0f8389;
         color: #daecec;
@@ -293,11 +333,19 @@ export default {
         margin-right: 10px;
         top: 10px;
         cursor: pointer;
-        justify-content: center; /* Center horizontally */
+        justify-content: center;
         align-items: center;
       }
-      #filter {
-        padding: 10px;
+      .filter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+        width: 50%;
+        height: 35px;
+        outline: 0;
         border: 2px solid #0f8389;
         background-color: #15b4bc;
         cursor: pointer;
@@ -638,6 +686,27 @@ export default {
         .cancel:hover{
           box-shadow: 1px 1px 5px 10px #99dcdd;
         }
+      }
+    }
+    .calendarCont{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      width: 50%;
+      height: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      .calContDialog{
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
     }
   }

@@ -119,7 +119,6 @@ const getRooms = async () =>{
 		const response = await fetch(url, settings)
 		const json = await response.json()
 		return json
-		
 	} catch (error) {
 		console.log(error)
 		return false

@@ -45,8 +45,8 @@
 
 <script>
 import VueCal from '/node_modules/vue-cal/dist/vue-cal.cjs.js'
-import DataDialogVue from '@/components/DataDialog.vue'
 import 'vue-cal/dist/vuecal.css'
+import DataDialogVue from '@/components/DataDialog.vue'
 import postMethods from '@/service/postMethod'
 import getMethod from '@/service/getMethod'
 import util from '@/utils/utils'

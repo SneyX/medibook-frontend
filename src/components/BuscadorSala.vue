@@ -52,7 +52,8 @@ export default {
     return {
       resultados: [],
       filtros: [],
-      filtrosAplicados: []
+      filtrosAplicados: [],
+      filtroFecha: []
     }
   },
   methods: {
@@ -66,6 +67,10 @@ export default {
         return
       }
       const datos = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
+      const datos2 = await getMethod.getBookings()
+      console.log(datos2)
+      const datos3 = datos2.filter(room => room.room.id == 29)
+      console.log(datos3)
       if (this.filtrosAplicados.length < 1 && busqueda.length >= 1 ) {
         this.resultados = datos.filter(sala => {  
           let {name, description} = sala
@@ -80,7 +85,10 @@ export default {
         }
       }
       if (this.filtrosAplicados.length >= 1 && busqueda.length < 1 ) {
+
         this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
+        const resp = datos2.filter(room => this.filtroFecha.includes(room.date))
+        console.log(resp)
         if (this.resultados.length < 1) {
           util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           util.cargarLoader("")
@@ -117,11 +125,16 @@ export default {
         let dialog = {
           type: 'filter',
           filtros: this.filtros,
-          acept: async (filtro) =>{
-            dialog = {}
-            this.$store.dispatch('setDialog',dialog)
-            this.filtrosAplicados.push(filtro)
-            await this.buscar()
+          acept: async (filtro, isFecha) =>{
+            if (!isFecha) {
+              this.filtrosAplicados.push(filtro)
+              await this.buscar()
+            } else {
+              this.filtroFecha.push(filtro)
+              const filtroFormat = this.formatearFecha(filtro)
+              this.filtrosAplicados.push(filtroFormat)
+              await this.buscar()
+            }
           }
         }
         util.cargarLoader("")
@@ -133,11 +146,16 @@ export default {
         let dialog = {
           type: 'filter',
           filtros: filtrosStored,
-          acept: async (filtro) =>{
-            dialog = {}
-            this.$store.dispatch('setDialog',dialog)
-            this.filtrosAplicados.push(filtro)
-            await this.buscar()
+          acept: async (filtro, isFecha) =>{
+            if (!isFecha) {
+              this.filtrosAplicados.push(filtro)
+              await this.buscar()
+            } else {
+              this.filtroFecha.push(filtro)
+              const filtroFormat = this.formatearFecha(filtro)
+              this.filtrosAplicados.push(filtroFormat)
+              await this.buscar()
+            }
           }
         }
         util.cargarLoader("")
@@ -152,6 +170,16 @@ export default {
       } else {
         this.resultados = []
       }
+    },
+    formatearFecha(filtro){
+      const meses = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ]
+      const dia = filtro.toString().slice(6, 8)
+      const mes = meses.indexOf(filtro.slice(3, 6)) + 1
+      const anio = filtro.toString().slice(8, 12)
+      const fechaFormateada = `${dia.padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${anio}`
+      return fechaFormateada
     },
   },
 }
