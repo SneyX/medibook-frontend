@@ -3,9 +3,7 @@
     <div class="card-container">
       <div class="headerContainer">
         <h2>DETALLE DE SALA - {{ card?.name }}</h2>
-        <router-link class="name" :to="{ name: 'admin-reserva', params: { id: routeId } }">
-          <p class="infoDet">Reservar</p>
-        </router-link>
+        <p class="infoDet" v-if="!user" @click="msjLogin()">Reservar</p>
         <div class="cerrar" @click="goBack">&lt;</div>
       </div>
       <div class="mainContainer">
@@ -77,6 +75,9 @@ export default {
     routeId(){
       return this.$route.params.id
     },
+    user(){
+      return this.$store.getters?.getUser?.jwt || false
+    },
   },
   data(){
     return {
@@ -97,6 +98,10 @@ export default {
       const resultado = await getMethod.getRoom(data)
       this.card = resultado
       util.cargarLoader("")
+    },
+    msjLogin(){
+      util.cargarPopUp('Debe iniciar sesión para poder realizar reservas \n Si no tiene una cuenta le invitamos a crear una!',"LOGIN")
+      this.$router.push({ path: '/login' })
     },
     goBack() {
       this.$router.go(-1)

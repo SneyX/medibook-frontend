@@ -82,7 +82,7 @@
         }
       },
       msjLogin(){
-        util.cargarPopUp('Debe iniciar sesión para poder realizar reservas',"LOGIN")
+        util.cargarPopUp('Debe iniciar sesión para poder realizar reservas \n Si no tiene una cuenta le invitamos a crear una!',"LOGIN")
         this.$router.push({ path: '/login' })
       },
     },
