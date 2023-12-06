@@ -123,6 +123,11 @@ export default {
               const turnosDisponibles = Object.keys(this.disponibilidadPorFechaTurnoSala[fechaSeleccionada])
               return turnosDisponibles.some( turno => this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno][sala.id])
             })
+            this.resultados = this.resultados.filter(sala => {  
+              let {name, description} = sala
+              return name.trim().toLowerCase().includes(busqueda) ||
+              description.trim().toLowerCase().includes(busqueda) 
+            })
           }
         }
         if (this.resultados.length < 1) {
