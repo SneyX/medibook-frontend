@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     theme() {
-      return this.$store.getters.getTheme;
+      return this.$store.getters.getTheme
     },
     storeRooms(){
       return this.$store.getters?.getRooms || []
@@ -53,7 +53,8 @@ export default {
       resultados: [],
       filtros: [],
       filtrosAplicados: [],
-      filtroFecha: []
+      filtroFecha: [],
+      disponibilidadPorFechaTurnoSala: {},
     }
   },
   methods: {
@@ -62,15 +63,11 @@ export default {
       util.cargarLoader("Buscando salas...")
       const busqueda = this.$refs.search.value.trim().toLowerCase()
       if (this.filtrosAplicados.length < 1 && busqueda.length < 1 ) {
-        util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
         util.cargarLoader("")
+        util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
         return
       }
       const datos = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
-      const datos2 = await getMethod.getBookings()
-      console.log(datos2)
-      const datos3 = datos2.filter(room => room.room.id == 29)
-      console.log(datos3)
       if (this.filtrosAplicados.length < 1 && busqueda.length >= 1 ) {
         this.resultados = datos.filter(sala => {  
           let {name, description} = sala
@@ -78,20 +75,31 @@ export default {
           description.trim().toLowerCase().includes(busqueda) 
         })
         if (this.resultados.length < 1) {
-          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           util.cargarLoader("")
+          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           this.$refs.search.value = ""
           return
         }
       }
       if (this.filtrosAplicados.length >= 1 && busqueda.length < 1 ) {
-
         this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
-        const resp = datos2.filter(room => this.filtroFecha.includes(room.date))
-        console.log(resp)
+        if (this.filtroFecha.length > 0) {
+          const fechaSeleccionada = this.filtroFecha[0]
+          if (this.resultados.length > 0) {
+            this.resultados = this.resultados.filter( sala => {
+              const turnosDisponibles = Object.keys(this.disponibilidadPorFechaTurnoSala[fechaSeleccionada])
+              return turnosDisponibles.some( turno => this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno][sala.id])
+            })
+          } else {
+            this.resultados = datos.filter( sala => {
+              const turnosDisponibles = Object.keys(this.disponibilidadPorFechaTurnoSala[fechaSeleccionada])
+              return turnosDisponibles.some( turno => this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno][sala.id])
+            })
+          }
+        }
         if (this.resultados.length < 1) {
-          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           util.cargarLoader("")
+          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           this.$refs.search.value = ""
           return
         }
@@ -103,10 +111,24 @@ export default {
           return name.trim().toLowerCase().includes(busqueda) ||
           description.trim().toLowerCase().includes(busqueda) 
         })
+        if (this.filtroFecha.length > 0) {
+          const fechaSeleccionada = this.filtroFecha[0]
+          if (this.resultados.length > 0) {
+            this.resultados = this.resultados.filter( sala => {
+              const turnosDisponibles = Object.keys(this.disponibilidadPorFechaTurnoSala[fechaSeleccionada])
+              return turnosDisponibles.some( turno => this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno][sala.id])
+            })
+          } else {
+            this.resultados = datos.filter( sala => {
+              const turnosDisponibles = Object.keys(this.disponibilidadPorFechaTurnoSala[fechaSeleccionada])
+              return turnosDisponibles.some( turno => this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno][sala.id])
+            })
+          }
+        }
         if (this.resultados.length < 1) {
           this.resultados = datos.filter(room => this.filtrosAplicados.includes(room.typeroom.name))
-          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           util.cargarLoader("")
+          util.cargarPopUp("no se encontraron coincidencias", "RESULTADO")
           this.$refs.search.value = ""
           return
         }
@@ -126,13 +148,21 @@ export default {
           type: 'filter',
           filtros: this.filtros,
           acept: async (filtro, isFecha) =>{
+            util.cargarLoader("Buscando salas...")
             if (!isFecha) {
               this.filtrosAplicados.push(filtro)
+              util.cargarLoader("")
               await this.buscar()
             } else {
+              if (this.filtroFecha.length > 0) {
+                const fecha = this.formatearFecha(this.filtroFecha[0])
+                this.quitarFiltro(fecha)
+              }
               this.filtroFecha.push(filtro)
+              await this.actualizarDisponibilidadPorFecha(filtro)
               const filtroFormat = this.formatearFecha(filtro)
               this.filtrosAplicados.push(filtroFormat)
+              util.cargarLoader("")
               await this.buscar()
             }
           }
@@ -147,13 +177,21 @@ export default {
           type: 'filter',
           filtros: filtrosStored,
           acept: async (filtro, isFecha) =>{
+            util.cargarLoader("Buscando salas...")
             if (!isFecha) {
               this.filtrosAplicados.push(filtro)
+              util.cargarLoader("")
               await this.buscar()
             } else {
+              if (this.filtroFecha.length > 0) {
+                const fecha = this.formatearFecha(this.filtroFecha[0])
+                this.quitarFiltro(fecha)
+              }
               this.filtroFecha.push(filtro)
+              await this.actualizarDisponibilidadPorFecha(filtro)
               const filtroFormat = this.formatearFecha(filtro)
               this.filtrosAplicados.push(filtroFormat)
+              util.cargarLoader("")
               await this.buscar()
             }
           }
@@ -165,11 +203,35 @@ export default {
     async quitarFiltro(filtro){
       const idx = this.filtrosAplicados.indexOf(filtro)
       this.filtrosAplicados.splice(idx,1)
+      if (filtro.includes("-")) {
+        const fechaSinFiltro = this.quitarFormato(filtro)
+        const idx = this.filtroFecha.indexOf(fechaSinFiltro)
+        this.filtroFecha.splice(idx,1)
+        delete this.disponibilidadPorFechaTurnoSala[fechaSinFiltro]
+      }
       if (this.filtrosAplicados.length >= 1) {
         await this.buscar()
       } else {
         this.resultados = []
       }
+    },
+    quitarFormato(filtro){
+      const meses = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ]
+
+      const dia = filtro.slice(0, 2)
+      const mesNum = parseInt(filtro.slice(3, 5), 10) - 1
+      const mes = meses[mesNum]
+      const anio = filtro.slice(6, 10)
+
+      const fechaSinFormato = new Date(anio, mesNum, dia)
+      const diasSemana = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      const diaSemana = diasSemana[fechaSinFormato.getDay()]
+
+      const fechaFinal = `${diaSemana}${mes}${dia}${anio}`
+
+      return fechaFinal
     },
     formatearFecha(filtro){
       const meses = [
@@ -181,6 +243,32 @@ export default {
       const fechaFormateada = `${dia.padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${anio}`
       return fechaFormateada
     },
+    async actualizarDisponibilidadPorFecha(fechaSeleccionada) {
+      if (!this.disponibilidadPorFechaTurnoSala[fechaSeleccionada]) {
+        this.disponibilidadPorFechaTurnoSala[fechaSeleccionada] = {}
+        const turnosDisponibles = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"]
+        const salasDisponibles = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
+
+        turnosDisponibles.forEach(turno => {
+          this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno] = {}
+          salasDisponibles.forEach(room => {
+            this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turno][room.id] = true
+          })
+        })
+      }
+
+      const bookings = await getMethod.getBookings()
+      const resp = bookings.filter(booking => this.filtroFecha.includes(booking.date))
+      const reservasEnFecha = resp.filter(reserva => reserva.date === fechaSeleccionada)
+
+      reservasEnFecha.forEach(reserva => {
+        const turnoReservado = reserva.shift
+        const salaReservada = reserva.room.id
+
+        this.disponibilidadPorFechaTurnoSala[fechaSeleccionada][turnoReservado][salaReservada] = false
+      })
+    },
+    
   },
 }
 </script>

@@ -203,12 +203,7 @@ export default {
       iconName: "",
       noCalendar: true,
       fechaSeleccionada: new Date(),
-      minDate: null,
-    }
-  },
-  async created() {
-    if (this.dialog?.type == 'filter') {
-      this.minDate = new Date()
+      minDate:  new Date(),
     }
   },
   methods: {
