@@ -4,6 +4,9 @@
       <div class="headerContainer">
         <h2>DETALLE DE SALA - {{ card?.name }}</h2>
         <p class="infoDet" v-if="!user" @click="msjLogin()">Reservar</p>
+        <router-link class="name" :to="{ name: 'admin-reserva', params: { id: routeId } }" v-if="user">
+          <p>Reservar</p>
+        </router-link>
         <div class="cerrar" @click="goBack">&lt;</div>
       </div>
       <div class="mainContainer">
