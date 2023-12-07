@@ -32,6 +32,14 @@ export default {
       default:()=>[],
     }
   },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
+    user(){
+      return this.$store.getters?.getUser
+    },
+  },
   data() {
     return {
       fecha: [],
