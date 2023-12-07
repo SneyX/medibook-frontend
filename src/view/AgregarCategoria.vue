@@ -91,7 +91,6 @@ export default {
       }
 
       const res = await postMethods.addTypeRoom(category)
-      
       if (res) {
         this.$store.dispatch('setTypeRooms',[])
         const categorys = await getMethod.getTypeRooms()
@@ -101,7 +100,7 @@ export default {
         formData.set("path", this.imageFiles[0])
         formData.set("typeroom_id",id)
         await postMethods.addImgTyperoom(formData)
-        util.cargarLoader()
+        util.cargarLoader("")
         this.$refs.loginForm.reset()
         util.cargarPopUp("Categoría agregada con éxito", "Gracias!")
       }
