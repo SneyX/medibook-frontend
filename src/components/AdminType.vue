@@ -58,7 +58,7 @@ export default {
           await deleteMethods.deleteTypeRoom(card.id)
           const updatedRooms = await getMethod.getTypeRooms()
           this.$store.dispatch('setTypeRooms', updatedRooms)
-          this.$emit('update-cards', updatedRooms)
+          this.$emit('update-cards', updatedRooms, 'category')
           util.cargarLoader("")
         },
         cancel: ()=> {

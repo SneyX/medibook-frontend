@@ -98,7 +98,7 @@ export default {
           await deleteMethods.deleteRoom(card.id)
           const updatedRooms = await getMethod.getRooms()
           this.$store.dispatch('setRooms', updatedRooms)
-          this.$emit('update-cards', updatedRooms)
+          this.$emit('update-cards', updatedRooms, 'sala')
           util.cargarLoader("")
         },
         cancel: ()=> {
