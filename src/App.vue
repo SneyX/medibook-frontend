@@ -140,6 +140,15 @@ export default {
       .vuecal__flex{
         .vuecal__bg{
           .vuecal__flex{
+            .vuecal__flex{
+              .vuecal__flex{
+                .vuecal__cell--disabled{
+                  .vuecal__flex{
+                    cursor: not-allowed;
+                  }
+                }
+              }
+            }
             .vuecal__time-column{
               display: flex;
               flex-direction: column;

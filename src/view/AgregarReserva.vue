@@ -28,6 +28,7 @@
           class="cal2"
           :disable-views="['years', 'year', 'month','week']"
           active-view="day"
+          :min-date="minDate"
           :selected-date="fechaSeleccionada"
           :time-from="8 * 60"
           :time-to="22 * 60"
