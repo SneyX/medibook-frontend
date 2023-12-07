@@ -85,8 +85,10 @@ export default {
           util.cargarLoader("Eliminando característica")
           await deleteMethods.deleteCaracteristica(card.id)
           const updatedRooms = await getMethod.getCaracteristicas()
+          this.renderCards = updatedRooms
+          this.$store.dispatch('setCaracteristicas', [])
           this.$store.dispatch('setCaracteristicas', updatedRooms)
-          this.$emit('update-cards', updatedRooms)
+          this.$emit('update-cards', updatedRooms, 'car')
           util.cargarLoader("")
         },
         cancel: ()=> {

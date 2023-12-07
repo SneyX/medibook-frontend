@@ -49,6 +49,7 @@ import AdminCaracteristicas from '@/components/AdminCaracteristicas.vue'
 
 export default {
   name: "AdministrarProducto",
+  emits: ["update-cards"],
   components: {
     AdminCard,
     AdminType,
@@ -86,7 +87,7 @@ export default {
   methods: {
     async generarCards() {
       util.cargarLoader("Cargando salas...")
-      this.cards = this.storeRooms.length < 1 ? await getMethod.getRooms() : this.storeRooms
+      this.cards = await getMethod.getRooms()
       if (this.storeRooms.length < 1) {
         this.$store.dispatch('setRooms', this.cards)
       }
@@ -94,7 +95,7 @@ export default {
     },
     async generarCards2() {
       util.cargarLoader("Cargando categorías...")
-      this.cards = this.storeTypeRooms.length < 1 ? await getMethod.getTypeRooms() : this.storeTypeRooms
+      this.cards = await getMethod.getTypeRooms()
       if (this.storeTypeRooms.length < 1) {
         this.$store.dispatch('setTypeRooms', this.cards)
       }
@@ -102,14 +103,15 @@ export default {
     },
     async generarCards3() {
       util.cargarLoader("Cargando características...")
-      this.cards = this.storeCaracteristicas.length < 1 ? await getMethod.getCaracteristicas() : this.storeCaracteristicas
+      this.cards =  await getMethod.getCaracteristicas()
       if (this.storeCaracteristicas.length < 1) {
         this.$store.dispatch('setCaracteristicas', this.cards)
       }
       util.cargarLoader("");
     },
-    async updateCards(updatedRooms) {
+    async updateCards(updatedRooms,type) {
       this.cards = updatedRooms
+      this.displayHandler(type)
     },
     async displayHandler(value){
       switch (value) {
